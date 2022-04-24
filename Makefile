@@ -1,116 +1,41 @@
-NAME:=	scop
+NAME = humangl
 
-# FILES AND FOLDERS
+LIB_GLFW_NAME = glfw
+LIB_GLAD_NAME = glad
 
-SRC_FILES:=	buffer_handler\
-			event_handler\
-			file_handler\
-			opengl_handler\
-			obj_loader\
-			printers\
-			sdl_handler\
-			shader_compiler\
-			utils\
-			texture_handler\
-			transformation_handler\
-			main_args_parser\
-			main\
-			vertex_balancer\
-			vertex_preparer
-ifeq ($(shell uname),Linux)
-SRC_FILES+=	glad
-endif
+SRC_PATH = ./src/
+OBJ_PATH = ./obj/
+LIB_PATH = ./lib/
+INC_PATH = ./include/ $(LIB_PATH)$(LIB_GLFW_NAME)/include/ $(LIB_PATH)$(LIB_GLAD_NAME)/include/
 
-INC_FILES:=	main
-ifeq ($(shell uname),Linux)
-INC_FILES+=	glad\
-			khrplatform
-endif
+CC_FLGS = -std=c++11 #-Werror -Wextra -Wall
+CC_LIBS = -lglfw -framework AppKit -framework OpenGL -framework IOKit -framework CoreVideo
 
-SRC_DIR:=	src
-OBJ_DIR:=	.obj
-INC_DIR:=	include
+SRC_NAME = main.cpp
+OBJ_NAME = $(SRC_NAME:.cpp=.o)
+LIB_NAME = $(LIB_GLFW_NAME)/src
+LIB_SRC_NAME = $(LIB_GLAD_NAME)/src/glad.c
 
-SRCS:=	$(patsubst %,$(SRC_DIR)/%.c,$(SRC_FILES))
-OBJS:=	$(patsubst %,$(OBJ_DIR)/%.o,$(SRC_FILES))
-INCS:=	$(patsubst %,$(INC_DIR)/%.h,$(INC_FILES))
-
-# LIBRARIES
-
-LIBS_DIR:=		lib
-
-ifeq ($(shell uname),Darwin)
-SDL2_INC?=		~/.brew/include
-endif
-ifeq ($(shell uname),Linux)
-SDL2_INC?=		/usr/include
-endif
-
-LIBOBJ_NAME=	libobj
-LIBOBJ_DIR:=	$(LIBS_DIR)/libobj
-LIBOBJ:=		$(LIBOBJ_DIR)/$(LIBOBJ_NAME).a
-
-LIBMATH_NAME=	libmath
-LIBMATH_DIR:=	$(LIBS_DIR)/libmath
-LIBMATH:=		$(LIBMATH_DIR)/$(LIBMATH_NAME).a
-
-# COMPILATION
-
-CFLAGS?=	-Wall -Wextra -Werror\
-			-I$(INC_DIR)\
-			-I$(LIBOBJ_DIR)/include\
-			-I$(LIBMATH_DIR)/include\
-			-I$(SDL2_INC)\
-			-D GL_SILENCE_DEPRECATION
-LDFLAGS?=	-L$(LIBOBJ_DIR) -lobj\
-			-L$(LIBMATH_DIR) -lmath\
-			-lSDL2 -lSDL2main
-ifeq ($(shell uname),Darwin)
-LDFLAGS+=	-framework OpenGL
-endif
-ifeq ($(shell uname),Linux)
-LDFLAGS+=	-ldl -lm
-endif
-DEBUGFLAGS?=-g -DDEBUG
+SRC = $(addprefix $(SRC_PATH), $(SRC_NAME))
+OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
+INC = $(addprefix -I,$(INC_PATH))
+LIB = $(addprefix -L$(LIB_PATH),$(LIB_NAME))
+LIB_SRC = $(addprefix $(LIB_PATH),$(LIB_SRC_NAME))
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBOBJ) $(LIBMATH) $(INCS)
-	@echo "Compiling $@ executable"
-	@$(CC) -o $@ $(OBJS) $(LDFLAGS)
+$(NAME): $(OBJ)
+	$(CXX) $(CC_FLGS) $(LIB) $(LIB_SRC) $(INC) $(OBJ) $(CC_LIBS) -o $(NAME)
 
-$(LIBOBJ):
-	@echo "Compiling libobj library"
-	@$(MAKE) -s -C $(LIBOBJ_DIR)
-
-$(LIBMATH):
-	@echo "Compiling libmath library"
-	@$(MAKE) -s -C $(LIBMATH_DIR)
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_DIR)
-	@$(CC) -c $(CFLAGS) -o $@ $<
+$(OBJ_PATH)%.o: $(SRC_PATH)%.cpp
+	mkdir -p $(OBJ_PATH)
+	$(CXX) $(CC_FLGS) $(INC) -o $@ -c $<
 
 clean:
-	@echo "Cleaning $(NAME) object files"
-	@rm -rf $(OBJ_DIR)
-	@echo "Cleaning $(LIBOBJ_NAME) object files"
-	@make clean -s -C $(LIBOBJ_DIR)
-	@echo "Cleaning $(LIBMATH_NAME) object files"
-	@make clean -s -C $(LIBMATH_DIR)
+	rm -fv $(OBJ)
+	rm -rf $(OBJ_PATH)
 
 fclean: clean
-	@echo "Removing $(NAME)"
-	@rm -rf $(NAME) $(NAME).dSYM
-	@echo "Removing $(LIBOBJ_NAME)"
-	@make fclean -s -C $(LIBOBJ_DIR)
-	@echo "Removing $(LIBMATH_NAME)"
-	@make fclean -s -C $(LIBMATH_DIR)
+	rm -fv $(NAME)
 
 re: fclean all
-
-debug: $(LIBOBJ) $(LIBMATH) $(SRCS) $(INCS)
-	@echo "Compiling debuggable $(NAME) executable"
-	@$(CC) $(DEBUGFLAGS) -o $(NAME) $(SRCS) $(CFLAGS) $(LDFLAGS)
-
-.PHONY: all clean fclean re debug
