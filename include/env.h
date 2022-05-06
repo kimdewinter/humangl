@@ -7,8 +7,10 @@ class Env
 {
 public:
 	Env();
-	// ~Env();
-	GLFWwindow *window;
+	~Env();
+	void process_input();
+	bool should_window_close() { return glfwWindowShouldClose(this->window); };
 
 private:
+	GLFWwindow *window;
 };
