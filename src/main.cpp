@@ -30,7 +30,7 @@ static void render(Env *env)
 int main()
 {
 	Env env;
-	// std::map<std::string, Model *> game_obj = Skelly::create_skelly();
+	std::map<std::string, Model *> game_obj = Skelly::create_skelly();
 
 	// Game loop
 	using namespace std::chrono;
