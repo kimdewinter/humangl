@@ -40,6 +40,9 @@ set(sources
 ${SOURCE_DIR}/main.cpp
 ${SOURCE_DIR}/env.cpp
 ${SOURCE_DIR}/renderer.cpp
+${SOURCE_DIR}/types.cpp
+${SOURCE_DIR}/model.cpp
+${SOURCE_DIR}/skelly.cpp
 )
 
 add_executable(humangl ${sources} ${includes})
