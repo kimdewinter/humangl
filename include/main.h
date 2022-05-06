@@ -11,8 +11,3 @@
 #define WINDOW_RESIZABLE GL_FALSE
 #define MS_PER_UPDATE 30
 #define PRINT_ERR std::cout << err.what() << std::endl;
-
-// class App
-// {
-
-// };

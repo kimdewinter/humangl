@@ -39,6 +39,7 @@ set(CMAKE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 set(sources
 ${SOURCE_DIR}/main.cpp
 ${SOURCE_DIR}/env.cpp
+${SOURCE_DIR}/renderer.cpp
 )
 
 add_executable(humangl ${sources} ${includes})

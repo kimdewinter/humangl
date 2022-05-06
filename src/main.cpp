@@ -1,12 +1,13 @@
 #include "main.h"
 #include "env.h"
+#include "renderer.h"
 #include <chrono>
 #include <thread> // Possibly only needed for test-sleeps during development; remove later
 #include <iostream>
 
 int main()
 {
-	Env *env = new ::Env();
+	Env env = Env();
 
 	// Game loop
 	using namespace std::chrono;
@@ -14,7 +15,7 @@ int main()
 
 	time_point previous = steady_clock::now();
 	nanoseconds lag = nanoseconds(0);
-	while (!env->should_window_close())
+	while (!env.should_window_close())
 	{
 		time_point current = steady_clock::now();
 		nanoseconds elapsed = current - previous;
@@ -22,7 +23,7 @@ int main()
 		lag += elapsed;
 
 		std::cout << "Processing input." << std::endl;
-		env->process_input();
+		env.process_input();
 		std::this_thread::sleep_for(milliseconds(10)); // Simulates processing of input
 
 		while (lag >= ns_per_update)
@@ -35,6 +36,7 @@ int main()
 
 		// render();
 		std::cout << "Rendering." << std::endl;
+		Renderer::render(&env);
 		std::this_thread::sleep_for(milliseconds(20)); // Simulates rendering
 	}
 

@@ -10,6 +10,8 @@ public:
 	~Env();
 	void process_input();
 	bool should_window_close() { return glfwWindowShouldClose(this->window); };
+	void swap_buffers() { glfwSwapBuffers(this->window); };
+	void poll_events() { glfwPollEvents(); };
 
 private:
 	GLFWwindow *window;

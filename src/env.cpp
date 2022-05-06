@@ -30,7 +30,7 @@ Env::Env()
 	glfwSetFramebufferSizeCallback(this->window, framebuffer_size_callback);
 	glfwSetInputMode(this->window, GLFW_STICKY_KEYS, 1);
 
-	if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "GLAD initialization failed" << std::endl;
 		glfwTerminate();
