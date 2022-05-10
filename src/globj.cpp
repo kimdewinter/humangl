@@ -50,18 +50,29 @@ namespace
 	}
 
 	GlObj::GlObj(
-		std::vector<std::vector<std::array<GLfloat, 3>> const> const vertex_data,
-		std::vector<unsigned int> const indices) : vertex_data(vertex_data),
-												   indices(indices)
+		std::vector<std::vector<std::array<GLfloat, 3>> const> const vertex_data, // DANGER: MAGICAL SIZE VALUE
+		std::vector<unsigned int> const indices) : indices(indices)
 	{
-		// glGenVertexArrays(1, &vao);
-		// glGenBuffers(1, &vbo);
-		// glGenBuffers(1, &ebo);
+		// Set up vertex data
+		try
+		{
+			this->vertex_data = format_vertex_data(vertex_data);
+		}
+		catch (char const *const msg)
+		{
+			std::cout << msg << std::endl;
+			return;
+		}
 
-		// glBindVertexArray(vao);
+		// Generate buffers
+		glGenVertexArrays(1, &vao);
+		glGenBuffers(1, &vbo);
+		glGenBuffers(1, &ebo);
 
-		// glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		// glBufferData(GL_ARRAY_BUFER, sizeof()) FINISH THIS
+		glBindVertexArray(vao);
+
+		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(3 * sizeof(GLfloat)) * this->vertex_data.size(), // DANGER: MAGICAL SIZE VALUE
 	}
 }
 

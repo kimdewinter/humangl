@@ -23,7 +23,7 @@ public:
 	void render() const;
 
 private:
-	std::vector<std::vector<vec3> const> const vertex_data; // vertices, normals, etc.
+	std::vector<vec3> vertex_data; // vertices, normals, etc.
 	std::vector<unsigned int> const indices;
 
 	GLuint vbo;
