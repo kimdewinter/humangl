@@ -43,6 +43,7 @@ ${SOURCE_DIR}/renderer.cpp
 ${SOURCE_DIR}/types.cpp
 ${SOURCE_DIR}/model.cpp
 ${SOURCE_DIR}/skelly.cpp
+${SOURCE_DIR}/globj.cpp
 )
 
 add_executable(humangl ${sources} ${includes})

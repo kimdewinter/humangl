@@ -3,15 +3,19 @@
 Model::Model(
 	const std::string name,
 	std::forward_list<Model *> children,
+	const std::vector<vec3> vertices,
+	const std::vector<unsigned int> indices,
 	const vec3 position,
 	const vec3 orientation,
 	const vec3 scaling,
-	vec3 color) : name(name),
-				  children(children),
-				  position(position),
-				  orientation(orientation),
-				  scaling(scaling),
-				  color(color)
+	const vec3 color) : name(name),
+						children(children),
+						vertices(vertices),
+						indices(indices),
+						position(position),
+						orientation(orientation),
+						scaling(scaling),
+						color(color)
 {
 	// TO DO: set up vbo, vao, ebo, etc
 }
