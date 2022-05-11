@@ -22,7 +22,7 @@ Env::Env()
 	this->window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, APP_NAME, NULL, NULL);
 	if (!window)
 	{
-		std::cout << "GLFW window creation failed" << std::endl;
+		PRINT_OUT("GLFW window creation failed");
 		glfwTerminate();
 		return;
 	}
@@ -32,7 +32,7 @@ Env::Env()
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
-		std::cout << "GLAD initialization failed" << std::endl;
+		PRINT_OUT("GLAD initialization failed");
 		glfwTerminate();
 		return;
 	}

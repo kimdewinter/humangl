@@ -1,33 +1,35 @@
 #include "model.h"
+#include "main.h"
 
 Model::Model(
-	const std::string name,
-	std::forward_list<Model *> children,
-	const std::vector<vec3> vertices,
-	const std::vector<unsigned int> indices,
-	const vec3 position,
-	const vec3 orientation,
-	const vec3 scaling,
-	const vec3 color) : name(name),
-						children(children),
-						vertices(vertices),
-						indices(indices),
-						position(position),
-						orientation(orientation),
-						scaling(scaling),
-						color(color)
+	std::string const name,
+	std::forward_list<Model const *const> const children,
+	std::vector<std::vector<vec3 const> const> const vertices,
+	std::vector<unsigned int const> const indices,
+	vec3 const position,
+	vec3 const orientation,
+	vec3 const scaling,
+	vec3 const color)
+try : name(name),
+	children(children),
+	position(position),
+	orientation(orientation),
+	scaling(scaling),
+	color(color),
+	gl_obj(GlObj(vertices, indices))
 {
-	// TO DO: set up vbo, vao, ebo, etc
+}
+catch (char const *const msg)
+{
+	PRINT_OUT(msg);
 }
 
 Model::~Model()
 {
-	std::forward_list<Model *>::iterator iter;
+	std::forward_list<Model const *const>::const_iterator iter;
 
 	for (iter = this->children.begin(); iter != this->children.end(); iter++)
 	{
 		delete *iter;
 	}
-
-	// ADD LATER: deletion of vbo, vao, ebo, etc
 };

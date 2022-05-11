@@ -2,6 +2,7 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <iostream>
 
 #define APP_NAME "humangl"
 #define OPENGL_VERSION_MAJOR 4
@@ -10,4 +11,5 @@
 #define WINDOW_HEIGHT 900
 #define WINDOW_RESIZABLE GL_FALSE
 #define MS_PER_UPDATE 30
-#define PRINT_ERR std::cout << err.what() << std::endl;
+
+#define PRINT_OUT(str) std::cout << #str << std::endl
