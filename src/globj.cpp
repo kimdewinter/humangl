@@ -2,60 +2,65 @@
 #include "globj.h"
 #include "main.h"
 
-// Constructor namespace
-// namespace
-// {
-/// Error-check vertex attribute data length, and return total number of vertices
-/// Ex: if there are two attributes, and A has 20 vertices, then B must also have 20 vertices
-size_t check_vertexattrib_len(std::vector<std::vector<vec3 const> const> const &vecs)
+// Namespace for helpers of GlObj::GlObj
+namespace
 {
-	using std::vector;
-
-	if (vecs.size() < 1 || vecs.begin()->size() < 1)
-		throw "Insufficient vertex attribute data supplied.";
-
-	if (vecs.size() == 1)
-		return vecs.begin()->size(); // Only one attribute, no need to compare
-
-	vector<vector<vec3 const> const>::const_iterator vecs_iter = vecs.begin();
-	size_t size = vecs_iter->size();
-	for (vecs_iter++; vecs_iter < vecs.end(); vecs_iter++)
-		if (vecs_iter->size() != size)
-			throw "Dissimilar amounts of vertex data between attributes."; // Dissimilar sizes
-	return size;
-}
-
-/// Combine the data of the various attributes into one single, contiguous vector of vertex data
-std::vector<vec3> const format_vertex_data(std::vector<std::vector<vec3 const> const> const &in)
-{
-	using std::string;
-	using std::vector;
-
-	// Check parameter "in"
-	size_t n_vertices;
-	try
+	/// Error-check vertex attribute data length, and return total number of vertices
+	/// Ex: if there are two attributes, and A has 20 vertices, then B must also have 20 vertices
+	size_t check_vertexattrib_len(std::vector<std::vector<vec3 const> const> const &vecs)
 	{
-		n_vertices = check_vertexattrib_len(in);
-	}
-	catch (char const *const msg)
-	{
-		throw msg;
+		using std::vector;
+
+		if (vecs.size() < 1 || vecs.begin()->size() < 1)
+			throw "Insufficient vertex attribute data supplied.";
+
+		if (vecs.size() == 1)
+			return vecs.begin()->size(); // Only one attribute, no need to compare
+
+		vector<vector<vec3 const> const>::const_iterator vecs_iter = vecs.begin();
+		size_t size = vecs_iter->size();
+		for (vecs_iter++; vecs_iter < vecs.end(); vecs_iter++)
+			if (vecs_iter->size() != size)
+				throw "Dissimilar amounts of vertex data between attributes."; // Dissimilar sizes
+		return size;
 	}
 
-	// Combine the data of the various attributes into one single, contiguous vector of vertex data
-	vector<vec3> out;
-	for (int vert_i = 0; vert_i < n_vertices; vert_i++)
-		for (vector<vec3 const> const &in_i : in)
-			out.push_back(in_i.at(vert_i));
-	return out;
+	/// Combine the data of the various attributes into one single, contiguous vector of vertex data
+	std::vector<vec3> const format_vertex_data(std::vector<std::vector<vec3 const> const> const &in)
+	{
+		using std::string;
+		using std::vector;
+
+		// Check parameter "in"
+		size_t n_vertices;
+		try
+		{
+			n_vertices = check_vertexattrib_len(in);
+		}
+		catch (char const *const msg)
+		{
+			throw msg;
+		}
+
+		// Combine the data of the various attributes into one single, contiguous vector of vertex data
+		vector<vec3> out;
+		for (int vert_i = 0; vert_i < n_vertices; vert_i++)
+			for (vector<vec3 const> const &in_i : in)
+				out.push_back(in_i.at(vert_i));
+		return out;
+	}
+
+	template <typename T>
+	size_t sizeof_vector(typename std::vector<T> const &vec)
+	{
+		return sizeof(T) * vec.size();
+	}
 }
 
-template <typename T>
-size_t sizeof_vector(typename std::vector<T> const &vec)
-{
-	return sizeof(T) * vec.size();
-}
-
+/// Object that hands buffering and draw calls.
+/// 'vertex_data' should contain vectors with your position attributes, normal attributes, etc.
+/// in the GLSL shader they correspond to "layout (location = 0)", "layout (location = 1)", etc.
+/// 'indices' holds the vertex indices, so glDrawElements can be used; avoiding duplicate vertices.
 GlObj::GlObj(
 	std::vector<std::vector<vec3 const> const> const &vertex_data,
 	std::vector<unsigned int const> const &indices)
@@ -102,7 +107,6 @@ catch (char const *const msg)
 {
 	throw msg;
 }
-// }
 
 GlObj::~GlObj()
 {
