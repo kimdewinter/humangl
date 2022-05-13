@@ -20,15 +20,15 @@ class GlObj
 {
 public:
 	GlObj(
-		std::vector<std::vector<vec3 const> const> const &vertex_data,
-		std::vector<unsigned int const> const &indices);
+		std::vector<std::vector<vec3>> const &vertex_data,
+		std::vector<unsigned int> const &indices);
 	~GlObj();
 	GLuint get_vao() const;
 	// void render() const;
 
 private:
 	std::vector<vec3> const vertex_data; // vertices, normals, etc.
-	std::vector<unsigned int const> const indices;
+	std::vector<unsigned int> const indices;
 
 	GLuint vbo;
 	GLuint vao;

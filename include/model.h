@@ -12,9 +12,9 @@ class Model
 public:
 	Model(
 		std::string const name,
-		std::forward_list<Model const *const> const children,
-		std::vector<std::vector<vec3 const> const> const vertices,
-		std::vector<unsigned int const> const indices,
+		std::forward_list<Model const *> const children,
+		std::vector<std::vector<vec3>> const vertices,
+		std::vector<unsigned int> const indices,
 		vec3 const position,
 		vec3 const orientation,
 		vec3 const scaling,
@@ -24,7 +24,7 @@ public:
 
 private:
 	std::string const name;
-	std::forward_list<Model const *const> const children;
+	std::forward_list<Model const *> const children;
 
 	vec3 position;
 	vec3 orientation;
