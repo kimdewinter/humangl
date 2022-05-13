@@ -23,7 +23,7 @@ public:
 		std::vector<std::vector<vec3>> const &vertex_data,
 		std::vector<unsigned int> const &indices);
 	~GlObj();
-	GLuint get_vao() const;
+	GLuint get_vao() const { return vao; };
 	// void render() const;
 
 private:

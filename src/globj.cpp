@@ -114,8 +114,3 @@ GlObj::~GlObj()
 	glDeleteBuffers(1, &this->vbo);
 	glDeleteBuffers(1, &this->ebo);
 }
-
-GLuint GlObj::get_vao() const
-{
-	return vao;
-}
