@@ -6,6 +6,7 @@
 #include <vector>
 #include "types.h"
 #include "globj.h"
+#include "shader.h"
 
 class Model
 {
@@ -15,6 +16,7 @@ public:
 		std::forward_list<Model const *> const children,
 		std::vector<std::vector<vec3>> const vertices,
 		std::vector<unsigned int> const indices,
+		std::shared_ptr<Shader> const shader,
 		vec3 const position,
 		vec3 const orientation,
 		vec3 const scaling,
@@ -32,5 +34,6 @@ private:
 
 	vec3 color;
 
-	GlObj gl_obj;
+	std::shared_ptr<Shader> const shader;
+	GlObj const gl_obj;
 };

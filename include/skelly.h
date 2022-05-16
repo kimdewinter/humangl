@@ -3,5 +3,5 @@
 
 namespace Skelly
 {
-	Model *create_skelly();
+	Model *create_skelly(std::shared_ptr<Shader> const shader);
 }

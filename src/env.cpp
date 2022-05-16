@@ -56,6 +56,8 @@ Env::~Env()
 
 void Env::process_input()
 {
+	// DO SOMETHING WITH "glfwPollEvents()" ?
+
 	// Close window when escape is pressed
 	if (glfwGetKey(this->window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(this->window, true);

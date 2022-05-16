@@ -3,36 +3,41 @@
 #include "renderer.h"
 #include "model.h"
 #include "skelly.h"
+#include "shader.h"
 #include <chrono>
 #include <thread> // Possibly only needed for test-sleeps during development; remove later
 #include <iostream>
 
-static void update()
+namespace
 {
-	PRINT_OUT("Updating game state.");
-	std::this_thread::sleep_for(std::chrono::milliseconds(10)); // Simulates updating of game state
-}
+	void update()
+	{
+		PRINT_OUT("Updating game state.");
+		std::this_thread::sleep_for(std::chrono::milliseconds(10)); // Simulates updating of game state
+	}
 
-static void process_input(Env *env)
-{
-	PRINT_OUT("Processing input.");
-	env->process_input();
-	std::this_thread::sleep_for(std::chrono::milliseconds(10)); // Simulates processing of input
-}
+	void process_input(Env *env)
+	{
+		PRINT_OUT("Processing input.");
+		env->process_input();
+		std::this_thread::sleep_for(std::chrono::milliseconds(10)); // Simulates processing of input
+	}
 
-static void render(Env *env)
-{
-	PRINT_OUT("Rendering.");
-	Renderer::render(env);
-	std::this_thread::sleep_for(std::chrono::milliseconds(20)); // Simulates rendering
+	std::map<std::string, Model *> create_game_objects()
+	{
+		std::shared_ptr<Shader> shader =
+			std::make_shared<Shader>("resources/shader.vert", "resources/shader.frag");
+
+		return std::map<std::string, Model *>{
+			{"skelly", Skelly::create_skelly(shader)},
+		};
+	}
 }
 
 int main()
 {
 	Env env;
-	std::map<std::string, Model *> game_obj{
-		{"skelly", Skelly::create_skelly()},
-	};
+	std::map<std::string, Model *> game_obj = create_game_objects();
 
 	// Game loop
 	using namespace std::chrono;
@@ -55,7 +60,7 @@ int main()
 			lag -= ns_per_update;
 		}
 
-		render(&env);
+		Renderer::render(env, game_obj);
 	}
 
 	PRINT_OUT("Program complete.");

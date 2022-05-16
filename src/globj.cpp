@@ -92,18 +92,8 @@ GlObj::GlObj(
 			GL_STATIC_DRAW);
 
 		// Set position attribute, AKA "layout (location = 0)"
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void *)0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void *)0);
 		glEnableVertexAttribArray(0);
-
-		// Set color attribute, AKA "layout (locaton = 1)"
-		glVertexAttribPointer(
-			1,
-			3,
-			GL_FLOAT,
-			GL_FALSE,
-			6 * sizeof(GLfloat),
-			(void *)(3 * sizeof(GLfloat)));
-		glEnableVertexAttribArray(1);
 	}
 	catch (char const *const msg)
 	{
@@ -116,4 +106,8 @@ GlObj::~GlObj()
 	glDeleteVertexArrays(1, &this->vao);
 	glDeleteBuffers(1, &this->vbo);
 	glDeleteBuffers(1, &this->ebo);
+}
+
+void GlObj::render() const
+{
 }
