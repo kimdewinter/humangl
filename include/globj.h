@@ -27,9 +27,6 @@ public:
 	// void render() const;
 
 private:
-	std::vector<vec3> const vertex_data; // vertices, normals, etc.
-	std::vector<unsigned int> const indices;
-
 	GLuint vbo;
 	GLuint vao;
 	GLuint ebo;

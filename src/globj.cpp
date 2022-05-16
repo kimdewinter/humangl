@@ -64,48 +64,51 @@ namespace
 GlObj::GlObj(
 	std::vector<std::vector<vec3>> const &vertex_data,
 	std::vector<unsigned int> const &indices)
-try : indices(indices),
-	vertex_data(format_vertex_data(vertex_data))
 {
-	// Generate buffers
-	glGenVertexArrays(1, &vao);
-	glGenBuffers(1, &vbo);
-	glGenBuffers(1, &ebo);
+	try
+	{
+		std::vector<vec3> formatted_vertex_data = format_vertex_data(vertex_data);
 
-	// Buffer vertex data
-	glBindVertexArray(vao);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(
-		GL_ARRAY_BUFFER,
-		sizeof_vector(this->vertex_data),
-		this->vertex_data.data(),
-		GL_STATIC_DRAW);
+		// Generate buffers
+		glGenVertexArrays(1, &vao);
+		glGenBuffers(1, &vbo);
+		glGenBuffers(1, &ebo);
 
-	// Buffer indices
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-	glBufferData(
-		GL_ELEMENT_ARRAY_BUFFER,
-		sizeof_vector(this->indices),
-		this->indices.data(),
-		GL_STATIC_DRAW);
+		// Buffer vertex data
+		glBindVertexArray(vao);
+		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		glBufferData(
+			GL_ARRAY_BUFFER,
+			sizeof_vector(formatted_vertex_data),
+			formatted_vertex_data.data(),
+			GL_STATIC_DRAW);
 
-	// Set position attribute, AKA "layout (location = 0)"
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void *)0);
-	glEnableVertexAttribArray(0);
+		// Buffer indices
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+		glBufferData(
+			GL_ELEMENT_ARRAY_BUFFER,
+			sizeof_vector(indices),
+			indices.data(),
+			GL_STATIC_DRAW);
 
-	// Set color attribute, AKA "layout (locaton = 1)"
-	glVertexAttribPointer(
-		1,
-		3,
-		GL_FLOAT,
-		GL_FALSE,
-		6 * sizeof(GLfloat),
-		(void *)(3 * sizeof(GLfloat)));
-	glEnableVertexAttribArray(1);
-}
-catch (char const *const msg)
-{
-	throw msg;
+		// Set position attribute, AKA "layout (location = 0)"
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (void *)0);
+		glEnableVertexAttribArray(0);
+
+		// Set color attribute, AKA "layout (locaton = 1)"
+		glVertexAttribPointer(
+			1,
+			3,
+			GL_FLOAT,
+			GL_FALSE,
+			6 * sizeof(GLfloat),
+			(void *)(3 * sizeof(GLfloat)));
+		glEnableVertexAttribArray(1);
+	}
+	catch (char const *const msg)
+	{
+		throw msg;
+	}
 }
 
 GlObj::~GlObj()

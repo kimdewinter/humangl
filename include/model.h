@@ -33,7 +33,4 @@ private:
 	vec3 color;
 
 	GlObj gl_obj;
-	GLuint vbo;
-	GLuint vao;
-	GLuint ebo;
 };

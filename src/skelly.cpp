@@ -4,9 +4,8 @@
 
 namespace Skelly
 {
-	std::map<std::string, Model *> create_skelly()
+	Model *create_skelly()
 	{
-		std::map<std::string, Model *> map;
-		return map;
+		return NULL; // TO DO: HARDCODE SOME DATA
 	}
 }

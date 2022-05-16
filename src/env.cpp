@@ -3,7 +3,13 @@
 #include <stdlib.h>
 #include <iostream>
 
-static void framebuffer_size_callback(GLFWwindow *window, int width, int height);
+namespace
+{
+	void framebuffer_size_callback(GLFWwindow *window, int width, int height)
+	{
+		glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+	}
+}
 
 Env::Env()
 {
@@ -46,11 +52,6 @@ Env::~Env()
 	glfwDestroyWindow(this->window);
 	this->window = NULL;
 	glfwTerminate();
-}
-
-static void framebuffer_size_callback(GLFWwindow *window, int width, int height)
-{
-	glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
 void Env::process_input()

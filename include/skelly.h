@@ -3,5 +3,5 @@
 
 namespace Skelly
 {
-	std::map<std::string, Model *> create_skelly();
+	Model *create_skelly();
 }
