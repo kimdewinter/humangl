@@ -4,6 +4,7 @@
 #include <forward_list>
 #include <string>
 #include <vector>
+#include <memory>
 #include "types.h"
 #include "globj.h"
 #include "shader.h"
