@@ -63,7 +63,7 @@ namespace
 /// 'indices' holds the vertex indices, so glDrawElements can be used; avoiding duplicate vertices.
 GlObj::GlObj(
 	std::vector<std::vector<vec3>> const &vertex_data,
-	std::vector<unsigned int> const &indices)
+	std::vector<unsigned int> const &indices) : ebo_len(indices.size())
 {
 	try
 	{
@@ -108,6 +108,9 @@ GlObj::~GlObj()
 	glDeleteBuffers(1, &this->ebo);
 }
 
-void GlObj::render() const
+void GlObj::render(std::shared_ptr<Shader> const &shader) const
 {
+	shader->use();
+	glBindVertexArray(this->vao);
+	glDrawElements(GL_TRIANGLES, this->ebo_len, GL_UNSIGNED_INT, (void *)0);
 }

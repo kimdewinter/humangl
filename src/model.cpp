@@ -3,7 +3,7 @@
 
 Model::Model(
 	std::string const name,
-	std::forward_list<Model const *> const children,
+	std::forward_list<Model *> const children,
 	std::vector<std::vector<vec3>> const vertices,
 	std::vector<unsigned int> const indices,
 	std::shared_ptr<Shader> const shader,
@@ -28,10 +28,18 @@ catch (char const *const msg)
 
 Model::~Model()
 {
-	std::forward_list<Model const *>::const_iterator iter;
-
-	for (iter = this->children.begin(); iter != this->children.end(); iter++)
-	{
-		delete *iter;
-	}
+	for (Model *child : this->children)
+		delete child;
 };
+
+void Model::render() const
+{
+	// TO DO: prepare matrices and such to be send to the render call and children
+
+	this->gl_obj.render(this->shader);
+
+	for (Model *child : this->children)
+	{
+		child->render();
+	}
+}

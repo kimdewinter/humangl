@@ -14,7 +14,7 @@ class Model
 public:
 	Model(
 		std::string const name,
-		std::forward_list<Model const *> const children,
+		std::forward_list<Model *> const children,
 		std::vector<std::vector<vec3>> const vertices,
 		std::vector<unsigned int> const indices,
 		std::shared_ptr<Shader> const shader,
@@ -23,11 +23,11 @@ public:
 		vec3 const scaling,
 		vec3 const color);
 	~Model();
-	void render(); // TO IMPLEMENT
+	void render() const;
 
 private:
 	std::string const name;
-	std::forward_list<Model const *> const children;
+	std::forward_list<Model *> const children;
 
 	vec3 position;
 	vec3 orientation;
