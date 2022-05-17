@@ -43,7 +43,8 @@ Env::Env()
 		return;
 	}
 
-	glEnable(GL_DEPTH_TEST);
+	if (DEPTH_TESTING)
+		glEnable(GL_DEPTH_TEST);
 	glEnable(GL_MULTISAMPLE); // MSAA
 }
 
