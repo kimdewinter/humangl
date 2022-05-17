@@ -112,5 +112,6 @@ void GlObj::render(std::shared_ptr<Shader> const &shader) const
 {
 	shader->use();
 	glBindVertexArray(this->vao);
+	glUniform4f(glGetUniformLocation(shader->get_id(), "color_in"), 1.0f, 0.0f, 0.0f, 1.0f);
 	glDrawElements(GL_TRIANGLES, this->ebo_len, GL_UNSIGNED_INT, (void *)0);
 }
