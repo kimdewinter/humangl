@@ -34,9 +34,17 @@ Model::~Model()
 
 void Model::render() const
 {
-	// TO DO: prepare matrices and such to be send to the render call and children
-
-	this->gl_obj.render(this->shader);
+	this->gl_obj.render(
+		this->shader,
+		[&]()
+		{
+			vec3 const color = this->color;
+			glUniform3f(
+				glGetUniformLocation(this->shader->get_id(), "color_in"),
+				this->color[0],
+				this->color[1],
+				this->color[2]);
+		});
 
 	for (Model *child : this->children)
 	{

@@ -108,10 +108,12 @@ GlObj::~GlObj()
 	glDeleteBuffers(1, &this->ebo);
 }
 
-void GlObj::render(std::shared_ptr<Shader> const &shader) const
+void GlObj::render(
+	std::shared_ptr<Shader> const &shader,
+	std::function<void()> uniform_setter) const
 {
 	shader->use();
 	glBindVertexArray(this->vao);
-	// glUniform4f(glGetUniformLocation(shader->get_id(), "color_in"), 1.0f, 0.0f, 0.0f, 1.0f);
+	uniform_setter();
 	glDrawElements(GL_TRIANGLES, this->ebo_len, GL_UNSIGNED_INT, (void *)0);
 }

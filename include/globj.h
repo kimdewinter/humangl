@@ -16,7 +16,9 @@ public:
 		std::vector<unsigned int> const &indices);
 	~GlObj();
 	GLuint get_vao() const { return vao; };
-	void render(std::shared_ptr<Shader> const &shader, std::function<void()> uniform_setter) const;
+	void render(
+		std::shared_ptr<Shader> const &shader,
+		std::function<void()> uniform_setter) const;
 
 private:
 	GLuint vbo;
