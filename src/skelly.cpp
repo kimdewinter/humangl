@@ -24,7 +24,7 @@ namespace Skelly
 			shader,			  // Shader
 			{0.0, 0.0, 0.0},  // Position
 			{0.0, 0.0, 0.0},  // Orientaiton
-			{1.0, 1.0, 1.0},  // Scaling
+			{0.0, 0.0, 0.0},  // Scaling
 			{1.0, 0.0, 0.0}}; // Color
 		return model;
 	}

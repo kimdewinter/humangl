@@ -1,5 +1,32 @@
 #include "model.h"
 #include "main.h"
+#include <cmath>
+
+namespace
+{
+	void set_uniform_vec3(const GLuint shader_id, std::string const uniform_name, vec3 const &value)
+	{
+		glUniform3f(
+			glGetUniformLocation(shader_id, uniform_name.c_str()),
+			value[0],
+			value[1],
+			value[2]);
+	}
+
+	void set_uniform_mat4(const GLuint shader_id, std::string const uniform_name, mat4 const &value)
+	{
+		glUniformMatrix4fv(
+			glGetUniformLocation(shader_id, uniform_name.c_str()),
+			1,
+			GL_FALSE,
+			value.data());
+	}
+
+	GLfloat degrees_to_radians(GLfloat const degrees)
+	{
+		return degrees * (M_PI / 180);
+	}
+}
 
 Model::Model(
 	std::string const name,
@@ -38,12 +65,28 @@ void Model::render() const
 		this->shader,
 		[&]()
 		{
-			vec3 const color = this->color;
-			glUniform3f(
-				glGetUniformLocation(this->shader->get_id(), "color_in"),
-				this->color[0],
-				this->color[1],
-				this->color[2]);
+			GLuint id = this->shader->get_id();
+			set_uniform_mat4(
+				id,
+				"position",
+				get_translation_mat4(this->position[0], this->position[1], this->position[2]));
+			set_uniform_mat4(
+				id,
+				"orientation",
+				get_rotation_mat4(this->orientation[0], this->orientation[1], this->orientation[2]));
+			set_uniform_mat4(
+				id,
+				"scaling",
+				get_scaling_mat4(this->scaling[0], this->scaling[1], this->scaling[2]));
+			set_uniform_mat4(
+				id,
+				"projection",
+				get_projection_mat4(
+					degrees_to_radians(FIELD_OF_VIEW),
+					WINDOW_WIDTH / WINDOW_HEIGHT,
+					PROJECTION_NEAR,
+					PROJECTION_FAR));
+			set_uniform_vec3(id, "color_in", this->color);
 		});
 
 	for (Model *child : this->children)
