@@ -9,5 +9,6 @@ uniform mat4 projection;
 
 void main()
 {
-	gl_Position = scaling  * position * orientation * vec4(Position, 1.0);
+	mat4 model = scaling * position * orientation;
+	gl_Position = projection * model * vec4(Position, 1.0);
 }
