@@ -20,12 +20,12 @@ namespace Skelly
 				}}, // Vertices
 			std::vector<unsigned int>(
 				{0, 1, 3,
-				 1, 2, 3}),	  // Indices
-			shader,			  // Shader
-			{0.0, 0.0, 0.0},  // Position
-			{0.0, 0.0, 0.0},  // Orientaiton
-			{0.0, 0.0, 0.0},  // Scaling
-			{1.0, 0.0, 0.0}}; // Color
+				 1, 2, 3}),		   // Indices
+			shader,				   // Shader
+			{0.0, 0.0, 0.0},	   // Position
+			{0.0, 0.0, 0.0},	   // Orientaiton
+			{0.0, 0.0, 0.0},	   // Scaling
+			{1.0, 0.0, 0.0, 0.0}}; // Color
 		return model;
 	}
 }

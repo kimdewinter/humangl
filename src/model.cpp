@@ -13,6 +13,16 @@ namespace
 			value[2]);
 	}
 
+	void set_uniform_vec4(const GLuint shader_id, std::string const uniform_name, vec4 const &value)
+	{
+		glUniform4f(
+			glGetUniformLocation(shader_id, uniform_name.c_str()),
+			value[0],
+			value[1],
+			value[2],
+			value[3]);
+	}
+
 	void set_uniform_mat4(const GLuint shader_id, std::string const uniform_name, mat4 const &value)
 	{
 		glUniformMatrix4fv(
@@ -37,7 +47,7 @@ Model::Model(
 	vec3 const position,
 	vec3 const orientation,
 	vec3 const scaling,
-	vec3 const color)
+	vec4 const color)
 try : name(name),
 	children(children),
 	shader(shader),
@@ -86,7 +96,7 @@ void Model::render() const
 					WINDOW_WIDTH / WINDOW_HEIGHT,
 					PROJECTION_NEAR,
 					PROJECTION_FAR));
-			set_uniform_vec3(id, "color_in", this->color);
+			set_uniform_vec4(id, "color_in", this->color);
 		});
 
 	for (Model *child : this->children)

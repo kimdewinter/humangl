@@ -21,7 +21,7 @@ public:
 		vec3 const position,
 		vec3 const orientation,
 		vec3 const scaling,
-		vec3 const color);
+		vec4 const color);
 	~Model();
 	void render() const;
 
@@ -33,7 +33,7 @@ private:
 	vec3 orientation;
 	vec3 scaling;
 
-	vec3 color;
+	vec4 color;
 
 	std::shared_ptr<Shader> const shader;
 	GlObj const gl_obj;
