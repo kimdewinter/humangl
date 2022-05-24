@@ -19,6 +19,5 @@ mat4 get_identity_matrix()
 
 void main()
 {
-	// gl_Position = scaling * position * orientation * vec4(Position, 1.0);
-	gl_Position = get_identity_matrix() * scaling  * position * vec4(Position, 1.0);
+	gl_Position = scaling  * position * orientation * vec4(Position, 1.0);
 }

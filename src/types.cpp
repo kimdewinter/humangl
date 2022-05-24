@@ -11,13 +11,13 @@ mat4 get_identity_matrix()
 
 mat4 multiply_mat4(mat4 const a, mat4 const b)
 {
-	mat4 out;
-	for (unsigned int y = 0; y < 4; y++)
-		for (unsigned int x = 0; x < 4; x++)
-			for (unsigned int i = 0; i < 4; i++)
+	mat4 out = get_identity_matrix();
+	for (unsigned int i = 0; i < 4; i++)
+		for (unsigned int j = 0; j < 4; j++)
+			for (unsigned int k = 0; k < 4; k++)
 			{
-				out[y * 4 + x] +=
-					a[y * 4 + i] * b[i * 4 + x];
+				out[i * 4 + j] +=
+					a[i * 4 + k] * b[k * 4 + j];
 			}
 	return out;
 }
@@ -75,7 +75,7 @@ mat4 get_projection_mat4(
 
 /// Mind that this type of rotation is rudimentary and may suffer from gimbal locking
 /// Use quaternions instead to solve this
-mat4 get_rotation_mat4(GLfloat const x, GLfloat const y, GLfloat const z)
+mat4 get_orientation_mat4(GLfloat const x, GLfloat const y, GLfloat const z)
 {
 	mat4 x_mat{
 		1.0f, 0.0f, 0.0f, 0.0f,

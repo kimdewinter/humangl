@@ -73,7 +73,7 @@ void Model::render() const
 			set_uniform_mat4(
 				id,
 				"orientation",
-				get_rotation_mat4(this->orientation[0], this->orientation[1], this->orientation[2]));
+				get_orientation_mat4(this->orientation[0], this->orientation[1], this->orientation[2]));
 			set_uniform_mat4(
 				id,
 				"scaling",
