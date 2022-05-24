@@ -43,9 +43,14 @@ Env::Env()
 		return;
 	}
 
-	if (DEPTH_TESTING)
-		glEnable(GL_DEPTH_TEST);
+#if DEPTH_TESTING == 1
+	glEnable(GL_DEPTH_TEST);
+#endif
 	glEnable(GL_MULTISAMPLE); // MSAA
+
+#if WIREFRAME_MODE == 1
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+#endif
 }
 
 Env::~Env()
