@@ -16,7 +16,11 @@ mat4 get_identity_matrix()
 
 mat4 multiply_mat4(mat4 const a, mat4 const b)
 {
-	mat4 out = get_identity_matrix();
+	mat4 out{0.0f, 0.0f, 0.0f, 0.0f,
+			 0.0f, 0.0f, 0.0f, 0.0f,
+			 0.0f, 0.0f, 0.0f, 0.0f,
+			 0.0f, 0.0f, 0.0f, 0.0f};
+
 	for (unsigned int i = 0; i < 4; i++)
 		for (unsigned int j = 0; j < 4; j++)
 			for (unsigned int k = 0; k < 4; k++)
