@@ -79,18 +79,13 @@ void Model::render() const
 		[&]()
 		{
 			GLuint id = this->shader->get_id();
+			mat4 scaling = get_scaling_mat4(this->scaling[0], this->scaling[1], this->scaling[2]);
+			mat4 position = get_translation_mat4(this->position[0], this->position[1], this->position[2]);
+			mat4 orientation = get_orientation_mat4(this->orientation[0], this->orientation[1], this->orientation[2]);
 			set_uniform_mat4(
 				id,
-				"position",
-				get_translation_mat4(this->position[0], this->position[1], this->position[2]));
-			set_uniform_mat4(
-				id,
-				"orientation",
-				get_orientation_mat4(this->orientation[0], this->orientation[1], this->orientation[2]));
-			set_uniform_mat4(
-				id,
-				"scaling",
-				get_scaling_mat4(this->scaling[0], this->scaling[1], this->scaling[2]));
+				"model",
+				multiply_mat4(orientation, multiply_mat4(position, scaling)));
 			set_uniform_mat4(
 				id,
 				"projection",
