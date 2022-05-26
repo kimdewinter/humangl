@@ -20,7 +20,6 @@ namespace
 	{
 		PRINT_OUT("Processing input.");
 		env->process_input();
-		std::this_thread::sleep_for(std::chrono::milliseconds(10)); // Simulates processing of input
 	}
 
 	std::map<std::string, Model *> create_game_objects()
@@ -38,6 +37,7 @@ int main()
 {
 	Env env;
 	std::map<std::string, Model *> game_obj = create_game_objects();
+	env.select_model(game_obj.find("skelly")->second);
 
 	// Game loop
 	using namespace std::chrono;

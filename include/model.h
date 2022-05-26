@@ -24,14 +24,25 @@ public:
 		vec4 const color);
 	~Model();
 	void render() const;
+	void modify_position(vec3 const additives);
+	void modify_orientation(vec3 const additives);
+	void modify_scaling(vec3 const additives);
+	void reset_position() { this->position = this->default_position; };
+	void reset_orientation() { this->orientation = this->default_orientation; };
+	void reset_scaling() { this->scaling = this->default_scaling; };
 
 private:
 	std::string const name;
 	std::forward_list<Model *> const children;
 
+	float test = 0.0f;
+
 	vec3 position;
+	vec3 const default_position;
 	vec3 orientation;
+	vec3 const default_orientation;
 	vec3 scaling;
+	vec3 const default_scaling;
 
 	vec4 color;
 

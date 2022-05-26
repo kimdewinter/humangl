@@ -52,8 +52,11 @@ try : name(name),
 	children(children),
 	shader(shader),
 	position(position),
+	default_position(position),
 	orientation(orientation),
+	default_orientation(orientation),
 	scaling(scaling),
+	default_scaling(scaling),
 	color(color),
 	gl_obj(GlObj(vertices, indices))
 {
@@ -103,4 +106,19 @@ void Model::render() const
 	{
 		child->render();
 	}
+}
+
+void Model::modify_position(vec3 const additives)
+{
+	this->position = addition_vec3(this->position, additives);
+}
+
+void Model::modify_orientation(vec3 const additives)
+{
+	this->orientation = addition_vec3(this->orientation, additives);
+}
+
+void Model::modify_scaling(vec3 const additives)
+{
+	this->scaling = addition_vec3(this->scaling, additives);
 }
