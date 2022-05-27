@@ -12,14 +12,7 @@ namespace
 {
 	void update()
 	{
-		PRINT_OUT("Updating game state.");
 		std::this_thread::sleep_for(std::chrono::milliseconds(10)); // Simulates updating of game state
-	}
-
-	void process_input(Env *env)
-	{
-		PRINT_OUT("Processing input.");
-		env->process_input();
 	}
 
 	std::map<std::string, Model *> create_game_objects()
@@ -52,7 +45,7 @@ int main()
 		previous = current;
 		lag += elapsed;
 
-		process_input(&env);
+		env.process_input();
 
 		while (lag >= ns_per_update)
 		{

@@ -85,7 +85,7 @@ void Model::render() const
 			set_uniform_mat4(
 				id,
 				"model",
-				multiply_mat4(orientation, multiply_mat4(position, scaling)));
+				multiply_mat4(orientation, multiply_mat4(scaling, position)));
 			set_uniform_mat4(
 				id,
 				"projection",
@@ -116,4 +116,18 @@ void Model::modify_orientation(vec3 const additives)
 void Model::modify_scaling(vec3 const additives)
 {
 	this->scaling = addition_vec3(this->scaling, additives);
+}
+
+void Model::print_model_data() const
+{
+	std::function<void(std::string const, vec3 const &)> print_vec3 = [](std::string const pre_str, vec3 const &vec)
+	{
+		std::cout << pre_str << vec[0] << ", " << vec[1] << ", " << vec[2] << std::endl;
+	};
+	std::cout << std::endl
+			  << "Printing data of model " << this->name << std::endl;
+	print_vec3("Position: ", this->position);
+	print_vec3("Orientation: ", this->orientation);
+	print_vec3("Scaling: ", this->scaling);
+	std::cout << std::endl;
 }

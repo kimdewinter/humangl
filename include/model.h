@@ -30,6 +30,7 @@ public:
 	void reset_position() { this->position = this->default_position; };
 	void reset_orientation() { this->orientation = this->default_orientation; };
 	void reset_scaling() { this->scaling = this->default_scaling; };
+	void print_model_data() const;
 
 private:
 	std::string const name;
