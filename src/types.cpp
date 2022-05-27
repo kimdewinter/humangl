@@ -88,19 +88,19 @@ mat4 get_orientation_mat4(GLfloat const x, GLfloat const y, GLfloat const z)
 {
 	mat4 x_mat{
 		1.0f, 0.0f, 0.0f, 0.0f,
-		0.0f, cos(x), sin(x), 0.0f,
-		0.0f, -sin(x), cos(x), 0.0f,
+		0.0f, (GLfloat)cos(x), (GLfloat)sin(x), 0.0f,
+		0.0f, (GLfloat)-sin(x), (GLfloat)cos(x), 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f};
 
 	mat4 y_mat{
-		cos(y), 0.0f, -(sin(y)), 0.0f,
+		(GLfloat)cos(y), 0.0f, (GLfloat) - (sin(y)), 0.0f,
 		0.0f, 1.0f, 0.0f, 0.0f,
-		sin(y), 0.0f, cos(y), 0.0f,
+		(GLfloat)sin(y), 0.0f, (GLfloat)cos(y), 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f};
 
 	mat4 z_mat{
-		cos(z), sin(z), 0.0f, 0.0f,
-		-sin(z), cos(z), 0.0f, 0.0f,
+		(GLfloat)cos(z), (GLfloat)sin(z), 0.0f, 0.0f,
+		(GLfloat)-sin(z), (GLfloat)cos(z), 0.0f, 0.0f,
 		0.0f, 0.0f, 1.0f, 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f};
 
