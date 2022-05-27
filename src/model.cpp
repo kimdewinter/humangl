@@ -125,7 +125,7 @@ void Model::print_model_data() const
 		std::cout << pre_str << vec[0] << ", " << vec[1] << ", " << vec[2] << std::endl;
 	};
 	std::cout << std::endl
-			  << "Printing data of model " << this->name << std::endl;
+			  << "Printing data of model \"" << this->name << "\"" << std::endl;
 	print_vec3("Position: ", this->position);
 	print_vec3("Orientation: ", this->orientation);
 	print_vec3("Scaling: ", this->scaling);
