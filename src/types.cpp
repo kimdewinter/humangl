@@ -6,14 +6,6 @@ vec3 addition_vec3(vec3 const a, vec3 const b)
 	return vec3{a[0] + b[0], a[1] + b[1], a[2] + b[2]};
 }
 
-mat4 get_identity_matrix()
-{
-	return mat4{1.0f, 0.0f, 0.0f, 0.0f,
-				0.0f, 1.0f, 0.0f, 0.0f,
-				0.0f, 0.0f, 1.0f, 0.0f,
-				0.0f, 0.0f, 0.0f, 1.0f};
-}
-
 mat4 multiply_mat4(mat4 const a, mat4 const b)
 {
 	mat4 out{0.0f, 0.0f, 0.0f, 0.0f,
