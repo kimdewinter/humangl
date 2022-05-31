@@ -46,7 +46,7 @@ Model::Model(
 	std::shared_ptr<Shader> const shader,
 	vec3 const position,
 	vec3 const orientation,
-	vec3 const scaling,
+	vec3 const scale,
 	vec4 const color)
 try : name(name),
 	children(children),
@@ -55,8 +55,8 @@ try : name(name),
 	default_position(position),
 	orientation(orientation),
 	default_orientation(orientation),
-	scaling(scaling),
-	default_scaling(scaling),
+	scale(scale),
+	default_scale(scale),
 	color(color),
 	gl_obj(GlObj(vertices, indices))
 {
@@ -79,13 +79,13 @@ void Model::render() const
 		[&]()
 		{
 			GLuint id = this->shader->get_id();
-			mat4 scaling = get_scaling_mat4(this->scaling[0], this->scaling[1], this->scaling[2]);
-			mat4 position = get_translation_mat4(this->position[0], this->position[1], this->position[2]);
-			mat4 orientation = get_orientation_mat4(this->orientation[0], this->orientation[1], this->orientation[2]);
+			mat4 translation = get_translation_mat4(this->position[0], this->position[1], this->position[2]);
+			mat4 scaling = get_scaling_mat4(this->scale[0], this->scale[1], this->scale[2]);
+			mat4 rotation = get_rotation_mat4(this->orientation[0], this->orientation[1], this->orientation[2]);
 			set_uniform_mat4(
 				id,
 				"model",
-				multiply_mat4(orientation, multiply_mat4(scaling, position)));
+				multiply_mat4(multiply_mat4(scaling, rotation), translation));
 			set_uniform_mat4(
 				id,
 				"projection",
@@ -113,9 +113,9 @@ void Model::modify_orientation(vec3 const additives)
 	this->orientation = addition_vec3(this->orientation, additives);
 }
 
-void Model::modify_scaling(vec3 const additives)
+void Model::modify_scale(vec3 const additives)
 {
-	this->scaling = addition_vec3(this->scaling, additives);
+	this->scale = addition_vec3(this->scale, additives);
 }
 
 void Model::print_model_data() const
@@ -128,6 +128,6 @@ void Model::print_model_data() const
 			  << "Printing data of model \"" << this->name << "\"" << std::endl;
 	print_vec3("Position: ", this->position);
 	print_vec3("Orientation: ", this->orientation);
-	print_vec3("Scaling: ", this->scaling);
+	print_vec3("Scale: ", this->scale);
 	std::cout << std::endl;
 }

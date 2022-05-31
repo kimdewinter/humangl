@@ -37,8 +37,8 @@ namespace Skelly
 				 5, 6, 2}),		   // Indices
 			shader,				   // Shader
 			{0.0, 0.4, -0.5},	   // Position
-			{0.0, 0.0, 0.0},	   // Orientaiton
-			{-0.8, -0.40, -0.8},   // Scaling
+			{0.0, 0.0, 0.0},	   // Orientation
+			{-0.8, -0.40, -0.8},   // Scale
 			{1.0, 0.0, 0.0, 0.0}}; // Color
 		return model;
 	}

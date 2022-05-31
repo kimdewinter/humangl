@@ -102,25 +102,25 @@ void Env::process_input()
 			this->selected_model->modify_orientation({MOVEMENT_SPEED, 0.0, 0.0});
 		if (pressed(GLFW_KEY_H))
 			this->selected_model->modify_orientation({0.0, MOVEMENT_SPEED, 0.0});
-		// Check keypresses that change scaling
+		// Check keypresses that change scale
 		if (pressed(GLFW_KEY_U))
-			this->selected_model->modify_scaling({0.0, -MOVEMENT_SPEED, 0.0});
+			this->selected_model->modify_scale({0.0, -MOVEMENT_SPEED, 0.0});
 		if (pressed(GLFW_KEY_I))
-			this->selected_model->modify_scaling({0.0, 0.0, MOVEMENT_SPEED});
+			this->selected_model->modify_scale({0.0, 0.0, MOVEMENT_SPEED});
 		if (pressed(GLFW_KEY_O))
-			this->selected_model->modify_scaling({0.0, MOVEMENT_SPEED, 0.0});
+			this->selected_model->modify_scale({0.0, MOVEMENT_SPEED, 0.0});
 		if (pressed(GLFW_KEY_J))
-			this->selected_model->modify_scaling({-MOVEMENT_SPEED, 0.0, 0.0});
+			this->selected_model->modify_scale({-MOVEMENT_SPEED, 0.0, 0.0});
 		if (pressed(GLFW_KEY_K))
-			this->selected_model->modify_scaling({0.0, 0.0, -MOVEMENT_SPEED});
+			this->selected_model->modify_scale({0.0, 0.0, -MOVEMENT_SPEED});
 		if (pressed(GLFW_KEY_L))
-			this->selected_model->modify_scaling({MOVEMENT_SPEED, 0.0, 0.0});
+			this->selected_model->modify_scale({MOVEMENT_SPEED, 0.0, 0.0});
 		// Check keypresses that center/reset everything
 		if (pressed(GLFW_KEY_C))
 		{
 			this->selected_model->reset_position();
 			this->selected_model->reset_orientation();
-			this->selected_model->reset_scaling();
+			this->selected_model->reset_scale();
 		}
 #if DEBUG_MODELS == 1
 		this->selected_model->print_model_data();

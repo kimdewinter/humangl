@@ -1,5 +1,6 @@
 #include "types.h"
 #include <cmath>
+#include "glm/gtc/quaternion.hpp"
 
 vec3 addition_vec3(vec3 const a, vec3 const b)
 {
@@ -74,29 +75,26 @@ mat4 get_projection_mat4(
 				0.0f, 0.0f, -(2.0f * far * near) / (far - near), 1.0f};
 }
 
-/// Mind that this type of rotation is rudimentary and may suffer from gimbal locking
-/// Use quaternions instead to solve this
-mat4 get_orientation_mat4(GLfloat const x, GLfloat const y, GLfloat const z)
+mat4 get_rotation_mat4(GLfloat const x, GLfloat const y, GLfloat const z)
 {
-	mat4 x_mat{
-		1.0f, 0.0f, 0.0f, 0.0f,
-		0.0f, (GLfloat)cos(x), (GLfloat)sin(x), 0.0f,
-		0.0f, (GLfloat)-sin(x), (GLfloat)cos(x), 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f};
-
-	mat4 y_mat{
-		(GLfloat)cos(y), 0.0f, (GLfloat) - (sin(y)), 0.0f,
-		0.0f, 1.0f, 0.0f, 0.0f,
-		(GLfloat)sin(y), 0.0f, (GLfloat)cos(y), 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f};
-
-	mat4 z_mat{
-		(GLfloat)cos(z), (GLfloat)sin(z), 0.0f, 0.0f,
-		(GLfloat)-sin(z), (GLfloat)cos(z), 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f};
-
-	return multiply_mat4(multiply_mat4(x_mat, y_mat), z_mat);
+	glm::mat4 mat(glm::quat(glm::vec3(x, y, z))); // Use quaternion to avoid gimbal lock
+	return mat4{
+		mat[0][0],
+		mat[0][1],
+		mat[0][2],
+		mat[0][3],
+		mat[1][0],
+		mat[1][1],
+		mat[1][2],
+		mat[1][3],
+		mat[2][0],
+		mat[2][1],
+		mat[2][2],
+		mat[2][3],
+		mat[3][0],
+		mat[3][1],
+		mat[3][2],
+		mat[3][3]};
 }
 
 mat4 get_lookat_mat4(vec3 const cam_pos, vec3 const target, vec3 const up)

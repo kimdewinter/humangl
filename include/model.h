@@ -20,16 +20,16 @@ public:
 		std::shared_ptr<Shader> const shader,
 		vec3 const position,
 		vec3 const orientation,
-		vec3 const scaling,
+		vec3 const scale,
 		vec4 const color);
 	~Model();
 	void render() const;
 	void modify_position(vec3 const additives);
 	void modify_orientation(vec3 const additives);
-	void modify_scaling(vec3 const additives);
+	void modify_scale(vec3 const additives);
 	void reset_position() { this->position = this->default_position; };
 	void reset_orientation() { this->orientation = this->default_orientation; };
-	void reset_scaling() { this->scaling = this->default_scaling; };
+	void reset_scale() { this->scale = this->default_scale; };
 	void print_model_data() const;
 
 private:
@@ -42,8 +42,8 @@ private:
 	vec3 const default_position;
 	vec3 orientation;
 	vec3 const default_orientation;
-	vec3 scaling;
-	vec3 const default_scaling;
+	vec3 scale;
+	vec3 const default_scale;
 
 	vec4 color;
 

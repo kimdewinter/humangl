@@ -28,5 +28,5 @@ mat4 get_projection_mat4(
 	GLfloat const aspect,
 	GLfloat const near,
 	GLfloat const far);
-mat4 get_orientation_mat4(GLfloat const x, GLfloat const y, GLfloat const z);
+mat4 get_rotation_mat4(GLfloat const x, GLfloat const y, GLfloat const z);
 mat4 get_lookat_mat4(vec3 const cam_pos, vec3 const target, vec3 const up);
