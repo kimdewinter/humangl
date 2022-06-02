@@ -72,7 +72,7 @@ mat4 get_projection_mat4(
 	return mat4{1.0f / (f * aspect), 0.0f, 0.0f, 0.0f,
 				0.0f, 1.0f / f, 0.0f, 0.0f,
 				0.0f, 0.0f, -(far + near) / (far - near), -1.0f,
-				0.0f, 0.0f, -(2.0f * far * near) / (far - near), 1.0f};
+				0.0f, 0.0f, -(2.0f * far * near) / (far - near), 0.0f};
 }
 
 mat4 get_rotation_mat4(GLfloat const x, GLfloat const y, GLfloat const z)
