@@ -123,7 +123,7 @@ void Env::process_input()
 			this->selected_model->reset_scale();
 		}
 #if DEBUG_MODELS == 1
-		this->selected_model->print_model_data();
+		this->selected_model->debug_model_data();
 #endif
 	}
 }

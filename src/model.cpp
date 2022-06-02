@@ -118,7 +118,7 @@ void Model::modify_scale(vec3 const additives)
 	this->scale = addition_vec3(this->scale, additives);
 }
 
-void Model::print_model_data() const
+void Model::debug_model_data() const
 {
 	std::function<void(std::string const, vec3 const &)> print_vec3 = [](std::string const pre_str, vec3 const &vec)
 	{
@@ -130,4 +130,16 @@ void Model::print_model_data() const
 	print_vec3("Orientation: ", this->orientation);
 	print_vec3("Scale: ", this->scale);
 	std::cout << std::endl;
+}
+
+Model *Model::find_child(std::string const name)
+{
+	if (name == this->name)
+		return this;
+	for (Model *child : this->children)
+	{
+		if (child->find_child(name))
+			return child;
+	}
+	return nullptr;
 }

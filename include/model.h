@@ -14,7 +14,7 @@ class Model
 public:
 	Model(
 		std::string const name,
-		std::forward_list<Model *> const children,
+		std::forward_list<Model *> children,
 		std::vector<std::vector<vec3>> const vertices,
 		std::vector<unsigned int> const indices,
 		std::shared_ptr<Shader> const shader,
@@ -30,11 +30,13 @@ public:
 	void reset_position() { this->position = this->default_position; };
 	void reset_orientation() { this->orientation = this->default_orientation; };
 	void reset_scale() { this->scale = this->default_scale; };
-	void print_model_data() const;
+	void debug_model_data() const;
+	void set_child(Model *child) { this->children.push_front(child); };
+	Model *find_child(std::string const name);
 
 private:
 	std::string const name;
-	std::forward_list<Model *> const children;
+	std::forward_list<Model *> children;
 
 	float test = 0.0f;
 
