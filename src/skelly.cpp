@@ -48,7 +48,7 @@ namespace
 			{0.0, 0.75, -3.0},			  // Position
 			{0.0, 0.0, 0.0},			  // Orientation
 			{0.0, 1.0, 0.0},			  // Scale
-			{1.0, 1.0, 0.0, 0.0}};		  // Color
+			{1.0, 0.0, 0.0, 0.0}};		  // Color
 	}
 
 	Model *create_head(std::shared_ptr<Shader> const shader)
@@ -59,10 +59,10 @@ namespace
 			get_cube_vertices(),		  // Vertices
 			get_cube_indices(),			  // Indices
 			shader,						  // Shader
-			{0.0, 0.0, 0.0},			  // Position
+			{0.0, 0.71, 0.0},			  // Position
 			{0.0, 0.0, 0.0},			  // Orientation
-			{0.0, 0.0, 0.0},			  // Scale
-			{1.0, 0.0, 0.0, 0.0}};		  // Color
+			{-0.4, -0.6, -0.4},			  // Scale
+			{1.0, 1.0, 0.0, 0.0}};		  // Color
 	}
 
 	Model *create_left_upper_arm(std::shared_ptr<Shader> const shader)
@@ -73,10 +73,10 @@ namespace
 			get_cube_vertices(),		  // Vertices
 			get_cube_indices(),			  // Indices
 			shader,						  // Shader
-			{0.7, 0.0, 0.0},			  // Position
+			{0.67, 0.07, 0.0},			  // Position
 			{0.0, 0.0, 0.0},			  // Orientation
-			{-0.7, 0.0, -0.7},			  // Scale
-			{1.0, 0.0, 0.0, 0.0}};		  // Color
+			{-0.7, -0.33, -0.7},		  // Scale
+			{1.0, 1.0, 0.0, 0.0}};		  // Color
 	}
 }
 
@@ -85,9 +85,9 @@ namespace Skelly
 	Model *create_skelly(std::shared_ptr<Shader> const shader)
 	{
 		Model *torso = create_torso(shader);
-		// Model *head = create_head(shader);
+		Model *head = create_head(shader);
 		Model *left_upper_arm = create_left_upper_arm(shader);
-		// torso->set_child(head);
+		torso->set_child(head);
 		torso->set_child(left_upper_arm);
 		return torso;
 	}
