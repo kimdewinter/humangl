@@ -23,7 +23,10 @@ public:
 		vec3 const scale,
 		vec4 const color);
 	~Model();
-	void render() const;
+	void render(mat4 const parent_mat = {1.0, 0.0, 0.0, 0.0,
+										 0.0, 1.0, 0.0, 0.0,
+										 0.0, 0.0, 1.0, 0.0,
+										 0.0, 0.0, 0.0, 1.0}) const;
 	void modify_position(vec3 const additives);
 	void modify_orientation(vec3 const additives);
 	void modify_scale(vec3 const additives);
@@ -40,7 +43,7 @@ private:
 
 	float test = 0.0f;
 
-	vec3 position;
+	vec3 position; // Relative to parent (or world if Model instance is the root part)
 	vec3 const default_position;
 	vec3 orientation;
 	vec3 const default_orientation;

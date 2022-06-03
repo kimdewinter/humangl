@@ -30,7 +30,7 @@ int main()
 {
 	Env env;
 	std::map<std::string, Model *> game_obj = create_game_objects();
-	env.select_model(game_obj.find("skelly")->second->find_child("left_upper_arm"));
+	env.select_model(game_obj.find("skelly")->second->find_child("torso"));
 
 	// Game loop
 	using namespace std::chrono;
