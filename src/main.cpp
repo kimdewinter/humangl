@@ -17,8 +17,6 @@ namespace
 
 	std::map<std::string, Model *> create_game_objects()
 	{
-		std::shared_ptr<Shader> shader =
-			std::make_shared<Shader>("resources/shader.vert", "resources/shader.frag");
 
 		return std::map<std::string, Model *>{
 			{"skelly", Skelly::create_skelly(shader)},
@@ -30,7 +28,7 @@ int main()
 {
 	Env env;
 	std::map<std::string, Model *> game_obj = create_game_objects();
-
+	// env.select_model(game_obj.find("skelly")->second);
 	/*
 		env.select_model(game_obj.find("skelly")->second->find_child("torso"));
 		auto skelly_models = game_obj.find("skelly")->second->get_all_models();

@@ -45,6 +45,7 @@ ${SOURCE_DIR}/model.cpp
 ${SOURCE_DIR}/skelly.cpp
 ${SOURCE_DIR}/globj.cpp
 ${SOURCE_DIR}/shader.cpp
+${SOURCE_DIT}/world.cpp
 )
 
 add_executable(humangl ${sources} ${includes})

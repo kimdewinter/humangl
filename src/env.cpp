@@ -127,3 +127,7 @@ void Env::process_input()
 #endif
 	}
 }
+
+Env::Selector::Selector(std::vector<Model *> models) : models(models)
+{
+}

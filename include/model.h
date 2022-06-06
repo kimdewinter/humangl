@@ -35,9 +35,10 @@ public:
 	void reset_orientation() { this->orientation = this->default_orientation; };
 	void reset_scale() { this->scale = this->default_scale; };
 	void debug_model_data() const;
-	void set_child(Model *child) { this->children.push_front(child); };
+	void set_child(Model *child);
+	void set_child(std::vector<Model *> children);
 	Model *find_child(std::string const name);
-	std::vector<Model *> const get_all_models();
+	std::vector<Model *> const get_all_children();
 
 private:
 	std::string const name;
@@ -57,5 +58,5 @@ private:
 	std::shared_ptr<Shader> const shader;
 	GlObj const gl_obj;
 
-	void get_all_models_helper(std::vector<Model *> &vec);
+	void get_all_children_helper(std::vector<Model *> &vec);
 };
