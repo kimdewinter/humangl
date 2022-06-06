@@ -23,6 +23,7 @@ public:
 		vec3 const scale,
 		vec4 const color);
 	~Model();
+	std::string get_name() const { return this->name; };
 	void render(mat4 const parent_mat = {1.0, 0.0, 0.0, 0.0,
 										 0.0, 1.0, 0.0, 0.0,
 										 0.0, 0.0, 1.0, 0.0,
@@ -36,6 +37,7 @@ public:
 	void debug_model_data() const;
 	void set_child(Model *child) { this->children.push_front(child); };
 	Model *find_child(std::string const name);
+	std::vector<Model *> const get_all_models();
 
 private:
 	std::string const name;
@@ -54,4 +56,6 @@ private:
 
 	std::shared_ptr<Shader> const shader;
 	GlObj const gl_obj;
+
+	void get_all_models_helper(std::vector<Model *> &vec);
 };

@@ -1,6 +1,7 @@
 #include "model.h"
 #include "main.h"
 #include <cmath>
+#include <functional>
 
 namespace
 {
@@ -143,4 +144,19 @@ Model *Model::find_child(std::string const name)
 			return child;
 	}
 	return nullptr;
+}
+
+void Model::get_all_models_helper(std::vector<Model *> &vec)
+{
+	vec.push_back(this);
+	for (Model *child : this->children)
+		get_all_models_helper(vec);
+}
+
+std::vector<Model *> const Model::get_all_models()
+{
+	std::vector<Model *> vec{this};
+	for (Model *child : this->children)
+		child->get_all_models_helper(vec);
+	return vec;
 }
