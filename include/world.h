@@ -5,20 +5,19 @@
 #include <memory>
 #include "model.h"
 
+class WorldObj
+{
+public:
+	~WorldObj();
+
+protected:
+	std::map<std::string, Model *> models; // index 0 is root model, beware that root may have forward_list to children
+};
+
 class Skelly : public WorldObj
 {
 public:
 	Skelly(std::shared_ptr<Shader> const shader);
-};
-
-class WorldObj
-{
-public:
-	WorldObj(Model *root);
-	~WorldObj();
-
-protected:
-	std::map<std::string, Model *> models; // index 0 is the root model
 };
 
 class World

@@ -81,14 +81,14 @@ namespace
 	}
 }
 
-WorldObj::WorldObj(Model *root)
+Skelly::Skelly(std::shared_ptr<Shader> const shader)
 {
-	std::vector<Model *> const all_models = root->get_all_children();
+	this->models = create_torso(shader)->get_all_children();
 }
 
 WorldObj::~WorldObj()
 {
-	for (auto model : this->models)
+	for (std::pair<std::string, Model *> model : this->models)
 		delete model.second;
 }
 
@@ -97,4 +97,6 @@ World::World()
 {
 	std::shared_ptr<Shader> shader =
 		std::make_shared<Shader>("resources/shader.vert", "resources/shader.frag");
+
+	this->world_objs.insert({"skelly", Skelly(shader)});
 }
