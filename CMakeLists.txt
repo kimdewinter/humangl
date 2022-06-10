@@ -39,13 +39,11 @@ set(CMAKE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 set(sources
 ${SOURCE_DIR}/main.cpp
 ${SOURCE_DIR}/env.cpp
-${SOURCE_DIR}/renderer.cpp
 ${SOURCE_DIR}/types.cpp
 ${SOURCE_DIR}/model.cpp
-${SOURCE_DIR}/skelly.cpp
 ${SOURCE_DIR}/globj.cpp
 ${SOURCE_DIR}/shader.cpp
-${SOURCE_DIT}/world.cpp
+${SOURCE_DIR}/world.cpp
 )
 
 add_executable(humangl ${sources} ${includes})

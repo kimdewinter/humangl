@@ -81,22 +81,37 @@ namespace
 	}
 }
 
-Skelly::Skelly(std::shared_ptr<Shader> const shader)
-{
-	this->models = create_torso(shader)->map_all();
-}
-
 WorldObj::~WorldObj()
 {
 	for (std::pair<std::string, Model *> model : this->models)
 		delete model.second;
 }
 
-/// You must modify this function so it spawns the world objects you desire
-World::World()
+void WorldObj::render()
 {
-	std::shared_ptr<Shader> shader =
-		std::make_shared<Shader>("resources/shader.vert", "resources/shader.frag");
+	this->models.begin()->second->render();
+	this->models[0]->render();
+}
 
-	this->world_objs.insert({"skelly", Skelly(shader)});
+Skelly::Skelly(std::shared_ptr<Shader> const shader)
+{
+	this->models = create_torso(shader)->map_all();
+}
+
+void World::spawn_object(std::string const name, WorldObj obj)
+{
+	this->world_objs.insert({name, obj});
+};
+
+void World::remove_object(std::string const name)
+{
+	this->world_objs.erase(name);
+}
+
+void World::render()
+{
+	for (std::pair<std::string, WorldObj> obj : this->world_objs)
+	{
+		obj.second.render();
+	}
 }

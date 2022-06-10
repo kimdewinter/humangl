@@ -1,9 +1,8 @@
 #include "main.h"
 #include "env.h"
-#include "renderer.h"
 #include "model.h"
-#include "skelly.h"
 #include "shader.h"
+#include "world.h"
 #include <chrono>
 #include <thread> // Possibly only needed for test-sleeps during development; remove later
 #include <iostream>
@@ -15,19 +14,29 @@ namespace
 		std::this_thread::sleep_for(std::chrono::milliseconds(10)); // Simulates updating of game state
 	}
 
-	std::map<std::string, Model *> create_game_objects()
+	void populate_world(World &world)
 	{
+		std::shared_ptr<Shader> shader =
+			std::make_shared<Shader>("resources/shader.vert", "resources/shader.frag");
+		world.spawn_object("skelly", Skelly(shader));
+	}
 
-		return std::map<std::string, Model *>{
-			{"skelly", Skelly::create_skelly(shader)},
-		};
+	void render(Env const &env, World &world)
+	{
+		glClearColor(CLEAR_COLOR_R, CLEAR_COLOR_G, CLEAR_COLOR_B, CLEAR_COLOR_A);
+		glClear(GL_COLOR_BUFFER_BIT);
+		world.render();
+		env.swap_buffers();
+		env.poll_events();
 	}
 }
 
 int main()
 {
 	Env env;
-	std::map<std::string, Model *> game_obj = create_game_objects();
+	World world;
+	populate_world(world);
+
 	// env.select_model(game_obj.find("skelly")->second);
 	/*
 		env.select_model(game_obj.find("skelly")->second->find_child("torso"));
@@ -60,7 +69,7 @@ int main()
 			lag -= ns_per_update;
 		}
 
-		Renderer::render(env, game_obj);
+		render(env, world);
 	}
 
 	PRINT_OUT("Program complete.");
