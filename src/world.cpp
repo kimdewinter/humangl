@@ -83,7 +83,7 @@ namespace
 
 Skelly::Skelly(std::shared_ptr<Shader> const shader)
 {
-	this->models = create_torso(shader)->get_all_children();
+	this->models = create_torso(shader)->map_all();
 }
 
 WorldObj::~WorldObj()

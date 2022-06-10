@@ -146,18 +146,18 @@ Model *Model::find_child(std::string const name)
 	return nullptr;
 }
 
-void Model::get_all_children_helper(std::map<std::string, Model *> &map) const
+void Model::map_all_helper(std::map<std::string, Model *> &map)
 {
 	map.insert({this->name, this});
 	for (Model *child : this->children)
-		get_all_children_helper(map);
+		map_all_helper(map);
 }
 
-std::map<std::string, Model *> Model::get_all_children()
+std::map<std::string, Model *> Model::map_all()
 {
 	std::map<std::string, Model *> map{{this->name, this}};
 	for (Model *child : this->children)
-		child->get_all_children_helper(map);
+		child->map_all_helper(map);
 	return map;
 }
 
