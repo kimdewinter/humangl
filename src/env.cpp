@@ -51,6 +51,8 @@ Env::Env()
 #if WIREFRAME_MODE == 1
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 #endif
+
+	glClearColor(CLEAR_COLOR_R, CLEAR_COLOR_G, CLEAR_COLOR_B, CLEAR_COLOR_A);
 }
 
 Env::~Env()
@@ -126,8 +128,4 @@ void Env::process_input()
 		this->selected_model->debug_model_data();
 #endif
 	}
-}
-
-Env::Selector::Selector(std::vector<Model *> models) : models(models)
-{
 }

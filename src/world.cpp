@@ -1,4 +1,5 @@
 #include "world.h"
+#include "main.h"
 
 namespace
 {
@@ -35,7 +36,83 @@ namespace
 			 1, 5, 2,
 			 5, 6, 2});
 	}
+}
 
+WorldObj::~WorldObj()
+{
+	for (std::pair<std::string, Model *> model : this->models)
+		delete model.second;
+}
+
+void WorldObj::render()
+{
+	this->models.begin()->second->render();
+	std::cout << "check world.cpp:50!" << std::endl;
+	// this->models[0]->render(); // TO DO: check if this one is necessary instead of line above
+}
+
+void World::spawn_object(std::string const name, WorldObj obj)
+{
+	this->world_objs.insert({name, obj});
+};
+
+void World::remove_object(std::string const name)
+{
+	this->world_objs.erase(name);
+}
+
+void World::render()
+{
+	for (std::pair<std::string, WorldObj> obj : this->world_objs)
+	{
+		obj.second.render();
+	}
+}
+
+bool WorldObj::model_exists(std::string const name) const
+{
+	this->models.find(name) != this->models.end() ? true : false;
+}
+
+bool World::worldobj_exists(std::string const name) const
+{
+	this->world_objs.find(name) != this->world_objs.end() ? true : false;
+}
+
+bool World::model_exists(std::string const world_obj_name, std::string const model_name) const
+{
+	if (this->worldobj_exists(world_obj_name))
+		return this->world_objs.find(world_obj_name)->second.model_exists(model_name);
+	return false;
+}
+
+void World::select()
+{
+	using namespace std;
+	cout << "Please enter the name of an existing object(WorldObj): ";
+	string worldobj;
+	cin >> worldobj;
+	if (!this->worldobj_exists(worldobj))
+	{
+		PRINT_OUT("Not found.");
+		return;
+	}
+
+	cout << "Please enter the name of an existing part(Model) of aforementioned object: ";
+	string model;
+	cin >> model;
+	if (!this->model_exists(worldobj, model))
+	{
+		PRINT_OUT("Not found.");
+		return;
+	}
+
+	this->selected = {worldobj, model};
+	PRINT_OUT("Selection succesful.");
+}
+
+namespace
+{
 	Model *create_head(std::shared_ptr<Shader> const shader)
 	{
 		return new Model{
@@ -81,37 +158,7 @@ namespace
 	}
 }
 
-WorldObj::~WorldObj()
-{
-	for (std::pair<std::string, Model *> model : this->models)
-		delete model.second;
-}
-
-void WorldObj::render()
-{
-	this->models.begin()->second->render();
-	this->models[0]->render();
-}
-
 Skelly::Skelly(std::shared_ptr<Shader> const shader)
 {
 	this->models = create_torso(shader)->map_all();
-}
-
-void World::spawn_object(std::string const name, WorldObj obj)
-{
-	this->world_objs.insert({name, obj});
-};
-
-void World::remove_object(std::string const name)
-{
-	this->world_objs.erase(name);
-}
-
-void World::render()
-{
-	for (std::pair<std::string, WorldObj> obj : this->world_objs)
-	{
-		obj.second.render();
-	}
 }

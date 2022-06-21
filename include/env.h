@@ -12,12 +12,14 @@ public:
 	~Env();
 	void process_input();
 	bool should_window_close() const { return glfwWindowShouldClose(this->window); };
+	void clear_buffers() const { glClear(GL_COLOR_BUFFER_BIT); };
 	void swap_buffers() const { glfwSwapBuffers(this->window); };
 	void poll_events() const { glfwPollEvents(); };
 	// void select_model(Model *selectee) { this->selected_model = selectee; };
 
 private:
 	GLFWwindow *window;
+
 	// std::map<std::string, Model *> game_objs;
 
 	// Selector *selector = nullptr;

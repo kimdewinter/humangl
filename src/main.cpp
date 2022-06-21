@@ -23,8 +23,7 @@ namespace
 
 	void render(Env const &env, World &world)
 	{
-		glClearColor(CLEAR_COLOR_R, CLEAR_COLOR_G, CLEAR_COLOR_B, CLEAR_COLOR_A);
-		glClear(GL_COLOR_BUFFER_BIT);
+		env.clear_buffers();
 		world.render();
 		env.swap_buffers();
 		env.poll_events();
