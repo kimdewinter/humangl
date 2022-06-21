@@ -51,6 +51,16 @@ void WorldObj::render()
 	// this->models[0]->render(); // TO DO: check if this one is necessary instead of line above
 }
 
+bool WorldObj::model_exists(std::string const name) const
+{
+	this->models.find(name) != this->models.end() ? true : false;
+}
+
+void WorldObj::reset_model_color(std::string const name)
+{
+	this->models.find(name)->second->reset_color();
+}
+
 void World::spawn_object(std::string const name, WorldObj obj)
 {
 	this->world_objs.insert({name, obj});
@@ -69,11 +79,6 @@ void World::render()
 	}
 }
 
-bool WorldObj::model_exists(std::string const name) const
-{
-	this->models.find(name) != this->models.end() ? true : false;
-}
-
 bool World::worldobj_exists(std::string const name) const
 {
 	this->world_objs.find(name) != this->world_objs.end() ? true : false;
@@ -86,10 +91,21 @@ bool World::model_exists(std::string const world_obj_name, std::string const mod
 	return false;
 }
 
+void World::deselect()
+{
+	if (this->selected == std::pair<std::string, std::string>{"", ""})
+		return;
+	if (model_exists(this->selected.first, this->selected.second))
+		this->world_objs.find(this->selected.first)->second.reset_model_color(this->selected.second);
+	this->selected = {"", ""};
+}
+
 void World::select()
 {
 	using namespace std;
-	cout << "Please enter the name of an existing object(WorldObj): ";
+	if (this->selected == std::pair<std::string, std::string>{"", ""})
+		this->deselect();
+	cout << "Please enter the name of an existing object(WorldObj class): ";
 	string worldobj;
 	cin >> worldobj;
 	if (!this->worldobj_exists(worldobj))
@@ -98,7 +114,7 @@ void World::select()
 		return;
 	}
 
-	cout << "Please enter the name of an existing part(Model) of aforementioned object: ";
+	cout << "Please enter the name of an existing part(Model class) of aforementioned object: ";
 	string model;
 	cin >> model;
 	if (!this->model_exists(worldobj, model))

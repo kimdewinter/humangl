@@ -38,6 +38,8 @@ public:
 	void debug_model_data() const;
 	void set_child(Model *child);
 	void set_child(std::vector<Model *> children);
+	void set_color(vec4 const color) { this->color = color; };
+	void reset_color() { this->color = this->default_color; };
 	Model *find_child(std::string const name);
 	std::map<std::string, Model *> map_all();
 
@@ -53,8 +55,8 @@ private:
 	vec3 const default_orientation;
 	vec3 scale;
 	vec3 const default_scale;
-
 	vec4 color;
+	vec4 const default_color;
 
 	std::shared_ptr<Shader> const shader;
 	GlObj const gl_obj;

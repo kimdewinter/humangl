@@ -59,6 +59,7 @@ try : name(name),
 	scale(scale),
 	default_scale(scale),
 	color(color),
+	default_color(color),
 	gl_obj(GlObj(vertices, indices))
 {
 }

@@ -11,6 +11,7 @@ public:
 	~WorldObj(); // destructor must free all models
 	void render();
 	bool model_exists(std::string const name) const;
+	void reset_model_color(std::string const name);
 
 protected:
 	std::map<std::string, Model *> models; // index 0 is root model, beware that root may have forward_list to children
@@ -23,6 +24,7 @@ public:
 	void remove_object(std::string const name);
 	void render();
 	void select();
+	void deselect();
 
 private:
 	bool worldobj_exists(std::string const name) const;
