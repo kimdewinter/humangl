@@ -68,64 +68,66 @@ void Env::process_input()
 	std::function<bool(int)> pressed = [this](int key)
 	{ return glfwGetKey(this->window, key) == GLFW_PRESS; };
 
-	// Anonymous function that checks if private member var "selected_model" is pointing at something
-	std::function<bool()> model = [this]()
-	{ return this->selected_model; };
-
 	// Close window when escape is pressed
 	if (pressed(GLFW_KEY_ESCAPE))
 		glfwSetWindowShouldClose(this->window, true);
 
-	if (this->selected_model)
-	{
-		// Check keypresses that change position
-		if (pressed(GLFW_KEY_Q))
-			this->selected_model->modify_position({0.0, -MOVEMENT_SPEED, 0.0});
-		if (pressed(GLFW_KEY_W))
-			this->selected_model->modify_position({0.0, 0.0, -MOVEMENT_SPEED});
-		if (pressed(GLFW_KEY_E))
-			this->selected_model->modify_position({0.0, MOVEMENT_SPEED, 0.0});
-		if (pressed(GLFW_KEY_A))
-			this->selected_model->modify_position({-MOVEMENT_SPEED, 0.0, 0.0});
-		if (pressed(GLFW_KEY_S))
-			this->selected_model->modify_position({0.0, 0.0, MOVEMENT_SPEED});
-		if (pressed(GLFW_KEY_D))
-			this->selected_model->modify_position({MOVEMENT_SPEED, 0.0, 0.0});
-		// Check keypresses that change orientation (rotation)
-		if (pressed(GLFW_KEY_R))
-			this->selected_model->modify_orientation({0.0, 0.0, MOVEMENT_SPEED});
-		if (pressed(GLFW_KEY_T))
-			this->selected_model->modify_orientation({-MOVEMENT_SPEED, 0.0, 0.0});
-		if (pressed(GLFW_KEY_Y))
-			this->selected_model->modify_orientation({0.0, 0.0, -MOVEMENT_SPEED});
-		if (pressed(GLFW_KEY_F))
-			this->selected_model->modify_orientation({0.0, -MOVEMENT_SPEED, 0.0});
-		if (pressed(GLFW_KEY_G))
-			this->selected_model->modify_orientation({MOVEMENT_SPEED, 0.0, 0.0});
-		if (pressed(GLFW_KEY_H))
-			this->selected_model->modify_orientation({0.0, MOVEMENT_SPEED, 0.0});
-		// Check keypresses that change scale
-		if (pressed(GLFW_KEY_U))
-			this->selected_model->modify_scale({0.0, -MOVEMENT_SPEED, 0.0});
-		if (pressed(GLFW_KEY_I))
-			this->selected_model->modify_scale({0.0, 0.0, MOVEMENT_SPEED});
-		if (pressed(GLFW_KEY_O))
-			this->selected_model->modify_scale({0.0, MOVEMENT_SPEED, 0.0});
-		if (pressed(GLFW_KEY_J))
-			this->selected_model->modify_scale({-MOVEMENT_SPEED, 0.0, 0.0});
-		if (pressed(GLFW_KEY_K))
-			this->selected_model->modify_scale({0.0, 0.0, -MOVEMENT_SPEED});
-		if (pressed(GLFW_KEY_L))
-			this->selected_model->modify_scale({MOVEMENT_SPEED, 0.0, 0.0});
-		// Check keypresses that center/reset everything
-		if (pressed(GLFW_KEY_C))
+	/*
+		// Anonymous function that checks if private member var "selected_model" is pointing at something
+		std::function<bool()> model = [this]()
+		{ return this->selected_model; };
+
+		if (this->selected_model)
 		{
-			this->selected_model->reset_position();
-			this->selected_model->reset_orientation();
-			this->selected_model->reset_scale();
+			// Check keypresses that change position
+			if (pressed(GLFW_KEY_Q))
+				this->selected_model->modify_position({0.0, -MOVEMENT_SPEED, 0.0});
+			if (pressed(GLFW_KEY_W))
+				this->selected_model->modify_position({0.0, 0.0, -MOVEMENT_SPEED});
+			if (pressed(GLFW_KEY_E))
+				this->selected_model->modify_position({0.0, MOVEMENT_SPEED, 0.0});
+			if (pressed(GLFW_KEY_A))
+				this->selected_model->modify_position({-MOVEMENT_SPEED, 0.0, 0.0});
+			if (pressed(GLFW_KEY_S))
+				this->selected_model->modify_position({0.0, 0.0, MOVEMENT_SPEED});
+			if (pressed(GLFW_KEY_D))
+				this->selected_model->modify_position({MOVEMENT_SPEED, 0.0, 0.0});
+			// Check keypresses that change orientation (rotation)
+			if (pressed(GLFW_KEY_R))
+				this->selected_model->modify_orientation({0.0, 0.0, MOVEMENT_SPEED});
+			if (pressed(GLFW_KEY_T))
+				this->selected_model->modify_orientation({-MOVEMENT_SPEED, 0.0, 0.0});
+			if (pressed(GLFW_KEY_Y))
+				this->selected_model->modify_orientation({0.0, 0.0, -MOVEMENT_SPEED});
+			if (pressed(GLFW_KEY_F))
+				this->selected_model->modify_orientation({0.0, -MOVEMENT_SPEED, 0.0});
+			if (pressed(GLFW_KEY_G))
+				this->selected_model->modify_orientation({MOVEMENT_SPEED, 0.0, 0.0});
+			if (pressed(GLFW_KEY_H))
+				this->selected_model->modify_orientation({0.0, MOVEMENT_SPEED, 0.0});
+			// Check keypresses that change scale
+			if (pressed(GLFW_KEY_U))
+				this->selected_model->modify_scale({0.0, -MOVEMENT_SPEED, 0.0});
+			if (pressed(GLFW_KEY_I))
+				this->selected_model->modify_scale({0.0, 0.0, MOVEMENT_SPEED});
+			if (pressed(GLFW_KEY_O))
+				this->selected_model->modify_scale({0.0, MOVEMENT_SPEED, 0.0});
+			if (pressed(GLFW_KEY_J))
+				this->selected_model->modify_scale({-MOVEMENT_SPEED, 0.0, 0.0});
+			if (pressed(GLFW_KEY_K))
+				this->selected_model->modify_scale({0.0, 0.0, -MOVEMENT_SPEED});
+			if (pressed(GLFW_KEY_L))
+				this->selected_model->modify_scale({MOVEMENT_SPEED, 0.0, 0.0});
+			// Check keypresses that center/reset everything
+			if (pressed(GLFW_KEY_C))
+			{
+				this->selected_model->reset_position();
+				this->selected_model->reset_orientation();
+				this->selected_model->reset_scale();
+			}
+	#if DEBUG_MODELS == 1
+			this->selected_model->debug_model_data();
+	#endif
 		}
-#if DEBUG_MODELS == 1
-		this->selected_model->debug_model_data();
-#endif
-	}
+	*/
 }

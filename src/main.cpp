@@ -36,17 +36,6 @@ int main()
 	World world;
 	populate_world(world);
 
-	// env.select_model(game_obj.find("skelly")->second);
-	/*
-		env.select_model(game_obj.find("skelly")->second->find_child("torso"));
-		auto skelly_models = game_obj.find("skelly")->second->get_all_models();
-		for (auto child : skelly_models)
-		{
-			PRINT_OUT(child->get_name());
-		}
-		return EXIT_SUCCESS;
-	*/
-
 	// Game loop
 	using namespace std::chrono;
 	nanoseconds const ns_per_update = duration_cast<nanoseconds>(milliseconds(MS_PER_UPDATE));

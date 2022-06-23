@@ -1,5 +1,4 @@
 #include "model.h"
-#include "main.h"
 #include <cmath>
 #include <functional>
 
@@ -41,7 +40,7 @@ namespace
 
 Model::Model(
 	std::string const name,
-	std::forward_list<Model *> const children,
+	std::forward_list<std::shared_ptr<Model>> const children,
 	std::vector<std::vector<vec3>> const vertices,
 	std::vector<unsigned int> const indices,
 	std::shared_ptr<Shader> const shader,
@@ -67,12 +66,6 @@ catch (char const *const msg)
 {
 	PRINT_OUT(msg);
 }
-
-Model::~Model()
-{
-	for (Model *child : this->children)
-		delete child;
-};
 
 void Model::render(mat4 const parent_mat) const
 {
@@ -100,10 +93,8 @@ void Model::render(mat4 const parent_mat) const
 			set_uniform_vec4(id, "color_in", this->color);
 		});
 
-	for (Model *child : this->children)
-	{
+	for (std::shared_ptr<Model> child : this->children)
 		child->render(final);
-	}
 }
 
 void Model::modify_position(vec3 const additives)
@@ -121,6 +112,7 @@ void Model::modify_scale(vec3 const additives)
 	this->scale = addition_vec3(this->scale, additives);
 }
 
+#if DEBUG_MODELS == 1
 void Model::debug_model_data() const
 {
 	std::function<void(std::string const, vec3 const &)> print_vec3 = [](std::string const pre_str, vec3 const &vec)
@@ -134,43 +126,19 @@ void Model::debug_model_data() const
 	print_vec3("Scale: ", this->scale);
 	std::cout << std::endl;
 }
+#endif
 
-Model *Model::find_child(std::string const name)
+void Model::map_all_helper(std::map<std::string, std::shared_ptr<Model>> &map)
 {
-	if (name == this->name)
-		return this;
-	for (Model *child : this->children)
-	{
-		if (child->find_child(name))
-			return child;
-	}
-	return nullptr;
-}
-
-void Model::map_all_helper(std::map<std::string, Model *> &map)
-{
-	map.insert({this->name, this});
-	for (Model *child : this->children)
+	map.insert({this->name, std::shared_ptr<Model>{this}});
+	for (std::shared_ptr<Model> child : this->children)
 		map_all_helper(map);
 }
 
-std::map<std::string, Model *> Model::map_all()
+std::map<std::string, std::shared_ptr<Model>> Model::map_all()
 {
-	std::map<std::string, Model *> map{{this->name, this}};
-	for (Model *child : this->children)
+	std::map<std::string, std::shared_ptr<Model>> map{{this->name, std::shared_ptr<Model>{this}}};
+	for (std::shared_ptr<Model> child : this->children)
 		child->map_all_helper(map);
 	return map;
-}
-
-void Model::set_child(Model *child)
-{
-	this->children.push_front(child);
-}
-
-void Model::set_child(std::vector<Model *> children)
-{
-	for (Model *child : children)
-	{
-		this->children.push_front(child);
-	}
 }
