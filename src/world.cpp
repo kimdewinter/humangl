@@ -46,8 +46,8 @@ namespace
 
 	std::shared_ptr<Model> create_head(std::shared_ptr<Shader> const shader)
 	{
-		return std::make_shared<Model>(
-			Model{
+		return std::shared_ptr<Model>{
+			new Model{
 				"head",										 // Name
 				std::forward_list<std::shared_ptr<Model>>{}, // Children
 				get_cube_vertices(),						 // Vertices
@@ -56,13 +56,12 @@ namespace
 				{0.0, 0.71, 0.0},							 // Position
 				{0.0, 0.0, 0.0},							 // Orientation
 				{-0.4, -0.6, -0.4},							 // Scale
-				{1.0, 1.0, 0.0, 0.0}});						 // Color
+				{1.0, 1.0, 0.0, 0.0}}};						 // Color
 	}
-
 	std::shared_ptr<Model> create_left_upper_arm(std::shared_ptr<Shader> const shader)
 	{
-		return std::make_shared<Model>(
-			Model{
+		return std::shared_ptr<Model>{
+			new Model{
 				"left_upper_arm",							 // Name
 				std::forward_list<std::shared_ptr<Model>>{}, // Children
 				get_cube_vertices(),						 // Vertices
@@ -71,13 +70,12 @@ namespace
 				{0.67, 0.07, 0.0},							 // Position
 				{0.0, 0.0, 0.0},							 // Orientation
 				{-0.7, -0.33, -0.7},						 // Scale
-				{1.0, 1.0, 0.0, 0.0}});						 // Color
+				{1.0, 1.0, 0.0, 0.0}}};						 // Color
 	}
-
 	std::shared_ptr<Model> create_torso(std::shared_ptr<Shader> const shader)
 	{
-		return std::make_shared<Model>(
-			Model{
+		return std::shared_ptr<Model>{
+			new Model{
 				"torso", // Name
 				std::forward_list<std::shared_ptr<Model>>{
 					create_head(shader),
@@ -88,7 +86,7 @@ namespace
 				{0.0, 0.75, -3.0},					// Position
 				{0.0, 0.0, 0.0},					// Orientation
 				{0.0, 1.0, 0.0},					// Scale
-				{1.0, 0.0, 0.0, 0.0}});				// Color
+				{1.0, 0.0, 0.0, 0.0}}};				// Color
 	}
 }
 
