@@ -127,10 +127,3 @@ void Model::debug_model_data() const
 	std::cout << std::endl;
 }
 #endif
-
-void Model::map_all(std::map<std::string, std::shared_ptr<Model>> &map)
-{
-	map.insert({this->name, std::shared_ptr<Model>{this}});
-	for (std::shared_ptr<Model> child : this->children)
-		child->map_all(map);
-}

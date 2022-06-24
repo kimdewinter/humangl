@@ -37,15 +37,13 @@ public:
 	void reset_orientation() { this->orientation = this->default_orientation; };
 	void reset_scale() { this->scale = this->default_scale; };
 	void reset_color() { this->color = this->default_color; };
-	void map_all(std::map<std::string, std::shared_ptr<Model>> &map);
 #if DEBUG_MODELS == 1
 	void debug_model_data() const;
 #endif
+	std::forward_list<std::shared_ptr<Model>> children;
 
 private:
 	std::string const name;
-	std::forward_list<std::shared_ptr<Model>> children;
-
 	vec3 position; // Relative to parent (or world if Model instance is the root part)
 	vec3 const default_position;
 	vec3 orientation;

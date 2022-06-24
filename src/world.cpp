@@ -91,7 +91,11 @@ namespace
 Skelly::Skelly(std::shared_ptr<Shader> const shader)
 {
 	this->root = create_torso(shader);
-	this->root->map_all(this->models);
+	this->models.insert({this->root->get_name(), this->root});
+	for (auto child : this->root->children)
+	{
+		this->models.insert({child->get_name(), child});
+	}
 }
 
 //-----------------------------WORLD--------------------------------------------
