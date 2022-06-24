@@ -3,9 +3,7 @@
 
 void WorldObj::render()
 {
-	this->models.begin()->second->render();
-	// std::cout << "check world.cpp:50!" << std::endl;
-	// this->models[0]->render(); // TO DO: check if this one is necessary instead of line above
+	this->root->render();
 }
 
 namespace
@@ -92,8 +90,8 @@ namespace
 
 Skelly::Skelly(std::shared_ptr<Shader> const shader)
 {
-	this->models.insert({"torso", create_torso(shader)});
-	// this->models = create_torso(shader)->map_all();
+	this->root = create_torso(shader);
+	this->root->map_all(this->models);
 }
 
 //-----------------------------WORLD--------------------------------------------
@@ -115,39 +113,3 @@ void World::render()
 		obj.second.render();
 	}
 }
-
-// void World::deselect()
-// {
-// 	if (this->selected == std::pair<std::string, std::string>{"", ""})
-// 		return;
-// 	if (model_exists(this->selected.first, this->selected.second))
-// 		this->world_objs.find(this->selected.first)->second.reset_model_color(this->selected.second);
-// 	this->selected = {"", ""};
-// }
-
-// void World::select()
-// {
-// 	using namespace std;
-// 	if (this->selected == std::pair<std::string, std::string>{"", ""})
-// 		this->deselect();
-// 	cout << "Please enter the name of an existing object(WorldObj class): ";
-// 	string worldobj;
-// 	cin >> worldobj;
-// 	if (!this->worldobj_exists(worldobj))
-// 	{
-// 		PRINT_OUT("Not found.");
-// 		return;
-// 	}
-
-// 	cout << "Please enter the name of an existing part(Model class) of aforementioned object: ";
-// 	string model;
-// 	cin >> model;
-// 	if (!this->model_exists(worldobj, model))
-// 	{
-// 		PRINT_OUT("Not found.");
-// 		return;
-// 	}
-
-// 	this->selected = {worldobj, model};
-// 	PRINT_OUT("Selection succesful.");
-// }

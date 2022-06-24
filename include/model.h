@@ -37,7 +37,7 @@ public:
 	void reset_orientation() { this->orientation = this->default_orientation; };
 	void reset_scale() { this->scale = this->default_scale; };
 	void reset_color() { this->color = this->default_color; };
-	std::map<std::string, std::shared_ptr<Model>> map_all();
+	void map_all(std::map<std::string, std::shared_ptr<Model>> &map);
 #if DEBUG_MODELS == 1
 	void debug_model_data() const;
 #endif
@@ -57,6 +57,4 @@ private:
 
 	std::shared_ptr<Shader> const shader;
 	GlObj const gl_obj;
-
-	void map_all_helper(std::map<std::string, std::shared_ptr<Model>> &map);
 };

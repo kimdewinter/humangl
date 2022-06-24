@@ -11,7 +11,8 @@ public:
 	void render();
 
 protected:
-	std::map<std::string, std::shared_ptr<Model>> models; // index 0 is root model, beware that root may have forward_list to children
+	std::shared_ptr<Model> root;
+	std::map<std::string, std::shared_ptr<Model>> models;
 };
 
 class Skelly : public WorldObj
