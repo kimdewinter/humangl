@@ -8,6 +8,7 @@
 #include <memory>
 #include <functional>
 
+/// Holds the VBO, VAO and EBO of a Model, and renders it via render()
 class GlObj
 {
 public:

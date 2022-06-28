@@ -11,6 +11,11 @@
 #include "globj.h"
 #include "shader.h"
 
+/// A model is a mesh that can either exist on it's own or be part of a larger collection
+/// for instance it can be the left upper arm of a humanoid figure.
+/// Model contains a forward_list called "children".
+/// A humanoid figure would start with a root Model, and then branch out by attaching child Models
+/// whose position and orientation would follow their parent Model.
 class Model
 {
 public:

@@ -17,7 +17,7 @@ typedef std::array<GLfloat, 4> vec4;
 typedef std::array<GLfloat, 16> mat4;
 
 vec3 addition_vec3(vec3 const a, vec3 const b);
-mat4 multiply_mat4(mat4 const a, mat4 const b);
+mat4 dot_product_mat4(mat4 const a, mat4 const b);
 vec3 normalize_vec3(vec3 const vec);
 mat4 get_scaling_mat4(GLfloat const x, GLfloat const y, GLfloat const z);
 vec3 cross_product_vec3(vec3 const a, vec3 const b);

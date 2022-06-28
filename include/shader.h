@@ -4,6 +4,7 @@
 #include <iostream>
 #include <glad/glad.h>
 
+/// OpenGL Shader program. Can use for multiple Models by using a std::shared_ptr.
 class Shader
 {
 public:

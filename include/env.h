@@ -5,6 +5,8 @@
 #include <map>
 #include "model.h"
 
+/// Handles context and window creation, as well as buffer clearing, swapping,
+/// event polling, input handling.
 class Env
 {
 public:

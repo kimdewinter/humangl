@@ -7,7 +7,8 @@ vec3 addition_vec3(vec3 const a, vec3 const b)
 	return vec3{a[0] + b[0], a[1] + b[1], a[2] + b[2]};
 }
 
-mat4 multiply_mat4(mat4 const a, mat4 const b)
+// dot multiplication of two mat4s
+mat4 dot_product_mat4(mat4 const a, mat4 const b)
 {
 	mat4 out{0.0f, 0.0f, 0.0f, 0.0f,
 			 0.0f, 0.0f, 0.0f, 0.0f,
@@ -75,6 +76,7 @@ mat4 get_projection_mat4(
 				0.0f, 0.0f, -(2.0f * far * near) / (far - near), 0.0f};
 }
 
+/// Quaternion rotation
 mat4 get_rotation_mat4(GLfloat const x, GLfloat const y, GLfloat const z)
 {
 	glm::mat4 mat(glm::quat(glm::vec3(x, y, z))); // Use quaternion to avoid gimbal lock

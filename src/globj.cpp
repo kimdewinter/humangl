@@ -108,6 +108,8 @@ GlObj::~GlObj()
 	glDeleteBuffers(1, &this->ebo);
 }
 
+/// Renders the VAO by using the given shader, setting any uniforms via an anonymous function,
+/// and then calling glDrawElements()
 void GlObj::render(
 	std::shared_ptr<Shader> const &shader,
 	std::function<void()> uniform_setter) const

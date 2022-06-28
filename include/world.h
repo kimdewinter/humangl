@@ -5,6 +5,7 @@
 #include <memory>
 #include "model.h"
 
+/// WorldObj is an object in the world, consisting out of one or more Models
 class WorldObj
 {
 public:
@@ -21,6 +22,7 @@ public:
 	Skelly(std::shared_ptr<Shader> const shader);
 };
 
+/// Contains all the worlds WorldObj instances, as well as the selection controller
 class World
 {
 public:
