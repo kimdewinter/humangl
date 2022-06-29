@@ -3,13 +3,16 @@
 #include <map>
 #include <vector>
 #include <memory>
-#include "model.h"
+#include "shader.h"
+
+class Model;
 
 /// WorldObj is an object in the world, consisting out of one or more Models
 class WorldObj
 {
 public:
 	void render();
+	void map_models(std::shared_ptr<Model> model);
 
 protected:
 	std::shared_ptr<Model> root;

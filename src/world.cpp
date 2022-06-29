@@ -1,9 +1,17 @@
 #include "world.h"
+#include "model.h"
 #include "main.h"
 
 void WorldObj::render()
 {
 	this->root->render();
+}
+
+void WorldObj::map_models(std::shared_ptr<Model> model)
+{
+	this->models.insert({model->get_name(), model});
+	for (std::shared_ptr<Model> child : model->children)
+		this->map_models(child);
 }
 
 namespace
@@ -91,11 +99,7 @@ namespace
 Skelly::Skelly(std::shared_ptr<Shader> const shader)
 {
 	this->root = create_torso(shader);
-	this->models.insert({this->root->get_name(), this->root});
-	for (auto child : this->root->children)
-	{
-		this->models.insert({child->get_name(), child});
-	}
+	this->map_models(this->root);
 }
 
 //-----------------------------WORLD--------------------------------------------

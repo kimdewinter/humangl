@@ -10,6 +10,7 @@
 #include "types.h"
 #include "globj.h"
 #include "shader.h"
+#include "world.h"
 
 /// A model is a mesh that can either exist on it's own or be part of a larger collection
 /// for instance it can be the left upper arm of a humanoid figure.
@@ -42,13 +43,14 @@ public:
 	void reset_orientation() { this->orientation = this->default_orientation; };
 	void reset_scale() { this->scale = this->default_scale; };
 	void reset_color() { this->color = this->default_color; };
+	friend void WorldObj::map_models(std::shared_ptr<Model> model);
 #if DEBUG_MODELS == 1
 	void debug_model_data() const;
 #endif
-	std::forward_list<std::shared_ptr<Model>> children;
 
 private:
 	std::string const name;
+	std::forward_list<std::shared_ptr<Model>> children;
 	vec3 position; // Relative to parent (or world if Model instance is the root part)
 	vec3 const default_position;
 	vec3 orientation;
