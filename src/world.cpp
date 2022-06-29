@@ -121,3 +121,28 @@ void World::render()
 		obj.second.render();
 	}
 }
+
+std::weak_ptr<Model> World::get_model(WorldObj &world_obj, std::string const &model_name)
+{
+	return world_obj.models.find(model_name)->second;
+}
+
+std::weak_ptr<Model> World::select()
+{
+	using namespace std;
+	// Let go of any previously selected
+	this->deselect();
+
+	// Get WorldObj name
+	cout << "Please enter the name of the WorldObj you wish to select a Model from:" << endl;
+	string world_obj;
+	cin >> world_obj;
+
+	// Get Model name
+	cout << "Please enter the name of the Model you wish to select from this WorldObj" << endl;
+	string model;
+	cin >> model;
+
+	this->selected = World::get_model(this->world_objs.find(world_obj)->second, model);
+	return this->selected;
+}
