@@ -122,27 +122,42 @@ void World::render()
 	}
 }
 
-std::weak_ptr<Model> World::get_model(WorldObj &world_obj, std::string const &model_name)
+std::optional<std::weak_ptr<Model>> World::get_model(
+	WorldObj &world_obj,
+	std::string const &model_name)
 {
-	return world_obj.models.find(model_name)->second;
+	auto model = world_obj.models.find(model_name);
+	if (model == world_obj.models.end())
+		return std::nullopt;
+	return std::weak_ptr<Model>(model->second);
 }
 
-std::weak_ptr<Model> World::select()
+std::optional<std::weak_ptr<Model>> World::select()
 {
 	using namespace std;
 	// Let go of any previously selected
 	this->deselect();
 
-	// Get WorldObj name
+	// Get WorldObj
 	cout << "Please enter the name of the WorldObj you wish to select a Model from:" << endl;
-	string world_obj;
-	cin >> world_obj;
+	string world_obj_name;
+	cin >> world_obj_name;
+	map<string, WorldObj>::iterator world_obj = this->world_objs.find(world_obj_name);
+	if (world_obj == this->world_objs.end())
+	{
+		cin.clear();
+		return nullopt;
+	}
 
-	// Get Model name
+	// Get Model
 	cout << "Please enter the name of the Model you wish to select from this WorldObj" << endl;
-	string model;
-	cin >> model;
+	string model_name;
+	cin >> model_name;
+	optional<weak_ptr<Model>> model = this->get_model(world_obj->second, model_name);
 
-	this->selected = World::get_model(this->world_objs.find(world_obj)->second, model);
+	// Set new model, if successfully extracted
+	if (model)
+		this->selected = model.value();
+	cin.clear();
 	return this->selected;
 }

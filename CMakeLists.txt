@@ -74,9 +74,9 @@ if (${ENABLE_ASSIMP})
     LinkASSIMP(opengl-template PRIVATE)
 endif()
 
-# Enable C++11
+# Enable C++17
 set_target_properties(humangl PROPERTIES
-    CXX_STANDARD 11
+    CXX_STANDARD 17
     CXX_STANDARD_REQUIRED YES
     CXX_EXTENSIONS NO)
 

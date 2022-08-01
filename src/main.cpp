@@ -26,7 +26,6 @@ namespace
 		env.clear_buffers();
 		world.render();
 		env.swap_buffers();
-		env.poll_events();
 	}
 }
 
@@ -49,7 +48,7 @@ int main()
 		previous = current;
 		lag += elapsed;
 
-		env.process_input();
+		env.process_input(world);
 
 		while (lag >= ns_per_update)
 		{
@@ -58,6 +57,7 @@ int main()
 		}
 
 		render(env, world);
+		env.poll_events();
 	}
 
 	PRINT_OUT("Program complete.");
