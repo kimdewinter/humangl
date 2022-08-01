@@ -71,10 +71,6 @@ void Env::process_input(World &world)
 	// Close window when escape is pressed
 	if (pressed(GLFW_KEY_ESCAPE))
 		glfwSetWindowShouldClose(this->window, true);
-	// if (pressed(GLFW_KEY_SPACE))
-	// 	world.select();
-	if (pressed(GLFW_KEY_SPACE))
-		std::cout << "derp!" << std::endl;
 
 	if (std::shared_ptr<Model> selected = world.get_selected().lock())
 	{
