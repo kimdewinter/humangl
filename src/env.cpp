@@ -72,56 +72,91 @@ void Env::process_input(World &world)
 	if (pressed(GLFW_KEY_ESCAPE))
 		glfwSetWindowShouldClose(this->window, true);
 
-	if (std::shared_ptr<Model> selected = world.get_selected().lock())
+	// 	if (std::shared_ptr<Model> selected = world.get_selected().lock())
+	// 	{
+	// 		// Check keypresses that change position
+	// 		if (pressed(GLFW_KEY_Q))
+	// 			selected->modify_position({0.0, -MOVEMENT_SPEED, 0.0});
+	// 		if (pressed(GLFW_KEY_W))
+	// 			selected->modify_position({0.0, 0.0, -MOVEMENT_SPEED});
+	// 		if (pressed(GLFW_KEY_E))
+	// 			selected->modify_position({0.0, MOVEMENT_SPEED, 0.0});
+	// 		if (pressed(GLFW_KEY_A))
+	// 			selected->modify_position({-MOVEMENT_SPEED, 0.0, 0.0});
+	// 		if (pressed(GLFW_KEY_S))
+	// 			selected->modify_position({0.0, 0.0, MOVEMENT_SPEED});
+	// 		if (pressed(GLFW_KEY_D))
+	// 			selected->modify_position({MOVEMENT_SPEED, 0.0, 0.0});
+	// 		// Check keypresses that change orientation (rotation)
+	// 		if (pressed(GLFW_KEY_R))
+	// 			selected->modify_orientation({0.0, 0.0, MOVEMENT_SPEED});
+	// 		if (pressed(GLFW_KEY_T))
+	// 			selected->modify_orientation({-MOVEMENT_SPEED, 0.0, 0.0});
+	// 		if (pressed(GLFW_KEY_Y))
+	// 			selected->modify_orientation({0.0, 0.0, -MOVEMENT_SPEED});
+	// 		if (pressed(GLFW_KEY_F))
+	// 			selected->modify_orientation({0.0, -MOVEMENT_SPEED, 0.0});
+	// 		if (pressed(GLFW_KEY_G))
+	// 			selected->modify_orientation({MOVEMENT_SPEED, 0.0, 0.0});
+	// 		if (pressed(GLFW_KEY_H))
+	// 			selected->modify_orientation({0.0, MOVEMENT_SPEED, 0.0});
+	// 		// Check keypresses that change scale
+	// 		if (pressed(GLFW_KEY_U))
+	// 			selected->modify_scale({0.0, -MOVEMENT_SPEED, 0.0});
+	// 		if (pressed(GLFW_KEY_I))
+	// 			selected->modify_scale({0.0, 0.0, MOVEMENT_SPEED});
+	// 		if (pressed(GLFW_KEY_O))
+	// 			selected->modify_scale({0.0, MOVEMENT_SPEED, 0.0});
+	// 		if (pressed(GLFW_KEY_J))
+	// 			selected->modify_scale({-MOVEMENT_SPEED, 0.0, 0.0});
+	// 		if (pressed(GLFW_KEY_K))
+	// 			selected->modify_scale({0.0, 0.0, -MOVEMENT_SPEED});
+	// 		if (pressed(GLFW_KEY_L))
+	// 			selected->modify_scale({MOVEMENT_SPEED, 0.0, 0.0});
+	// 		// Check keypresses that center/reset everything
+	// 		if (pressed(GLFW_KEY_C))
+	// 		{
+	// 			selected->reset_position();
+	// 			selected->reset_orientation();
+	// 			selected->reset_scale();
+	// 		}
+	// #if DEBUG_MODELS == 1
+	// 		selected->debug_model_data();
+	// #endif
+	// }
+}
+
+void Env::Key::check(GLFWwindow *window)
+{
+	if (is_currently_pressed(window))
+		this->action();
+}
+
+bool Env::Key::is_currently_pressed(GLFWwindow *window)
+{
+	return glfwGetKey(window, this->key) == GLFW_PRESS;
+}
+
+void Env::Unrepeatable::check(GLFWwindow *window)
+{
+	if (is_currently_pressed(window))
 	{
-		// Check keypresses that change position
-		if (pressed(GLFW_KEY_Q))
-			selected->modify_position({0.0, -MOVEMENT_SPEED, 0.0});
-		if (pressed(GLFW_KEY_W))
-			selected->modify_position({0.0, 0.0, -MOVEMENT_SPEED});
-		if (pressed(GLFW_KEY_E))
-			selected->modify_position({0.0, MOVEMENT_SPEED, 0.0});
-		if (pressed(GLFW_KEY_A))
-			selected->modify_position({-MOVEMENT_SPEED, 0.0, 0.0});
-		if (pressed(GLFW_KEY_S))
-			selected->modify_position({0.0, 0.0, MOVEMENT_SPEED});
-		if (pressed(GLFW_KEY_D))
-			selected->modify_position({MOVEMENT_SPEED, 0.0, 0.0});
-		// Check keypresses that change orientation (rotation)
-		if (pressed(GLFW_KEY_R))
-			selected->modify_orientation({0.0, 0.0, MOVEMENT_SPEED});
-		if (pressed(GLFW_KEY_T))
-			selected->modify_orientation({-MOVEMENT_SPEED, 0.0, 0.0});
-		if (pressed(GLFW_KEY_Y))
-			selected->modify_orientation({0.0, 0.0, -MOVEMENT_SPEED});
-		if (pressed(GLFW_KEY_F))
-			selected->modify_orientation({0.0, -MOVEMENT_SPEED, 0.0});
-		if (pressed(GLFW_KEY_G))
-			selected->modify_orientation({MOVEMENT_SPEED, 0.0, 0.0});
-		if (pressed(GLFW_KEY_H))
-			selected->modify_orientation({0.0, MOVEMENT_SPEED, 0.0});
-		// Check keypresses that change scale
-		if (pressed(GLFW_KEY_U))
-			selected->modify_scale({0.0, -MOVEMENT_SPEED, 0.0});
-		if (pressed(GLFW_KEY_I))
-			selected->modify_scale({0.0, 0.0, MOVEMENT_SPEED});
-		if (pressed(GLFW_KEY_O))
-			selected->modify_scale({0.0, MOVEMENT_SPEED, 0.0});
-		if (pressed(GLFW_KEY_J))
-			selected->modify_scale({-MOVEMENT_SPEED, 0.0, 0.0});
-		if (pressed(GLFW_KEY_K))
-			selected->modify_scale({0.0, 0.0, -MOVEMENT_SPEED});
-		if (pressed(GLFW_KEY_L))
-			selected->modify_scale({MOVEMENT_SPEED, 0.0, 0.0});
-		// Check keypresses that center/reset everything
-		if (pressed(GLFW_KEY_C))
+		if (!this->previously_pressed)
 		{
-			selected->reset_position();
-			selected->reset_orientation();
-			selected->reset_scale();
+			this->action();
+			this->previously_pressed = true;
 		}
-#if DEBUG_MODELS == 1
-		selected->debug_model_data();
-#endif
 	}
+	else
+	{
+		this->previously_pressed = false;
+	}
+}
+
+void Env::setup_keys()
+{
+	this->keys = {
+		Key(GLFW_KEY_SPACE, []()
+			{ std::cout << "spess"; }),
+	};
 }
