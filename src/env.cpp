@@ -53,6 +53,8 @@ Env::Env()
 #endif
 
 	glClearColor(CLEAR_COLOR_R, CLEAR_COLOR_G, CLEAR_COLOR_B, CLEAR_COLOR_A);
+
+	this->setup_keys();
 }
 
 Env::~Env()
@@ -71,6 +73,10 @@ void Env::process_input(World &world)
 	// Close window when escape is pressed
 	if (pressed(GLFW_KEY_ESCAPE))
 		glfwSetWindowShouldClose(this->window, true);
+
+	// Handle keypresses
+	for (auto key : this->keys)
+		key.check(this->window);
 
 	// 	if (std::shared_ptr<Model> selected = world.get_selected().lock())
 	// 	{
@@ -126,10 +132,14 @@ void Env::process_input(World &world)
 	// }
 }
 
-void Env::Key::check(GLFWwindow *window)
+Env::Key::Key(int key, std::function<void()> action) : key(key), action(action)
 {
-	if (is_currently_pressed(window))
-		this->action();
+	std::cout << "Key constructed" << std::endl;
+};
+
+Env::Unrepeatable::Unrepeatable(int key, std::function<void()> action) : Key(key, action)
+{
+	std::cout << "Unrepeatable constructed" << std::endl;
 }
 
 bool Env::Key::is_currently_pressed(GLFWwindow *window)
@@ -137,8 +147,16 @@ bool Env::Key::is_currently_pressed(GLFWwindow *window)
 	return glfwGetKey(window, this->key) == GLFW_PRESS;
 }
 
+void Env::Key::check(GLFWwindow *window)
+{
+	std::cout << "Key::check" << std::endl;
+	if (is_currently_pressed(window))
+		this->action();
+}
+
 void Env::Unrepeatable::check(GLFWwindow *window)
 {
+	std::cout << "Unrepeatable::check" << std::endl;
 	if (is_currently_pressed(window))
 	{
 		if (!this->previously_pressed)
@@ -156,7 +174,8 @@ void Env::Unrepeatable::check(GLFWwindow *window)
 void Env::setup_keys()
 {
 	this->keys = {
-		Key(GLFW_KEY_SPACE, []()
-			{ std::cout << "spess"; }),
-	};
+		Key(GLFW_KEY_ENTER, []()
+			{ std::cout << "enter" << std::endl; }),
+		Unrepeatable(GLFW_KEY_SPACE, []()
+					 { std::cout << "space" << std::endl; })};
 }

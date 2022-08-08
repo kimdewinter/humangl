@@ -22,14 +22,11 @@ private:
 	class Key
 	{
 	public:
-		Key(
-			int const key,
-			std::function<void()> action) : key(key),
-											action(action){};
+		Key(int key, std::function<void()> action);
 		void check(GLFWwindow *window);
 
 	protected:
-		int const key;
+		int key;
 		std::function<void()> action;
 		bool is_currently_pressed(GLFWwindow *window);
 	};
@@ -37,6 +34,7 @@ private:
 	class Unrepeatable : public Key
 	{
 	public:
+		Unrepeatable(int key, std::function<void()> action);
 		void check(GLFWwindow *window);
 
 	private:
@@ -44,7 +42,7 @@ private:
 	};
 
 	GLFWwindow *window;
-	std::array<Key, 1> keys;
+	std::vector<Key> keys;
 
 	void setup_keys();
 };
