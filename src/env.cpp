@@ -142,19 +142,9 @@ void Env::process_input(World &world)
 	// }
 }
 
-Env::Key::Key(int const key, std::function<void()> const action) : key{key}, action{action}
-{
-	std::cout << "Key::Key()" << std::endl;
-};
-
 bool Env::Key::is_currently_pressed(GLFWwindow *window) const
 {
 	return glfwGetKey(window, this->key) == GLFW_PRESS;
-}
-
-Env::Repeatable::Repeatable(int const key, std::function<void()> const action) : Key{key, action}
-{
-	PRINT_OUT("Repeatable::Repeatable()");
 }
 
 void Env::Repeatable::handle_input(GLFWwindow *window)
@@ -162,11 +152,6 @@ void Env::Repeatable::handle_input(GLFWwindow *window)
 	// PRINT_OUT("Repeatable::handle_input()");
 	if (this->is_currently_pressed(window))
 		this->action();
-}
-
-Env::Unrepeatable::Unrepeatable(int const key, std::function<void()> const action) : Key{key, action}
-{
-	PRINT_OUT("Unrepeatable::Unrepeatable()");
 }
 
 void Env::Unrepeatable::handle_input(GLFWwindow *window)
