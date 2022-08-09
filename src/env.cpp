@@ -11,6 +11,14 @@ namespace
 	}
 }
 
+void Env::setup_keys()
+{
+	this->keys.push_back(new Repeatable(GLFW_KEY_ENTER, []()
+										{ std::cout << "enter" << std::endl; }));
+	this->keys.push_back(new Unrepeatable(GLFW_KEY_SPACE, []()
+										  { std::cout << "space" << std::endl; }));
+}
+
 Env::Env()
 {
 	glfwInit();
@@ -59,6 +67,8 @@ Env::Env()
 
 Env::~Env()
 {
+	for (Key *key : this->keys)
+		delete key;
 	glfwDestroyWindow(this->window);
 	this->window = NULL;
 	glfwTerminate();
@@ -76,7 +86,7 @@ void Env::process_input(World &world)
 
 	// Handle keypresses
 	for (auto key : this->keys)
-		key.check(this->window);
+		key->handle_input(this->window);
 
 	// 	if (std::shared_ptr<Model> selected = world.get_selected().lock())
 	// 	{
@@ -132,31 +142,36 @@ void Env::process_input(World &world)
 	// }
 }
 
-Env::Key::Key(int key, std::function<void()> action) : key(key), action(action)
+Env::Key::Key(int const key, std::function<void()> const action) : key{key}, action{action}
 {
-	std::cout << "Key constructed" << std::endl;
+	std::cout << "Key::Key()" << std::endl;
 };
 
-Env::Unrepeatable::Unrepeatable(int key, std::function<void()> action) : Key(key, action)
-{
-	std::cout << "Unrepeatable constructed" << std::endl;
-}
-
-bool Env::Key::is_currently_pressed(GLFWwindow *window)
+bool Env::Key::is_currently_pressed(GLFWwindow *window) const
 {
 	return glfwGetKey(window, this->key) == GLFW_PRESS;
 }
 
-void Env::Key::check(GLFWwindow *window)
+Env::Repeatable::Repeatable(int const key, std::function<void()> const action) : Key{key, action}
 {
-	std::cout << "Key::check" << std::endl;
-	if (is_currently_pressed(window))
+	PRINT_OUT("Repeatable::Repeatable()");
+}
+
+void Env::Repeatable::handle_input(GLFWwindow *window)
+{
+	// PRINT_OUT("Repeatable::handle_input()");
+	if (this->is_currently_pressed(window))
 		this->action();
 }
 
-void Env::Unrepeatable::check(GLFWwindow *window)
+Env::Unrepeatable::Unrepeatable(int const key, std::function<void()> const action) : Key{key, action}
 {
-	std::cout << "Unrepeatable::check" << std::endl;
+	PRINT_OUT("Unrepeatable::Unrepeatable()");
+}
+
+void Env::Unrepeatable::handle_input(GLFWwindow *window)
+{
+	// PRINT_OUT("Unrepeatable::handle_input()");
 	if (is_currently_pressed(window))
 	{
 		if (!this->previously_pressed)
@@ -169,13 +184,4 @@ void Env::Unrepeatable::check(GLFWwindow *window)
 	{
 		this->previously_pressed = false;
 	}
-}
-
-void Env::setup_keys()
-{
-	this->keys = {
-		Key(GLFW_KEY_ENTER, []()
-			{ std::cout << "enter" << std::endl; }),
-		Unrepeatable(GLFW_KEY_SPACE, []()
-					 { std::cout << "space" << std::endl; })};
 }

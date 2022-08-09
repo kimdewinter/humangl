@@ -22,27 +22,35 @@ private:
 	class Key
 	{
 	public:
-		Key(int key, std::function<void()> action);
-		void check(GLFWwindow *window);
+		Key(int const key, std::function<void()> const action);
+		virtual void handle_input(GLFWwindow *window) = 0; // Call this for each Key to handle input
+		virtual ~Key() = default;
 
 	protected:
-		int key;
-		std::function<void()> action;
-		bool is_currently_pressed(GLFWwindow *window);
+		int const key;
+		std::function<void()> const action;
+		bool is_currently_pressed(GLFWwindow *window) const;
+	};
+
+	class Repeatable : public Key
+	{
+	public:
+		Repeatable(int const key, std::function<void()> const action);
+		void handle_input(GLFWwindow *window);
 	};
 
 	class Unrepeatable : public Key
 	{
 	public:
-		Unrepeatable(int key, std::function<void()> action);
-		void check(GLFWwindow *window);
+		Unrepeatable(int const key, std::function<void()> const action);
+		void handle_input(GLFWwindow *window);
 
 	private:
 		bool previously_pressed = false;
 	};
 
 	GLFWwindow *window;
-	std::vector<Key> keys;
+	std::vector<Key *> keys;
 
 	void setup_keys();
 };
