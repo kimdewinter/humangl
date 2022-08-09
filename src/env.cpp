@@ -11,14 +11,6 @@ namespace
 	}
 }
 
-void Env::setup_keys()
-{
-	this->keys.push_back(new Repeatable(GLFW_KEY_ENTER, []()
-										{ std::cout << "enter" << std::endl; }));
-	this->keys.push_back(new Unrepeatable(GLFW_KEY_SPACE, []()
-										  { std::cout << "space" << std::endl; }));
-}
-
 Env::Env()
 {
 	glfwInit();
@@ -61,8 +53,6 @@ Env::Env()
 #endif
 
 	glClearColor(CLEAR_COLOR_R, CLEAR_COLOR_G, CLEAR_COLOR_B, CLEAR_COLOR_A);
-
-	this->setup_keys();
 }
 
 Env::~Env()
