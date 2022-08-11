@@ -50,7 +50,10 @@ private:
 	};
 
 	GLFWwindow *window;
+	// Hardcode all hotkeys into the "keys" variable
 	std::vector<Key *> keys = {
+		new Unrepeatable(GLFW_KEY_ESCAPE, [&]()
+						 { glfwSetWindowShouldClose(this->window, true); }),
 		new Repeatable(GLFW_KEY_ENTER, []()
 					   { std::cout << "enter" << std::endl; }),
 		new Unrepeatable(GLFW_KEY_SPACE, []()

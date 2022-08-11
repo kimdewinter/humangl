@@ -66,15 +66,7 @@ Env::~Env()
 
 void Env::process_input(World &world)
 {
-	// Anonymous function that checks if a key has been pressed
-	std::function<bool(int)> pressed = [this](int key)
-	{ return glfwGetKey(this->window, key) == GLFW_PRESS; };
-
-	// Close window when escape is pressed
-	if (pressed(GLFW_KEY_ESCAPE))
-		glfwSetWindowShouldClose(this->window, true);
-
-	// Handle keypresses
+	// Handle keypresses (if any)
 	for (auto key : this->keys)
 		key->handle_input(this->window);
 
@@ -139,14 +131,12 @@ bool Env::Key::is_currently_pressed(GLFWwindow *window) const
 
 void Env::Repeatable::handle_input(GLFWwindow *window)
 {
-	// PRINT_OUT("Repeatable::handle_input()");
 	if (this->is_currently_pressed(window))
 		this->action();
 }
 
 void Env::Unrepeatable::handle_input(GLFWwindow *window)
 {
-	// PRINT_OUT("Unrepeatable::handle_input()");
 	if (is_currently_pressed(window))
 	{
 		if (!this->previously_pressed)
