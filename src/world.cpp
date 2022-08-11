@@ -139,9 +139,11 @@ std::optional<std::weak_ptr<Model>> World::select()
 	this->deselect();
 
 	// Get WorldObj
+	cin.clear();
 	cout << "Please enter the name of the WorldObj you wish to select a Model from:" << endl;
 	string world_obj_name;
 	cin >> world_obj_name;
+	cin.clear();
 	map<string, WorldObj>::iterator world_obj = this->world_objs.find(world_obj_name);
 	if (world_obj == this->world_objs.end())
 	{
@@ -150,14 +152,16 @@ std::optional<std::weak_ptr<Model>> World::select()
 	}
 
 	// Get Model
+	cin.clear();
 	cout << "Please enter the name of the Model you wish to select from this WorldObj" << endl;
 	string model_name;
 	cin >> model_name;
+	cin.clear();
 	optional<weak_ptr<Model>> model = this->get_model(world_obj->second, model_name);
 
 	// Set new model, if successfully extracted
 	if (model)
 		this->selected = model.value();
-	cin.clear();
+	PRINT_OUT("Selection succesful.");
 	return this->selected;
 }

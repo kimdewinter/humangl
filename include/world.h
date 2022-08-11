@@ -17,7 +17,7 @@ public:
 	void remove_object(std::string const name);
 	void render();
 	std::optional<std::weak_ptr<Model>> select();
-	std::weak_ptr<Model> get_selected() { return this->selected; };
+	std::shared_ptr<Model> get_selected() { return this->selected.lock(); };
 	void deselect() { this->selected.reset(); };
 	std::optional<std::weak_ptr<Model>> get_model(WorldObj &world_obj, std::string const &model_name);
 

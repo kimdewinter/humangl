@@ -42,7 +42,7 @@ private:
 		bool previously_pressed = false;
 	};
 
-	GLFWwindow *window = NULL; // Set, use "action" lambda function, and unset
-	World *world = NULL;	   // Set, use "action" lambda function, and unset
+	GLFWwindow *window = NULL; // For use by keys' functions. Set, use "action" lambda function, and unset
+	World *world = NULL;	   // For use by keys' functions. Set, use "action" lambda function, and unset
 	std::vector<Key *> keys;
 };
