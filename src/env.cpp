@@ -57,18 +57,17 @@ Env::Env()
 
 Env::~Env()
 {
-	for (Key *key : this->keys)
-		delete key;
 	glfwDestroyWindow(this->window);
 	this->window = NULL;
 	glfwTerminate();
 }
 
-void Env::process_input(World &world)
+void Env::process_input(World *world)
 {
+	this->input_handler.handle_input(this->window, world);
 	// Handle keypresses (if any)
-	for (auto key : this->keys)
-		key->handle_input(this->window);
+	// for (auto key : this->keys)
+	// key->handle_input(this->window);
 
 	// 	if (std::shared_ptr<Model> selected = world.get_selected().lock())
 	// 	{
@@ -122,31 +121,4 @@ void Env::process_input(World &world)
 	// 		selected->debug_model_data();
 	// #endif
 	// }
-}
-
-bool Env::Key::is_currently_pressed(GLFWwindow *window) const
-{
-	return glfwGetKey(window, this->key) == GLFW_PRESS;
-}
-
-void Env::Repeatable::handle_input(GLFWwindow *window)
-{
-	if (this->is_currently_pressed(window))
-		this->action();
-}
-
-void Env::Unrepeatable::handle_input(GLFWwindow *window)
-{
-	if (is_currently_pressed(window))
-	{
-		if (!this->previously_pressed)
-		{
-			this->action();
-			this->previously_pressed = true;
-		}
-	}
-	else
-	{
-		this->previously_pressed = false;
-	}
 }

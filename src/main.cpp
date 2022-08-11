@@ -48,7 +48,7 @@ int main()
 		previous = current;
 		lag += elapsed;
 
-		env.process_input(world);
+		env.process_input(&world);
 
 		while (lag >= ns_per_update)
 		{
