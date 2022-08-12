@@ -143,9 +143,9 @@ namespace
 				get_cube_vertices(),						 // Vertices
 				get_cube_indices(),							 // Indices
 				shader,										 // Shader
-				{0.0, -1.0, 0.0},							 // Position
+				{0.0, -1.2, 0.0},							 // Position
 				{0.0, 0.0, 0.0},							 // Orientation
-				{0.0, 0.0, 0.0},							 // Scale
+				{-0.7, 0.20, -0.7},							 // Scale
 				{1.0, 1.0, 0.0, 0.0}}};						 // Color
 	}
 	std::shared_ptr<Model> create_left_upper_arm(std::shared_ptr<Shader> const shader)
@@ -158,9 +158,9 @@ namespace
 				get_cube_vertices(),				// Vertices
 				get_cube_indices(),					// Indices
 				shader,								// Shader
-				{0.67, 0.07, 0.0},					// Position
+				{0.67, 0.3, 0.0},					// Position
 				{0.0, 0.0, 0.0},					// Orientation
-				{-0.7, -0.33, -0.7},				// Scale
+				{-0.7, 0.20, -0.7},					// Scale
 				{1.0, 1.0, 0.0, 0.0},				// Color
 				{0.0, -0.3, 0.0}}};					// Joint
 	}

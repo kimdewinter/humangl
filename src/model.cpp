@@ -80,17 +80,31 @@ mat4 get_rotation_around_joint(GLfloat x, GLfloat y, GLfloat z, GLfloat joint_x,
 /// Calcutes transformations, sets uniforms, renders, and calls itself in this->children
 void Model::render(mat4 const parent_mat) const
 {
-	mat4 translation = get_translation_mat4(this->position[0], this->position[1], this->position[2]);
-	mat4 scaling = get_scaling_mat4(this->scale[0], this->scale[1], this->scale[2]);
-	mat4 rotation = get_rotation_around_joint(
-		this->orientation[0],
-		this->orientation[1],
-		this->orientation[2],
-		this->joint[0],
-		this->joint[1],
-		this->joint[2]);
-	// mat4 rotation = get_rotation_mat4(this->orientation[0], this->orientation[1], this->orientation[2]);
-	mat4 final = dot_product_mat4(dot_product_mat4(dot_product_mat4(scaling, rotation), translation), parent_mat);
+	mat4 for_renderer;
+	mat4 for_child;
+	{
+		mat4 scaling = get_scaling_mat4(this->scale[0], this->scale[1], this->scale[2]);
+		mat4 rotation = get_rotation_around_joint(
+			this->orientation[0],
+			this->orientation[1],
+			this->orientation[2],
+			this->joint[0],
+			this->joint[1],
+			this->joint[2]);
+		mat4 translation = get_translation_mat4(this->position[0], this->position[1], this->position[2]);
+		for_renderer = dot_product_mat4(dot_product_mat4(dot_product_mat4(scaling, rotation), translation), parent_mat);
+	}
+	{
+		mat4 rotation = get_rotation_around_joint(
+			this->orientation[0],
+			this->orientation[1],
+			this->orientation[2],
+			this->joint[0],
+			this->joint[1],
+			this->joint[2]);
+		mat4 translation = get_translation_mat4(this->position[0], this->position[1], this->position[2]);
+		for_child = dot_product_mat4(dot_product_mat4(rotation, translation), parent_mat);
+	}
 	this->gl_obj.render(
 		this->shader,
 		[&]()
@@ -99,7 +113,7 @@ void Model::render(mat4 const parent_mat) const
 			set_uniform_mat4(
 				id,
 				"model",
-				final);
+				for_renderer);
 			set_uniform_mat4(
 				id,
 				"projection",
@@ -112,7 +126,7 @@ void Model::render(mat4 const parent_mat) const
 		});
 
 	for (std::shared_ptr<Model> child : this->children)
-		child->render(final);
+		child->render(for_child);
 }
 
 void Model::modify_position(vec3 const additives)
