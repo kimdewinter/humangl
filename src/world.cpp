@@ -50,18 +50,102 @@ namespace
 			 5, 6, 2});
 	}
 
-	std::shared_ptr<Model> create_head(std::shared_ptr<Shader> const shader)
+	std::shared_ptr<Model> create_right_lower_leg(std::shared_ptr<Shader> const shader)
 	{
 		return std::shared_ptr<Model>{
 			new Model{
-				"head",										 // Name
+				"right_lower_leg",							 // Name
 				std::forward_list<std::shared_ptr<Model>>{}, // Children
 				get_cube_vertices(),						 // Vertices
 				get_cube_indices(),							 // Indices
 				shader,										 // Shader
-				{0.0, 0.71, 0.0},							 // Position
+				{-0.26, -1.5, 0.0},							 // Position
 				{0.0, 0.0, 0.0},							 // Orientation
-				{-0.4, -0.6, -0.4},							 // Scale
+				{-0.6, -0.33, -0.6},						 // Scale
+				{1.0, 1.0, 0.0, 0.0}}};						 // Color
+	}
+	std::shared_ptr<Model> create_right_upper_leg(std::shared_ptr<Shader> const shader)
+	{
+		return std::shared_ptr<Model>{
+			new Model{
+				"right_upper_leg",							 // Name
+				std::forward_list<std::shared_ptr<Model>>{}, // Children
+				get_cube_vertices(),						 // Vertices
+				get_cube_indices(),							 // Indices
+				shader,										 // Shader
+				{-0.26, -0.84, 0.0},						 // Position
+				{0.0, 0.0, 0.0},							 // Orientation
+				{-0.6, -0.33, -0.6},						 // Scale
+				{1.0, 1.0, 0.0, 0.0}}};						 // Color
+	}
+	std::shared_ptr<Model> create_left_lower_leg(std::shared_ptr<Shader> const shader)
+	{
+		return std::shared_ptr<Model>{
+			new Model{
+				"left_lower_leg",							 // Name
+				std::forward_list<std::shared_ptr<Model>>{}, // Children
+				get_cube_vertices(),						 // Vertices
+				get_cube_indices(),							 // Indices
+				shader,										 // Shader
+				{0.26, -1.5, 0.0},							 // Position
+				{0.0, 0.0, 0.0},							 // Orientation
+				{-0.6, -0.33, -0.6},						 // Scale
+				{1.0, 1.0, 0.0, 0.0}}};						 // Color
+	}
+	std::shared_ptr<Model> create_left_upper_leg(std::shared_ptr<Shader> const shader)
+	{
+		return std::shared_ptr<Model>{
+			new Model{
+				"left_upper_leg",							 // Name
+				std::forward_list<std::shared_ptr<Model>>{}, // Children
+				get_cube_vertices(),						 // Vertices
+				get_cube_indices(),							 // Indices
+				shader,										 // Shader
+				{0.26, -0.84, 0.0},							 // Position
+				{0.0, 0.0, 0.0},							 // Orientation
+				{-0.6, -0.33, -0.6},						 // Scale
+				{1.0, 1.0, 0.0, 0.0}}};						 // Color
+	}
+	std::shared_ptr<Model> create_right_lower_arm(std::shared_ptr<Shader> const shader)
+	{
+		return std::shared_ptr<Model>{
+			new Model{
+				"right_lower_arm",							 // Name
+				std::forward_list<std::shared_ptr<Model>>{}, // Children
+				get_cube_vertices(),						 // Vertices
+				get_cube_indices(),							 // Indices
+				shader,										 // Shader
+				{-0.67, -0.6, 0.0},							 // Position
+				{0.0, 0.0, 0.0},							 // Orientation
+				{-0.7, -0.33, -0.7},						 // Scale
+				{1.0, 1.0, 0.0, 0.0}}};						 // Color
+	}
+	std::shared_ptr<Model> create_right_upper_arm(std::shared_ptr<Shader> const shader)
+	{
+		return std::shared_ptr<Model>{
+			new Model{
+				"right_upper_arm",							 // Name
+				std::forward_list<std::shared_ptr<Model>>{}, // Children
+				get_cube_vertices(),						 // Vertices
+				get_cube_indices(),							 // Indices
+				shader,										 // Shader
+				{-0.67, 0.07, 0.0},							 // Position
+				{0.0, 0.0, 0.0},							 // Orientation
+				{-0.7, -0.33, -0.7},						 // Scale
+				{1.0, 1.0, 0.0, 0.0}}};						 // Color
+	}
+	std::shared_ptr<Model> create_left_lower_arm(std::shared_ptr<Shader> const shader)
+	{
+		return std::shared_ptr<Model>{
+			new Model{
+				"left_lower_arm",							 // Name
+				std::forward_list<std::shared_ptr<Model>>{}, // Children
+				get_cube_vertices(),						 // Vertices
+				get_cube_indices(),							 // Indices
+				shader,										 // Shader
+				{0.67, -0.6, 0.0},							 // Position
+				{0.0, 0.0, 0.0},							 // Orientation
+				{-0.7, -0.33, -0.7},						 // Scale
 				{1.0, 1.0, 0.0, 0.0}}};						 // Color
 	}
 	std::shared_ptr<Model> create_left_upper_arm(std::shared_ptr<Shader> const shader)
@@ -78,6 +162,20 @@ namespace
 				{-0.7, -0.33, -0.7},						 // Scale
 				{1.0, 1.0, 0.0, 0.0}}};						 // Color
 	}
+	std::shared_ptr<Model> create_head(std::shared_ptr<Shader> const shader)
+	{
+		return std::shared_ptr<Model>{
+			new Model{
+				"head",										 // Name
+				std::forward_list<std::shared_ptr<Model>>{}, // Children
+				get_cube_vertices(),						 // Vertices
+				get_cube_indices(),							 // Indices
+				shader,										 // Shader
+				{0.0, 0.71, 0.0},							 // Position
+				{0.0, 0.0, 0.0},							 // Orientation
+				{-0.4, -0.6, -0.4},							 // Scale
+				{1.0, 1.0, 0.0, 0.0}}};						 // Color
+	}
 	std::shared_ptr<Model> create_torso(std::shared_ptr<Shader> const shader)
 	{
 		return std::shared_ptr<Model>{
@@ -85,14 +183,21 @@ namespace
 				"torso", // Name
 				std::forward_list<std::shared_ptr<Model>>{
 					create_head(shader),
-					create_left_upper_arm(shader)}, // Children
-				get_cube_vertices(),				// Vertices
-				get_cube_indices(),					// Indices
-				shader,								// Shader
-				{0.0, 0.75, -3.0},					// Position
-				{0.0, 0.0, 0.0},					// Orientation
-				{0.0, 1.0, 0.0},					// Scale
-				{1.0, 1.0, 0.0, 0.0}}};				// Color
+					create_left_upper_arm(shader),
+					create_left_lower_arm(shader),
+					create_right_upper_arm(shader),
+					create_right_lower_arm(shader),
+					create_left_upper_leg(shader),
+					create_right_upper_leg(shader),
+					create_left_lower_leg(shader),
+					create_right_lower_leg(shader)}, // Children
+				get_cube_vertices(),				 // Vertices
+				get_cube_indices(),					 // Indices
+				shader,								 // Shader
+				{0.0, 0.75, -3.0},					 // Position
+				{0.0, 0.0, 0.0},					 // Orientation
+				{0.0, 1.0, 0.0},					 // Scale
+				{1.0, 1.0, 0.0, 0.0}}};				 // Color
 	}
 }
 
@@ -148,7 +253,8 @@ std::optional<std::weak_ptr<Model>> World::select()
 	if (world_obj == this->world_objs.end())
 	{
 		cin.clear();
-		return nullopt;
+		PRINT_OUT("Selection failed: WorldObj not found.");
+		return this->selected;
 	}
 
 	// Get Model
@@ -161,7 +267,11 @@ std::optional<std::weak_ptr<Model>> World::select()
 
 	// Set new model, if successfully extracted
 	if (model)
+	{
 		this->selected = model.value();
-	PRINT_OUT("Selection succesful.");
+		PRINT_OUT("Selection succesful.");
+	}
+	else
+		PRINT_OUT("Selection failed: Model not found.");
 	return this->selected;
 }
