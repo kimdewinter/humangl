@@ -143,25 +143,26 @@ namespace
 				get_cube_vertices(),						 // Vertices
 				get_cube_indices(),							 // Indices
 				shader,										 // Shader
-				{0.67, -0.6, 0.0},							 // Position
+				{0.0, -1.0, 0.0},							 // Position
 				{0.0, 0.0, 0.0},							 // Orientation
-				{-0.7, -0.33, -0.7},						 // Scale
+				{0.0, 0.0, 0.0},							 // Scale
 				{1.0, 1.0, 0.0, 0.0}}};						 // Color
 	}
 	std::shared_ptr<Model> create_left_upper_arm(std::shared_ptr<Shader> const shader)
 	{
 		return std::shared_ptr<Model>{
 			new Model{
-				"left_upper_arm",							 // Name
-				std::forward_list<std::shared_ptr<Model>>{}, // Children
-				get_cube_vertices(),						 // Vertices
-				get_cube_indices(),							 // Indices
-				shader,										 // Shader
-				{0.67, 0.07, 0.0},							 // Position
-				{0.0, 0.0, 0.0},							 // Orientation
-				{-0.7, -0.33, -0.7},						 // Scale
-				{1.0, 1.0, 0.0, 0.0},						 // Color
-				{0.0, -0.3, 0.0}}};							 // Joint
+				"left_upper_arm", // Name
+				std::forward_list<std::shared_ptr<Model>>{
+					create_left_lower_arm(shader)}, // Children
+				get_cube_vertices(),				// Vertices
+				get_cube_indices(),					// Indices
+				shader,								// Shader
+				{0.67, 0.07, 0.0},					// Position
+				{0.0, 0.0, 0.0},					// Orientation
+				{-0.7, -0.33, -0.7},				// Scale
+				{1.0, 1.0, 0.0, 0.0},				// Color
+				{0.0, -0.3, 0.0}}};					// Joint
 	}
 	// std::shared_ptr<Model> create_head(std::shared_ptr<Shader> const shader)
 	// {
@@ -184,8 +185,7 @@ namespace
 				"torso", // Name
 				std::forward_list<std::shared_ptr<Model>>{
 					// create_head(shader),
-					create_left_upper_arm(shader),
-					create_left_lower_arm(shader)},
+					create_left_upper_arm(shader)},
 				// create_right_upper_arm(shader),
 				// create_right_lower_arm(shader),
 				// create_left_upper_leg(shader),
