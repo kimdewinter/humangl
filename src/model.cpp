@@ -47,7 +47,8 @@ Model::Model(
 	vec3 const position,
 	vec3 const orientation,
 	vec3 const scale,
-	vec4 const color)
+	vec4 const color,
+	vec3 const joint)
 try : name(name),
 	children(children),
 	shader(shader),
@@ -59,6 +60,7 @@ try : name(name),
 	default_scale(scale),
 	color(color),
 	default_color(color),
+	joint(joint),
 	gl_obj(GlObj(vertices, indices))
 {
 }
@@ -67,12 +69,27 @@ catch (char const *const msg)
 	PRINT_OUT(msg);
 }
 
+mat4 get_rotation_around_joint(GLfloat x, GLfloat y, GLfloat z, GLfloat joint_x, GLfloat joint_y, GLfloat joint_z)
+{
+	mat4 pre_translate = get_translation_mat4(joint_x, joint_y, joint_z);
+	mat4 rotate = get_rotation_mat4(x, y, z);
+	mat4 post_translate = get_translation_mat4(-joint_x, -joint_y, -joint_z);
+	return dot_product_mat4(dot_product_mat4(pre_translate, rotate), post_translate);
+}
+
 /// Calcutes transformations, sets uniforms, renders, and calls itself in this->children
 void Model::render(mat4 const parent_mat) const
 {
 	mat4 translation = get_translation_mat4(this->position[0], this->position[1], this->position[2]);
 	mat4 scaling = get_scaling_mat4(this->scale[0], this->scale[1], this->scale[2]);
-	mat4 rotation = get_rotation_mat4(this->orientation[0], this->orientation[1], this->orientation[2]);
+	mat4 rotation = get_rotation_around_joint(
+		this->orientation[0],
+		this->orientation[1],
+		this->orientation[2],
+		this->joint[0],
+		this->joint[1],
+		this->joint[2]);
+	// mat4 rotation = get_rotation_mat4(this->orientation[0], this->orientation[1], this->orientation[2]);
 	mat4 final = dot_product_mat4(dot_product_mat4(dot_product_mat4(scaling, rotation), translation), parent_mat);
 	this->gl_obj.render(
 		this->shader,

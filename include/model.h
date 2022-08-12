@@ -29,7 +29,8 @@ public:
 		vec3 const position,
 		vec3 const orientation,
 		vec3 const scale,
-		vec4 const color);
+		vec4 const color,
+		vec3 const joint = {0.0, 0.0, 0.0});
 	std::string const get_name() const { return this->name; };
 	void render(mat4 const parent_mat = {1.0, 0.0, 0.0, 0.0,
 										 0.0, 1.0, 0.0, 0.0,
@@ -59,6 +60,7 @@ private:
 	vec3 const default_scale;
 	vec4 color;
 	vec4 const default_color;
+	vec3 const joint;
 
 	std::shared_ptr<Shader> const shader;
 	GlObj const gl_obj;
