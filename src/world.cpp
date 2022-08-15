@@ -50,62 +50,67 @@ namespace
 			 5, 6, 2});
 	}
 
-	// std::shared_ptr<Model> create_right_lower_leg(std::shared_ptr<Shader> const shader)
-	// {
-	// 	return std::shared_ptr<Model>{
-	// 		new Model{
-	// 			"right_lower_leg",							 // Name
-	// 			std::forward_list<std::shared_ptr<Model>>{}, // Children
-	// 			get_cube_vertices(),						 // Vertices
-	// 			get_cube_indices(),							 // Indices
-	// 			shader,										 // Shader
-	// 			{-0.26, -1.5, 0.0},							 // Position
-	// 			{0.0, 0.0, 0.0},							 // Orientation
-	// 			{-0.6, -0.33, -0.6},						 // Scale
-	// 			{1.0, 1.0, 0.0, 0.0}}};						 // Color
-	// }
-	// std::shared_ptr<Model> create_right_upper_leg(std::shared_ptr<Shader> const shader)
-	// {
-	// 	return std::shared_ptr<Model>{
-	// 		new Model{
-	// 			"right_upper_leg",							 // Name
-	// 			std::forward_list<std::shared_ptr<Model>>{}, // Children
-	// 			get_cube_vertices(),						 // Vertices
-	// 			get_cube_indices(),							 // Indices
-	// 			shader,										 // Shader
-	// 			{-0.26, -0.84, 0.0},						 // Position
-	// 			{0.0, 0.0, 0.0},							 // Orientation
-	// 			{-0.6, -0.33, -0.6},						 // Scale
-	// 			{1.0, 1.0, 0.0, 0.0}}};						 // Color
-	// }
-	// std::shared_ptr<Model> create_left_lower_leg(std::shared_ptr<Shader> const shader)
-	// {
-	// 	return std::shared_ptr<Model>{
-	// 		new Model{
-	// 			"left_lower_leg",							 // Name
-	// 			std::forward_list<std::shared_ptr<Model>>{}, // Children
-	// 			get_cube_vertices(),						 // Vertices
-	// 			get_cube_indices(),							 // Indices
-	// 			shader,										 // Shader
-	// 			{0.26, -1.5, 0.0},							 // Position
-	// 			{0.0, 0.0, 0.0},							 // Orientation
-	// 			{-0.6, -0.33, -0.6},						 // Scale
-	// 			{1.0, 1.0, 0.0, 0.0}}};						 // Color
-	// }
-	std::shared_ptr<Model> create_left_upper_leg(std::shared_ptr<Shader> const shader)
+	std::shared_ptr<Model> create_right_lower_leg(std::shared_ptr<Shader> const shader)
 	{
 		return std::shared_ptr<Model>{
 			new Model{
-				"left_upper_leg",							 // Name
+				"right_lower_leg",							 // Name
 				std::forward_list<std::shared_ptr<Model>>{}, // Children
 				get_cube_vertices(),						 // Vertices
 				get_cube_indices(),							 // Indices
 				shader,										 // Shader
-				{0.25, -1.6, 0.0},							 // Position
+				{0.0, -1.2, 0.0},							 // Position
 				{0.0, 0.0, 0.0},							 // Orientation
 				{-0.625, 0.2, -0.625},						 // Scale
 				{1.0, 1.0, 0.0, 0.0},						 // Color
-				{-0.1, -0.325, 0.0}}};						 // Joint
+				{0.0, -0.6, 0.0}}};							 // Joint
+	}
+	std::shared_ptr<Model> create_right_upper_leg(std::shared_ptr<Shader> const shader)
+	{
+		return std::shared_ptr<Model>{
+			new Model{
+				"right_upper_leg", // Name
+				std::forward_list<std::shared_ptr<Model>>{
+					create_right_lower_leg(shader)}, // Children
+				get_cube_vertices(),				 // Vertices
+				get_cube_indices(),					 // Indices
+				shader,								 // Shader
+				{-0.25, -1.6, 0.0},					 // Position
+				{0.0, 0.0, 0.0},					 // Orientation
+				{-0.625, 0.2, -0.625},				 // Scale
+				{1.0, 1.0, 0.0, 0.0},				 // Color
+				{0.1, -0.325, 0.0}}};				 // Joint
+	}
+	std::shared_ptr<Model> create_left_lower_leg(std::shared_ptr<Shader> const shader)
+	{
+		return std::shared_ptr<Model>{
+			new Model{
+				"left_lower_leg",							 // Name
+				std::forward_list<std::shared_ptr<Model>>{}, // Children
+				get_cube_vertices(),						 // Vertices
+				get_cube_indices(),							 // Indices
+				shader,										 // Shader
+				{0.0, -1.2, 0.0},							 // Position
+				{0.0, 0.0, 0.0},							 // Orientation
+				{-0.625, 0.2, -0.625},						 // Scale
+				{1.0, 1.0, 0.0, 0.0},						 // Color
+				{0.0, -0.6, 0.0}}};							 // Joint
+	}
+	std::shared_ptr<Model> create_left_upper_leg(std::shared_ptr<Shader> const shader)
+	{
+		return std::shared_ptr<Model>{
+			new Model{
+				"left_upper_leg", // Name
+				std::forward_list<std::shared_ptr<Model>>{
+					create_left_lower_leg(shader)}, // Children
+				get_cube_vertices(),				// Vertices
+				get_cube_indices(),					// Indices
+				shader,								// Shader
+				{0.25, -1.6, 0.0},					// Position
+				{0.0, 0.0, 0.0},					// Orientation
+				{-0.625, 0.2, -0.625},				// Scale
+				{1.0, 1.0, 0.0, 0.0},				// Color
+				{-0.1, -0.325, 0.0}}};				// Joint
 	}
 	std::shared_ptr<Model> create_right_lower_arm(std::shared_ptr<Shader> const shader)
 	{
@@ -193,15 +198,15 @@ namespace
 					create_head(shader),
 					create_left_upper_arm(shader),
 					create_right_upper_arm(shader),
-					create_left_upper_leg(shader)},
-				// create_right_upper_leg(shader)}, // Children
-				get_cube_vertices(),	// Vertices
-				get_cube_indices(),		// Indices
-				shader,					// Shader
-				{0.0, 0.75, -3.0},		// Position
-				{0.0, 0.0, 0.0},		// Orientation
-				{0.0, 1.0, -0.5},		// Scale
-				{1.0, 1.0, 0.0, 0.0}}}; // Color
+					create_left_upper_leg(shader),
+					create_right_upper_leg(shader)}, // Children
+				get_cube_vertices(),				 // Vertices
+				get_cube_indices(),					 // Indices
+				shader,								 // Shader
+				{0.0, 0.75, -3.0},					 // Position
+				{0.0, 0.0, 0.0},					 // Orientation
+				{0.0, 1.0, -0.5},					 // Scale
+				{1.0, 1.0, 0.0, 0.0}}};				 // Color
 	}
 }
 
