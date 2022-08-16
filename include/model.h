@@ -31,7 +31,7 @@ public:
 		vec3 const scale,
 		vec4 const color,
 		vec3 const joint = {0.0, 0.0, 0.0});
-	std::string const get_name() const { return this->name; };
+	std::string const get_name() const;
 	void render(mat4 const parent_mat = {1.0, 0.0, 0.0, 0.0,
 										 0.0, 1.0, 0.0, 0.0,
 										 0.0, 0.0, 1.0, 0.0,
@@ -39,15 +39,13 @@ public:
 	void modify_position(vec3 const additives);
 	void modify_orientation(vec3 const additives);
 	void modify_scale(vec3 const additives);
-	void set_color(vec4 const color) { this->color = color; };
-	void reset_position() { this->position = this->default_position; };
-	void reset_orientation() { this->orientation = this->default_orientation; };
-	void reset_scale() { this->scale = this->default_scale; };
-	void reset_color() { this->color = this->default_color; };
+	void set_color(vec4 const color);
+	void reset_position();
+	void reset_orientation();
+	void reset_scale();
+	void reset_color();
 	friend void WorldObj::map_models(std::shared_ptr<Model> model);
-#if DEBUG_MODELS == 1
 	void debug_model_data() const;
-#endif
 
 private:
 	std::string const name;

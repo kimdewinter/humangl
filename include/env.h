@@ -13,10 +13,10 @@ public:
 	Env();
 	~Env();
 	void process_input(World *world);
-	bool should_window_close() const { return glfwWindowShouldClose(this->window); };
-	void clear_buffers() const { glClear(GL_COLOR_BUFFER_BIT); };
-	void swap_buffers() const { glfwSwapBuffers(this->window); };
-	void poll_events() const { glfwPollEvents(); };
+	bool should_window_close() const;
+	void clear_buffers() const;
+	void swap_buffers() const;
+	void poll_events() const;
 
 private:
 	GLFWwindow *window;

@@ -16,7 +16,7 @@ public:
 		std::vector<std::vector<vec3>> const &vertex_data,
 		std::vector<unsigned int> const &indices);
 	~GlObj();
-	GLuint get_vao() const { return vao; };
+	GLuint get_vao() const;
 	void render(
 		std::shared_ptr<Shader> const &shader,
 		std::function<void()> uniform_setter) const;

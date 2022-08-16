@@ -66,3 +66,23 @@ void Env::process_input(World *world)
 {
 	this->input_handler.handle_input(this->window, world);
 }
+
+bool Env::should_window_close() const
+{
+	return glfwWindowShouldClose(this->window);
+}
+
+void Env::clear_buffers() const
+{
+	glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void Env::swap_buffers() const
+{
+	glfwSwapBuffers(this->window);
+}
+
+void Env::poll_events() const
+{
+	glfwPollEvents();
+}

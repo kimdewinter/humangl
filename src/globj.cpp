@@ -2,7 +2,6 @@
 #include "globj.h"
 #include "main.h"
 
-// Namespace for helpers of GlObj::GlObj
 namespace
 {
 	/// Error-check vertex attribute data length, and return total number of vertices
@@ -57,7 +56,7 @@ namespace
 	}
 }
 
-/// Object that hands buffering and draw calls.
+/// Object that handles buffering and draw calls.
 /// 'vertex_data' should contain vectors with your position attributes, normal attributes, etc.
 /// in the GLSL shader they correspond to "layout (location = 0)", "layout (location = 1)", etc.
 /// 'indices' holds the vertex indices, so glDrawElements can be used; avoiding duplicate vertices.
@@ -106,6 +105,11 @@ GlObj::~GlObj()
 	glDeleteVertexArrays(1, &this->vao);
 	glDeleteBuffers(1, &this->vbo);
 	glDeleteBuffers(1, &this->ebo);
+}
+
+GLuint GlObj::get_vao() const
+{
+	return this->vao;
 }
 
 /// Renders the VAO by using the given shader, setting any uniforms via an anonymous function,

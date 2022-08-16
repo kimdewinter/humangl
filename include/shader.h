@@ -10,8 +10,8 @@ class Shader
 public:
 	Shader(std::string const &vert_path, std::string const &frag_path);
 	~Shader();
-	GLuint get_id() const { return id; };
-	void use() const { glUseProgram(this->id); };
+	GLuint get_id() const;
+	void use() const;
 	void setMat4(std::string const &uniform_name, mat4 const &mat4) const;
 
 private:

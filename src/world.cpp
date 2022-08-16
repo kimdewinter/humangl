@@ -2,18 +2,6 @@
 #include "model.h"
 #include "main.h"
 
-void WorldObj::render()
-{
-	this->root->render();
-}
-
-void WorldObj::map_models(std::shared_ptr<Model> model)
-{
-	this->models.insert({model->get_name(), model});
-	for (std::shared_ptr<Model> child : model->children)
-		this->map_models(child);
-}
-
 namespace
 {
 	std::vector<std::vector<vec3>> get_cube_vertices()
@@ -189,6 +177,7 @@ namespace
 				{1.0, 1.0, 0.0, 0.0},						 // Color
 				{0.0, 0.2, 0.0}}};							 // Joint
 	}
+	/// Hardcoded constructor of a skeleton
 	std::shared_ptr<Model> create_torso(std::shared_ptr<Shader> const shader)
 	{
 		return std::shared_ptr<Model>{
@@ -210,14 +199,6 @@ namespace
 	}
 }
 
-Skelly::Skelly(std::shared_ptr<Shader> const shader)
-{
-	this->root = create_torso(shader);
-	this->map_models(this->root);
-}
-
-//-----------------------------WORLD--------------------------------------------
-
 void World::spawn_object(std::string const name, WorldObj obj)
 {
 	this->world_objs.insert({name, obj});
@@ -234,16 +215,6 @@ void World::render()
 	{
 		obj.second.render();
 	}
-}
-
-std::optional<std::weak_ptr<Model>> World::get_model(
-	WorldObj &world_obj,
-	std::string const &model_name)
-{
-	auto model = world_obj.models.find(model_name);
-	if (model == world_obj.models.end())
-		return std::nullopt;
-	return std::weak_ptr<Model>(model->second);
 }
 
 std::optional<std::weak_ptr<Model>> World::select()
@@ -283,4 +254,42 @@ std::optional<std::weak_ptr<Model>> World::select()
 	else
 		PRINT_OUT("Selection failed: Model not found.");
 	return this->selected;
+}
+
+void World::deselect()
+{
+	this->selected.reset();
+}
+
+std::shared_ptr<Model> World::get_selected()
+{
+	return this->selected.lock();
+}
+
+std::optional<std::weak_ptr<Model>> World::get_model(
+	WorldObj &world_obj,
+	std::string const &model_name)
+{
+	auto model = world_obj.models.find(model_name);
+	if (model == world_obj.models.end())
+		return std::nullopt;
+	return std::weak_ptr<Model>(model->second);
+}
+
+void WorldObj::render()
+{
+	this->root->render();
+}
+
+void WorldObj::map_models(std::shared_ptr<Model> model)
+{
+	this->models.insert({model->get_name(), model});
+	for (std::shared_ptr<Model> child : model->children)
+		this->map_models(child);
+}
+
+Skelly::Skelly(std::shared_ptr<Shader> const shader)
+{
+	this->root = create_torso(shader);
+	this->map_models(this->root);
 }

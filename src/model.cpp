@@ -36,6 +36,20 @@ namespace
 	{
 		return degrees * (M_PI / 180);
 	}
+
+	mat4 get_rotation_around_joint(
+		GLfloat x,
+		GLfloat y,
+		GLfloat z,
+		GLfloat joint_x,
+		GLfloat joint_y,
+		GLfloat joint_z)
+	{
+		mat4 pre_translate = get_translation_mat4(joint_x, joint_y, joint_z);
+		mat4 rotate = get_rotation_mat4(x, y, z);
+		mat4 post_translate = get_translation_mat4(-joint_x, -joint_y, -joint_z);
+		return dot_product_mat4(dot_product_mat4(pre_translate, rotate), post_translate);
+	}
 }
 
 Model::Model(
@@ -69,12 +83,9 @@ catch (char const *const msg)
 	PRINT_OUT(msg);
 }
 
-mat4 get_rotation_around_joint(GLfloat x, GLfloat y, GLfloat z, GLfloat joint_x, GLfloat joint_y, GLfloat joint_z)
+std::string const Model::get_name() const
 {
-	mat4 pre_translate = get_translation_mat4(joint_x, joint_y, joint_z);
-	mat4 rotate = get_rotation_mat4(x, y, z);
-	mat4 post_translate = get_translation_mat4(-joint_x, -joint_y, -joint_z);
-	return dot_product_mat4(dot_product_mat4(pre_translate, rotate), post_translate);
+	return this->name;
 }
 
 /// Calcutes transformations, sets uniforms, renders, and calls itself in this->children
@@ -92,7 +103,8 @@ void Model::render(mat4 const parent_mat) const
 			this->joint[1],
 			this->joint[2]);
 		mat4 translation = get_translation_mat4(this->position[0], this->position[1], this->position[2]);
-		for_renderer = dot_product_mat4(dot_product_mat4(dot_product_mat4(scaling, rotation), translation), parent_mat);
+		for_renderer = dot_product_mat4(
+			dot_product_mat4(dot_product_mat4(scaling, rotation), translation), parent_mat);
 	}
 	{
 		mat4 rotation = get_rotation_around_joint(
@@ -144,7 +156,31 @@ void Model::modify_scale(vec3 const additives)
 	this->scale = addition_vec3(this->scale, additives);
 }
 
-#if DEBUG_MODELS == 1
+void Model::set_color(vec4 const color)
+{
+	this->color = color;
+}
+
+void Model::reset_position()
+{
+	this->position = this->default_position;
+};
+
+void Model::reset_orientation()
+{
+	this->orientation = this->default_orientation;
+};
+
+void Model::reset_scale()
+{
+	this->scale = this->default_scale;
+};
+
+void Model::reset_color()
+{
+	this->color = this->default_color;
+};
+
 void Model::debug_model_data() const
 {
 	std::function<void(std::string const, vec3 const &)> print_vec3 = [](std::string const pre_str, vec3 const &vec)
@@ -158,4 +194,3 @@ void Model::debug_model_data() const
 	print_vec3("Scale: ", this->scale);
 	std::cout << std::endl;
 }
-#endif

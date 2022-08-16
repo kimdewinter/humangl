@@ -1,50 +1,13 @@
 #include "env.h"
 
-void InputHandler::handle_input(GLFWwindow *window, World *world)
-{
-	this->window = window;
-	this->world = world;
-
-	for (auto key : this->keys)
-		key->handle_input(window);
-
-	this->window = NULL;
-	this->world = NULL;
-}
-
-bool InputHandler::Key::is_currently_pressed(GLFWwindow *window) const
-{
-	return glfwGetKey(window, this->key) == GLFW_PRESS;
-}
-
-void InputHandler::Repeatable::handle_input(GLFWwindow *window)
-{
-	if (this->is_currently_pressed(window))
-		this->action();
-}
-
-void InputHandler::Unrepeatable::handle_input(GLFWwindow *window)
-{
-	if (is_currently_pressed(window))
-	{
-		if (!this->previously_pressed)
-		{
-			this->action();
-			this->previously_pressed = true;
-		}
-	}
-	else
-	{
-		this->previously_pressed = false;
-	}
-}
-
 // Constructor which sets up all the possible hotkeys
 InputHandler::InputHandler()
 {
 	this->keys = {
+		// Keypress to end proram
 		new Unrepeatable(GLFW_KEY_ESCAPE, [&]()
 						 { glfwSetWindowShouldClose(this->window, true); }),
+		// Keypress that allows you to select a world object
 		new Unrepeatable(GLFW_KEY_SPACE, [&]()
 						 { this->world->select(); }),
 		// Keypresses that change translation
@@ -122,6 +85,7 @@ InputHandler::InputHandler()
 					   {
 						if (std::shared_ptr<Model> model = this->world->get_selected())
 							model->modify_scale({MOVEMENT_SPEED, 0.0, 0.0}); }),
+		// Keypress to reset selected Model
 		new Repeatable(GLFW_KEY_C, [&]()
 					   {
 						if (std::shared_ptr<Model> model = this->world->get_selected())
@@ -131,17 +95,69 @@ InputHandler::InputHandler()
 						model->reset_scale();
 						model->reset_color();
 	 					} }),
-#if DEBUG_MODELS == 1
+		// Keypress to print selected Model's data
 		new Unrepeatable(GLFW_KEY_ENTER, [&]()
 						 {
 							if (std::shared_ptr<Model> model = world->get_selected())
 								model->debug_model_data(); }),
-#endif
 	};
+}
+
+void InputHandler::handle_input(GLFWwindow *window, World *world)
+{
+	this->window = window;
+	this->world = world;
+
+	for (auto key : this->keys)
+		key->handle_input(window);
+
+	this->window = NULL;
+	this->world = NULL;
+}
+
+bool InputHandler::Key::is_currently_pressed(GLFWwindow *window) const
+{
+	return glfwGetKey(window, this->key) == GLFW_PRESS;
 }
 
 InputHandler::~InputHandler()
 {
 	for (auto key : this->keys)
 		delete key;
+}
+
+InputHandler::Key::Key(int const key, std::function<void()> const action) : key{key}, action{action}
+{
+}
+
+InputHandler::Repeatable::Repeatable(int const key, std::function<void()> const action)
+	: Key{key, action}
+{
+}
+
+void InputHandler::Repeatable::handle_input(GLFWwindow *window)
+{
+	if (this->is_currently_pressed(window))
+		this->action();
+}
+
+InputHandler::Unrepeatable::Unrepeatable(int const key, std::function<void()> const action)
+	: Key{key, action}
+{
+}
+
+void InputHandler::Unrepeatable::handle_input(GLFWwindow *window)
+{
+	if (is_currently_pressed(window))
+	{
+		if (!this->previously_pressed)
+		{
+			this->action();
+			this->previously_pressed = true;
+		}
+	}
+	else
+	{
+		this->previously_pressed = false;
+	}
 }

@@ -4,14 +4,13 @@
 #include "shader.h"
 #include "world.h"
 #include <chrono>
-#include <thread> // Possibly only needed for test-sleeps during development; remove later
 #include <iostream>
 
 namespace
 {
 	void update()
 	{
-		std::this_thread::sleep_for(std::chrono::milliseconds(10)); // Simulates updating of game state
+		// Placeholder for updating game logic
 	}
 
 	void populate_world(World &world)

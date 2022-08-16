@@ -100,12 +100,22 @@ catch (...)
 	throw;
 }
 
-void Shader::setMat4(std::string const &uniform_name, mat4 const &mat4) const
-{
-	glUniformMatrix4fv(glGetUniformLocation(this->id, uniform_name.c_str()), 1, GL_FALSE, &mat4[0]);
-}
-
 Shader::~Shader()
 {
 	glDeleteProgram(this->id);
+}
+
+GLuint Shader::get_id() const
+{
+	return this->id;
+}
+
+void Shader::use() const
+{
+	glUseProgram(this->id);
+}
+
+void Shader::setMat4(std::string const &uniform_name, mat4 const &mat4) const
+{
+	glUniformMatrix4fv(glGetUniformLocation(this->id, uniform_name.c_str()), 1, GL_FALSE, &mat4[0]);
 }
