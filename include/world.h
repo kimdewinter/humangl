@@ -4,7 +4,9 @@
 #include <vector>
 #include <memory>
 #include <optional>
+#include <chrono>
 #include "shader.h"
+#include "animator.h"
 
 class Model;
 class WorldObj;
@@ -15,7 +17,7 @@ class World
 public:
 	void spawn_object(std::string const name, WorldObj obj);
 	void remove_object(std::string const name);
-	void render();
+	void render(std::chrono::steady_clock::time_point const now);
 	std::optional<std::weak_ptr<Model>> select();
 	void deselect();
 	std::shared_ptr<Model> get_selected();
@@ -33,7 +35,7 @@ private:
 class WorldObj
 {
 public:
-	void render();
+	void render(std::chrono::steady_clock::time_point const now);
 	void map_models(std::shared_ptr<Model> model);
 	friend std::optional<std::weak_ptr<Model>> World::get_model(
 		WorldObj &world_obj,
@@ -42,6 +44,7 @@ public:
 protected:
 	std::shared_ptr<Model> root;
 	std::map<std::string, std::shared_ptr<Model>> models;
+	std::map<std::string, Animation> animations;
 };
 
 class Skelly : public WorldObj

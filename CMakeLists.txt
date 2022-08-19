@@ -45,6 +45,7 @@ ${SOURCE_DIR}/globj.cpp
 ${SOURCE_DIR}/shader.cpp
 ${SOURCE_DIR}/world.cpp
 ${SOURCE_DIR}/input.cpp
+${SOURCE_DIR}/animator.cpp
 )
 
 add_executable(humangl ${sources} ${includes})

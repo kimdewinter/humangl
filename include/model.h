@@ -32,10 +32,12 @@ public:
 		vec4 const color,
 		vec3 const joint = {0.0, 0.0, 0.0});
 	std::string const get_name() const;
-	void render(mat4 const parent_mat = {1.0, 0.0, 0.0, 0.0,
-										 0.0, 1.0, 0.0, 0.0,
-										 0.0, 0.0, 1.0, 0.0,
-										 0.0, 0.0, 0.0, 1.0}) const;
+	void render(
+		std::map<std::string, mat4> const &animation,
+		mat4 const parent_mat = {1.0, 0.0, 0.0, 0.0,
+								 0.0, 1.0, 0.0, 0.0,
+								 0.0, 0.0, 1.0, 0.0,
+								 0.0, 0.0, 0.0, 1.0}) const;
 	void modify_position(vec3 const additives);
 	void modify_orientation(vec3 const additives);
 	void modify_scale(vec3 const additives);
@@ -50,8 +52,8 @@ public:
 private:
 	std::string const name;
 	std::forward_list<std::shared_ptr<Model>> children;
-	vec3 position; // Relative to parent (or world if Model instance is the root part)
-	vec3 const default_position;
+	vec3 position;				 // Relative to parent (or world if Model instance is the root part)
+	vec3 const default_position; // Used for resetting
 	vec3 orientation;
 	vec3 const default_orientation;
 	vec3 scale;

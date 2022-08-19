@@ -209,11 +209,11 @@ void World::remove_object(std::string const name)
 	this->world_objs.erase(name);
 }
 
-void World::render()
+void World::render(std::chrono::steady_clock::time_point const now)
 {
 	for (std::pair<std::string, WorldObj> obj : this->world_objs)
 	{
-		obj.second.render();
+		obj.second.render(now);
 	}
 }
 
@@ -276,7 +276,7 @@ std::optional<std::weak_ptr<Model>> World::get_model(
 	return std::weak_ptr<Model>(model->second);
 }
 
-void WorldObj::render()
+void WorldObj::render(std::chrono::steady_clock::time_point const now)
 {
 	this->root->render();
 }
