@@ -20,10 +20,10 @@ namespace
 		world.spawn_object("skelly", Skelly(shader));
 	}
 
-	void render(Env const &env, World &world)
+	void render(Env const &env, World &world, std::chrono::steady_clock::time_point const now)
 	{
 		env.clear_buffers();
-		world.render();
+		world.render(now);
 		env.swap_buffers();
 	}
 }
@@ -55,7 +55,7 @@ int main()
 			lag -= ns_per_update;
 		}
 
-		render(env, world);
+		render(env, world, steady_clock::now());
 		env.poll_events();
 	}
 

@@ -8,31 +8,40 @@
 
 using namespace std::chrono;
 
-struct Keyframe
+struct Frame
 {
-    nanoseconds const time = nanoseconds(0); // Time since beginning of animation
     vec3 const translations = {0.0, 0.0, 0.0};
     vec3 const rotations = {0.0, 0.0, 0.0};
     vec3 const scalings = {0.0, 0.0, 0.0};
 };
 
-/// Contains all keyframes for a given Model
+struct Keyframe : public Frame
+{
+    nanoseconds const time = nanoseconds(0); // Time since beginning of animation
+};
+
+/// T should be a Frame or Keyframe, depending on what Channel is used for
+template <typename T>
 struct Channel
 {
     std::string const model_name = "";
-    std::vector<Keyframe> keyframes = {Keyframe{}};
+    std::vector<T> const model_frames;
 };
 
-/// Data repository for an animation, only constant members
-/// to use, simply construct the class, and call the getter to receive transformation matrixes
+/// Data repository for a WorldObj's single animation, only constant members
 class Animation
 {
 public:
-    Animation(std::string const animation_name, std::vector<Channel> const &channels);
-    std::map<std::string, mat4> const get_animated_mat4s(nanoseconds const time_elapsed) const;
+    Animation(std::string const animation_name, std::vector<Channel<Keyframe>> const &channels);
+    Frame const get_animated_frame(
+        std::string const &model_name,
+        nanoseconds const time_elapsed) const;
+    std::map<std::string, Frame> const get_animated_frames(nanoseconds const time_elapsed) const;
 
 private:
+    std::vector<Keyframe> const &get_channel(std::string const &model_name) const;
+
     std::string const animation_name;
     nanoseconds const duration;
-    std::map<std::string, Channel> const channels;
+    std::map<std::string, Channel<Keyframe>> const channels;
 };
