@@ -209,7 +209,7 @@ void World::remove_object(std::string const name)
 	this->world_objs.erase(name);
 }
 
-void World::render(std::chrono::steady_clock::time_point const now)
+void World::render()
 {
 	for (std::pair<std::string, WorldObj> obj : this->world_objs)
 	{
@@ -217,7 +217,7 @@ void World::render(std::chrono::steady_clock::time_point const now)
 	}
 }
 
-std::optional<std::weak_ptr<Model>> World::select()
+std::optional<std::weak_ptr<Model>> World::select_model()
 {
 	using namespace std;
 	// Let go of any previously selected
@@ -234,7 +234,7 @@ std::optional<std::weak_ptr<Model>> World::select()
 	{
 		cin.clear();
 		PRINT_OUT("Selection failed: WorldObj not found.");
-		return this->selected;
+		return this->selected_model;
 	}
 
 	// Get Model
@@ -248,22 +248,58 @@ std::optional<std::weak_ptr<Model>> World::select()
 	// Set new model, if successfully extracted
 	if (model)
 	{
-		this->selected = model.value();
+		this->selected_model = model.value();
 		PRINT_OUT("Selection succesful.");
 	}
 	else
 		PRINT_OUT("Selection failed: Model not found.");
-	return this->selected;
+	return this->selected_model;
+}
+
+void World::select_animation()
+{
+	using namespace std;
+
+	// Get WorldObj
+	cin.clear();
+	cout << "Please enter the name of the WorldObj you wish to select a Model from:" << endl;
+	string world_obj_name;
+	cin >> world_obj_name;
+	cin.clear();
+	map<string, WorldObj>::iterator world_obj = this->world_objs.find(world_obj_name);
+	if (world_obj == this->world_objs.end())
+	{
+		cin.clear();
+		PRINT_OUT("Selection failed: WorldObj not found.");
+		return;
+	}
+
+	// Get Animation name
+	cin.clear();
+	cout << "Please enter the name of the Animation you wish to select from this WorldObj" << endl;
+	string animation_name;
+	cin >> animation_name;
+	cin.clear();
+
+	// Set Animation in WorldObj
+	try
+	{
+		world_obj->second.set_animation(animation_name);
+	}
+	catch (...)
+	{
+		PRINT_OUT("Error setting animation to WorldObj, most likely WorldObj doesn't have that animation");
+	}
 }
 
 void World::deselect()
 {
-	this->selected.reset();
+	this->selected_model.reset();
 }
 
 std::shared_ptr<Model> World::get_selected()
 {
-	return this->selected.lock();
+	return this->selected_model.lock();
 }
 
 std::optional<std::weak_ptr<Model>> World::get_model(
@@ -276,9 +312,22 @@ std::optional<std::weak_ptr<Model>> World::get_model(
 	return std::weak_ptr<Model>(model->second);
 }
 
-void WorldObj::render(std::chrono::steady_clock::time_point const now)
+void WorldObj::render()
 {
 	this->root->render();
+}
+
+void WorldObj::update(std::chrono::steady_clock::time_point const now)
+{
+	if (this->animations.find(this->selected_animation) == this->animations.end())
+		return;
+	// auto frames = this->animations.find(this->selected_animation)->second->get_animated_frames(now);
+	// for (std::pair<std::string, std::shared_ptr<Model>> model : this->models)
+	// {
+	// 	model.second->reset_position();
+	// 	model.second->reset_orientation();
+	// 	model.second->reset_scale();
+	// }
 }
 
 void WorldObj::map_models(std::shared_ptr<Model> model)
@@ -286,6 +335,13 @@ void WorldObj::map_models(std::shared_ptr<Model> model)
 	this->models.insert({model->get_name(), model});
 	for (std::shared_ptr<Model> child : model->children)
 		this->map_models(child);
+}
+
+void WorldObj::set_animation(std::string const &animation_name)
+{
+	this->selected_animation = animation_name;
+	if (this->animations.find(this->selected_animation) == this->animations.end())
+		throw;
 }
 
 Skelly::Skelly(std::shared_ptr<Shader> const shader)

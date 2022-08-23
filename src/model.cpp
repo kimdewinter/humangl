@@ -89,7 +89,7 @@ std::string const Model::get_name() const
 }
 
 /// Calcutes transformations, sets uniforms, renders, and calls itself in this->children
-void Model::render(std::map<std::string, mat4> const &animation, mat4 const parent_mat) const
+void Model::render(mat4 const parent_mat) const
 {
 	mat4 for_renderer;
 	mat4 for_child; // The child models must not receive the scaling aspect of the parent transformation
@@ -138,7 +138,7 @@ void Model::render(std::map<std::string, mat4> const &animation, mat4 const pare
 		});
 
 	for (std::shared_ptr<Model> child : this->children)
-		child->render(animation, for_child);
+		child->render(for_child);
 }
 
 void Model::modify_position(vec3 const additives)

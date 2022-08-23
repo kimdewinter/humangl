@@ -2,26 +2,18 @@
 
 namespace
 {
-    nanoseconds const find_longest_duration(std::vector<Channel<Keyframe>> const &channels)
+    nanoseconds const find_longest_duration(
+        std::map<std::string, Channel<Keyframe>> const &channels)
     {
         nanoseconds longest = nanoseconds(0);
-        for (Channel<Keyframe> const channel : channels)
-            for (Keyframe const keyframe : channel.model_frames)
+        for (auto const channel : channels)
+            for (auto const keyframe : channel.second.model_frames)
                 if (keyframe.time > longest)
                     longest = keyframe.time;
         return longest;
     }
 
-    std::map<std::string, Channel<Keyframe>> const
-    map_channels(std::vector<Channel<Keyframe>> const &channels)
-    {
-        std::map<std::string, Channel<Keyframe>> map;
-        for (Channel<Keyframe> channel : channels)
-            map.emplace(channel.model_name, channel);
-        return map;
-    }
-
-    vec3 const interpolate_vec3(vec3 const last, vec3 next, float const scale_factor)
+    vec3 const interpolate_vec3(vec3 const &last, vec3 const &next, float const scale_factor)
     {
         return vec3{last[0] + ((next[0] - last[0]) * scale_factor),
                     last[1] + ((next[1] - last[1]) * scale_factor),
@@ -38,7 +30,10 @@ namespace
         float const scale_factor = mid_way_length / frames_difference;
 
         return Frame{
-            .translations{interpolate_vec3(last_key.translations, next_key.translations, scale_factor)},
+            .translations{interpolate_vec3(
+                last_key.translations,
+                next_key.translations,
+                scale_factor)},
             .rotations{interpolate_vec3(last_key.rotations, next_key.rotations, scale_factor)},
             .scalings{interpolate_vec3(last_key.scalings, next_key.scalings, scale_factor)}};
     }
@@ -48,10 +43,10 @@ namespace
 /// and you must supply a Channel<Keyframe> for every Model that is part of a WorldObj
 Animation::Animation(
     std::string const animation_name,
-    std::vector<Channel<Keyframe>> const &channels)
+    std::map<std::string, Channel<Keyframe>> const &channels)
     : animation_name{animation_name},
       duration{find_longest_duration(channels)},
-      channels{map_channels(channels)}
+      channels{channels}
 {
 }
 
@@ -63,8 +58,6 @@ std::vector<Keyframe> const &Animation::get_channel(std::string const &model_nam
         throw("Could not find requested Channel in Animation.");
     if (channel->second.model_frames.size() < 1)
         throw("Requested Channel had no Keyframes.");
-    if (channel->second.model_name != model_name)
-        throw("Parameter model_name different than member variable model_name in Channel.");
     return channel->second.model_frames;
 }
 
@@ -92,14 +85,17 @@ Frame const Animation::get_animated_frame(
         return Frame{*last_key};
     if (next_key->time == time_elapsed)
         return Frame{*next_key};
+    return interpolate_frames(*last_key, *next_key, time_elapsed);
 }
 
 /// The data returns can be added to the position, rotation and scaling of a WorldObj's Models
-// std::map<std::string, Frame> const Animation::get_animated_frames(
-//     nanoseconds const time_elapsed) const
-// {
-//     std::vector<Channel<Frame>> vec;
-//     for (std::pair<std::string, Channel<Keyframe>> channel : this->channels)
-//     {
-//     }
-// }
+std::map<std::string, Frame> const Animation::get_animated_frames(
+    nanoseconds const time_elapsed) const
+{
+    std::map<std::string, Frame> map;
+    for (auto channel : this->channels)
+        map.insert(std::pair<std::string, Frame>{
+            channel.first,
+            get_animated_frame(channel.first, time_elapsed)});
+    return map;
+}

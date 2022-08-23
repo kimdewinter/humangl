@@ -17,17 +17,20 @@ class World
 public:
 	void spawn_object(std::string const name, WorldObj obj);
 	void remove_object(std::string const name);
-	void render(std::chrono::steady_clock::time_point const now);
-	std::optional<std::weak_ptr<Model>> select();
+	void render();
+	void update(std::chrono::steady_clock::time_point const now);
+	std::optional<std::weak_ptr<Model>> select_model();
 	void deselect();
 	std::shared_ptr<Model> get_selected();
 	std::optional<std::weak_ptr<Model>> get_model(
 		WorldObj &world_obj,
 		std::string const &model_name);
+	void select_animation();
 
 private:
-	std::map<std::string, WorldObj> world_objs;
-	std::weak_ptr<Model> selected;
+	std::map<std::string, WorldObj>
+		world_objs;
+	std::weak_ptr<Model> selected_model;
 };
 
 /// WorldObj is an object in the world, consisting out of one or more Models
@@ -35,16 +38,19 @@ private:
 class WorldObj
 {
 public:
-	void render(std::chrono::steady_clock::time_point const now);
+	void render();
+	void update(std::chrono::steady_clock::time_point const now);
 	void map_models(std::shared_ptr<Model> model);
 	friend std::optional<std::weak_ptr<Model>> World::get_model(
 		WorldObj &world_obj,
 		std::string const &model_name);
+	void set_animation(std::string const &animation_name);
 
 protected:
 	std::shared_ptr<Model> root;
 	std::map<std::string, std::shared_ptr<Model>> models;
-	std::map<std::string, Animation> animations;
+	std::map<std::string, std::shared_ptr<Animation>> animations;
+	std::string selected_animation;
 };
 
 class Skelly : public WorldObj

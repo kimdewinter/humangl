@@ -20,11 +20,11 @@ struct Keyframe : public Frame
     nanoseconds const time = nanoseconds(0); // Time since beginning of animation
 };
 
+/// Holds all the keyframes for a Model,
 /// T should be a Frame or Keyframe, depending on what Channel is used for
 template <typename T>
 struct Channel
 {
-    std::string const model_name = "";
     std::vector<T> const model_frames;
 };
 
@@ -32,7 +32,9 @@ struct Channel
 class Animation
 {
 public:
-    Animation(std::string const animation_name, std::vector<Channel<Keyframe>> const &channels);
+    Animation(
+        std::string const animation_name,
+        std::map<std::string, Channel<Keyframe>> const &channels);
     Frame const get_animated_frame(
         std::string const &model_name,
         nanoseconds const time_elapsed) const;
