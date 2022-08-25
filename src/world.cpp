@@ -212,9 +212,7 @@ void World::remove_object(std::string const name)
 void World::render()
 {
 	for (std::pair<std::string, WorldObj> obj : this->world_objs)
-	{
-		obj.second.render(now);
-	}
+		obj.second.render();
 }
 
 std::optional<std::weak_ptr<Model>> World::select_model()
@@ -312,22 +310,10 @@ std::optional<std::weak_ptr<Model>> World::get_model(
 	return std::weak_ptr<Model>(model->second);
 }
 
-void WorldObj::render()
+void World::update(std::chrono::steady_clock::time_point const now)
 {
-	this->root->render();
-}
-
-void WorldObj::update(std::chrono::steady_clock::time_point const now)
-{
-	if (this->animations.find(this->selected_animation) == this->animations.end())
-		return;
-	// auto frames = this->animations.find(this->selected_animation)->second->get_animated_frames(now);
-	// for (std::pair<std::string, std::shared_ptr<Model>> model : this->models)
-	// {
-	// 	model.second->reset_position();
-	// 	model.second->reset_orientation();
-	// 	model.second->reset_scale();
-	// }
+	for (auto world_obj : this->world_objs)
+		world_obj.second.update(now);
 }
 
 void WorldObj::map_models(std::shared_ptr<Model> model)
@@ -339,9 +325,38 @@ void WorldObj::map_models(std::shared_ptr<Model> model)
 
 void WorldObj::set_animation(std::string const &animation_name)
 {
-	this->selected_animation = animation_name;
-	if (this->animations.find(this->selected_animation) == this->animations.end())
+	std::map<std::string, std::shared_ptr<Animation>>::iterator ptr =
+		this->animations.find(animation_name);
+	if (ptr == this->animations.end())
 		throw;
+	this->selected_animation = ptr->second;
+}
+
+void WorldObj::render()
+{
+	this->root->render();
+}
+
+void WorldObj::update(std::chrono::steady_clock::time_point const now)
+{
+	if (this->selected_animation.expired())
+		return;
+	std::shared_ptr<Animation> animation = this->selected_animation.lock();
+	nanoseconds current_frame = ((this->last_update_animation_frame + (now - this->last_update_timestamp)) % animation->get_duration());
+	std::map<std::string, Frame> const new_frames = animation->get_animated_frames(current_frame);
+
+	// TO DO: DO THE REST OF THIS
+	// for (std::pair<std::string, std::shared_ptr<Model>> model : this->models)
+	// {
+	// 	model.second->reset_position();
+	// 	model.second->reset_orientation();
+	// 	model.second->reset_scale();
+	// }
+}
+
+void WorldObj::unset_animation()
+{
+	this->selected_animation.reset();
 }
 
 Skelly::Skelly(std::shared_ptr<Shader> const shader)

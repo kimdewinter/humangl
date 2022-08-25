@@ -45,12 +45,15 @@ public:
 		WorldObj &world_obj,
 		std::string const &model_name);
 	void set_animation(std::string const &animation_name);
+	void unset_animation();
 
 protected:
 	std::shared_ptr<Model> root;
 	std::map<std::string, std::shared_ptr<Model>> models;
 	std::map<std::string, std::shared_ptr<Animation>> animations;
-	std::string selected_animation;
+	std::weak_ptr<Animation> selected_animation;				 // The animation the WorldObj is performaing
+	std::chrono::steady_clock::time_point last_update_timestamp; // Last update was done on this timestamp
+	std::chrono::nanoseconds last_update_animation_frame;		 // Last update ended on this part of the animation
 };
 
 class Skelly : public WorldObj

@@ -35,10 +35,11 @@ public:
     Animation(
         std::string const animation_name,
         std::map<std::string, Channel<Keyframe>> const &channels);
+    std::chrono::nanoseconds const get_duration() const;
     Frame const get_animated_frame(
         std::string const &model_name,
         nanoseconds const time_elapsed) const;
-    std::map<std::string, Frame> const get_animated_frames(nanoseconds const time_elapsed) const;
+    std::map<std::string, Frame> const get_animated_frames(nanoseconds const animation_frame) const;
 
 private:
     std::vector<Keyframe> const &get_channel(std::string const &model_name) const;

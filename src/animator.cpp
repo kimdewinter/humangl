@@ -23,9 +23,9 @@ namespace
     Frame const interpolate_frames(
         Keyframe const &last_key,
         Keyframe const &next_key,
-        nanoseconds const time_elapsed)
+        nanoseconds const animation_frame)
     {
-        nanoseconds const mid_way_length = time_elapsed - last_key.time;
+        nanoseconds const mid_way_length = animation_frame - last_key.time;
         nanoseconds const frames_difference = next_key.time - last_key.time;
         float const scale_factor = mid_way_length / frames_difference;
 
@@ -61,9 +61,14 @@ std::vector<Keyframe> const &Animation::get_channel(std::string const &model_nam
     return channel->second.model_frames;
 }
 
+std::chrono::nanoseconds const Animation::get_duration() const
+{
+    return this->duration;
+}
+
 Frame const Animation::get_animated_frame(
     std::string const &model_name,
-    nanoseconds const time_elapsed) const
+    nanoseconds const animation_frame) const
 {
     std::vector<Keyframe> const &channel = this->get_channel(model_name);
 
@@ -74,28 +79,28 @@ Frame const Animation::get_animated_frame(
     // Keep advancing until you find the current time point (between two keyframes)
     std::vector<Keyframe>::const_iterator last_key = channel.begin();
     std::vector<Keyframe>::const_iterator next_key = channel.begin()++;
-    while (!(last_key->time <= time_elapsed && next_key->time >= time_elapsed))
+    while (!(last_key->time <= animation_frame && next_key->time >= animation_frame))
     {
         last_key++;
         next_key++;
     }
 
     // If current time is right on a keyframe, there's no point in interpolating
-    if (last_key->time == time_elapsed)
+    if (last_key->time == animation_frame)
         return Frame{*last_key};
-    if (next_key->time == time_elapsed)
+    if (next_key->time == animation_frame)
         return Frame{*next_key};
-    return interpolate_frames(*last_key, *next_key, time_elapsed);
+    return interpolate_frames(*last_key, *next_key, animation_frame);
 }
 
 /// The data returns can be added to the position, rotation and scaling of a WorldObj's Models
 std::map<std::string, Frame> const Animation::get_animated_frames(
-    nanoseconds const time_elapsed) const
+    nanoseconds const animation_frame) const
 {
     std::map<std::string, Frame> map;
     for (auto channel : this->channels)
         map.insert(std::pair<std::string, Frame>{
             channel.first,
-            get_animated_frame(channel.first, time_elapsed)});
+            get_animated_frame(channel.first, animation_frame)});
     return map;
 }
