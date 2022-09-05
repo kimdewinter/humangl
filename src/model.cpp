@@ -156,6 +156,21 @@ void Model::modify_scale(vec3 const additives)
 	this->scale = addition_vec3(this->scale, additives);
 }
 
+void Model::set_position(vec3 const position)
+{
+	this->position = position;
+}
+
+void Model::set_orientation(vec3 const orientation)
+{
+	this->orientation = orientation;
+}
+
+void Model::set_scale(vec3 const scale)
+{
+	this->scale = scale;
+}
+
 void Model::set_color(vec4 const color)
 {
 	this->color = color;
