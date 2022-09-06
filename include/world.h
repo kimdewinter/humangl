@@ -4,7 +4,9 @@
 #include <vector>
 #include <memory>
 #include <optional>
+#include <chrono>
 #include "shader.h"
+#include "animator.h"
 
 class Model;
 class WorldObj;
@@ -16,16 +18,19 @@ public:
 	void spawn_object(std::string const name, WorldObj obj);
 	void remove_object(std::string const name);
 	void render();
-	std::optional<std::weak_ptr<Model>> select();
-	void deselect();
+	void update(std::chrono::steady_clock::time_point const now);
+	std::optional<std::weak_ptr<Model>> select_model();
+	void deselect_model();
 	std::shared_ptr<Model> get_selected();
 	std::optional<std::weak_ptr<Model>> get_model(
 		WorldObj &world_obj,
 		std::string const &model_name);
+	void select_animation();
 
 private:
-	std::map<std::string, WorldObj> world_objs;
-	std::weak_ptr<Model> selected;
+	std::map<std::string, WorldObj>
+		world_objs;
+	std::weak_ptr<Model> selected_model;
 };
 
 /// WorldObj is an object in the world, consisting out of one or more Models
@@ -34,14 +39,21 @@ class WorldObj
 {
 public:
 	void render();
+	void update(std::chrono::steady_clock::time_point const now);
 	void map_models(std::shared_ptr<Model> model);
 	friend std::optional<std::weak_ptr<Model>> World::get_model(
 		WorldObj &world_obj,
 		std::string const &model_name);
+	void set_animation(std::string const &animation_name);
+	void unset_animation();
 
 protected:
 	std::shared_ptr<Model> root;
 	std::map<std::string, std::shared_ptr<Model>> models;
+	std::map<std::string, std::shared_ptr<Animation>> animations;
+	std::weak_ptr<Animation> selected_animation;				 // The animation the WorldObj is performaing
+	std::chrono::steady_clock::time_point last_update_timestamp; // Last update was done on this timestamp
+	std::chrono::nanoseconds last_update_animation_frame;		 // Last update ended on this part of the animation
 };
 
 class Skelly : public WorldObj

@@ -8,16 +8,16 @@
 
 namespace
 {
-	void update()
-	{
-		// Placeholder for updating game logic
-	}
-
 	void populate_world(World &world)
 	{
 		std::shared_ptr<Shader> shader =
 			std::make_shared<Shader>("resources/shader.vert", "resources/shader.frag");
 		world.spawn_object("skelly", Skelly(shader));
+	}
+
+	void update(World &world, std::chrono::steady_clock::time_point const now)
+	{
+		world.update(now);
 	}
 
 	void render(Env const &env, World &world)
@@ -51,7 +51,7 @@ int main()
 
 		while (lag >= ns_per_update)
 		{
-			update();
+			update(world, steady_clock::now());
 			lag -= ns_per_update;
 		}
 

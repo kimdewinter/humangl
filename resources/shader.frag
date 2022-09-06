@@ -1,4 +1,4 @@
-#version 330 core
+#version 410 core
 
 uniform vec4 color_in;
 out vec4 color_out;

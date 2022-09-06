@@ -92,7 +92,7 @@ std::string const Model::get_name() const
 void Model::render(mat4 const parent_mat) const
 {
 	mat4 for_renderer;
-	mat4 for_child;
+	mat4 for_child; // The child models must not receive the scaling aspect of the parent transformation
 	{
 		mat4 scaling = get_scaling_mat4(this->scale[0], this->scale[1], this->scale[2]);
 		mat4 rotation = get_rotation_around_joint(
@@ -154,6 +154,21 @@ void Model::modify_orientation(vec3 const additives)
 void Model::modify_scale(vec3 const additives)
 {
 	this->scale = addition_vec3(this->scale, additives);
+}
+
+void Model::set_position(vec3 const position)
+{
+	this->position = position;
+}
+
+void Model::set_orientation(vec3 const orientation)
+{
+	this->orientation = orientation;
+}
+
+void Model::set_scale(vec3 const scale)
+{
+	this->scale = scale;
 }
 
 void Model::set_color(vec4 const color)

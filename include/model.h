@@ -39,6 +39,9 @@ public:
 	void modify_position(vec3 const additives);
 	void modify_orientation(vec3 const additives);
 	void modify_scale(vec3 const additives);
+	void set_position(vec3 const position);
+	void set_orientation(vec3 const orientation);
+	void set_scale(vec3 const scale);
 	void set_color(vec4 const color);
 	void reset_position();
 	void reset_orientation();
@@ -50,8 +53,8 @@ public:
 private:
 	std::string const name;
 	std::forward_list<std::shared_ptr<Model>> children;
-	vec3 position; // Relative to parent (or world if Model instance is the root part)
-	vec3 const default_position;
+	vec3 position;				 // Relative to parent (or world if Model instance is the root part)
+	vec3 const default_position; // Used for resetting
 	vec3 orientation;
 	vec3 const default_orientation;
 	vec3 scale;
