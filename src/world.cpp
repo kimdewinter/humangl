@@ -67,7 +67,7 @@ namespace
 				{0.0, 0.0, 0.0},					 // Orientation
 				{-0.625, 0.2, -0.625},				 // Scale
 				{1.0, 1.0, 0.0, 0.0},				 // Color
-				{0.1, -0.325, 0.0}}};				 // Joint
+				{0.0, -0.6, 0.0}}};					 // Joint
 	}
 	std::shared_ptr<Model> create_left_lower_leg(std::shared_ptr<Shader> const shader)
 	{
@@ -98,7 +98,7 @@ namespace
 				{0.0, 0.0, 0.0},					// Orientation
 				{-0.625, 0.2, -0.625},				// Scale
 				{1.0, 1.0, 0.0, 0.0},				// Color
-				{-0.1, -0.325, 0.0}}};				// Joint
+				{0.0, -0.6, 0.0}}};					// Joint
 	}
 	std::shared_ptr<Model> create_right_lower_arm(std::shared_ptr<Shader> const shader)
 	{
@@ -113,7 +113,7 @@ namespace
 				{0.0, 0.0, 0.0},							 // Orientation
 				{-0.7, 0.2, -0.7},							 // Scale
 				{1.0, 1.0, 0.0, 0.0},						 // Color
-				{0.0, -0.35, 0.0}}};						 // Joint
+				{0.0, -0.55, 0.0}}};						 // Joint
 	}
 	std::shared_ptr<Model> create_right_upper_arm(std::shared_ptr<Shader> const shader)
 	{
@@ -129,7 +129,7 @@ namespace
 				{0.0, 0.0, 0.0},					 // Orientation
 				{-0.7, 0.2, -0.7},					 // Scale
 				{1.0, 1.0, 0.0, 0.0},				 // Color
-				{0.1, -0.325, 0.0}}};				 // Joint
+				{0.0, -0.55, 0.0}}};				 // Joint
 	}
 	std::shared_ptr<Model> create_left_lower_arm(std::shared_ptr<Shader> const shader)
 	{
@@ -144,7 +144,7 @@ namespace
 				{0.0, 0.0, 0.0},							 // Orientation
 				{-0.7, 0.2, -0.7},							 // Scale
 				{1.0, 1.0, 0.0, 0.0},						 // Color
-				{0.0, -0.35, 0.0}}};						 // Joint
+				{0.0, -0.55, 0.0}}};						 // Joint
 	}
 	std::shared_ptr<Model> create_left_upper_arm(std::shared_ptr<Shader> const shader)
 	{
@@ -160,7 +160,7 @@ namespace
 				{0.0, 0.0, 0.0},					// Orientation
 				{-0.7, 0.2, -0.7},					// Scale
 				{1.0, 1.0, 0.0, 0.0},				// Color
-				{-0.1, -0.325, 0.0}}};				// Joint
+				{0.0, -0.55, 0.0}}};				// Joint
 	}
 	std::shared_ptr<Model> create_head(std::shared_ptr<Shader> const shader)
 	{
