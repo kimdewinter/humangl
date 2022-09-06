@@ -219,7 +219,7 @@ std::optional<std::weak_ptr<Model>> World::select_model()
 {
 	using namespace std;
 	// Let go of any previously selected
-	this->deselect();
+	this->deselect_model();
 
 	// Get WorldObj
 	cin.clear();
@@ -290,7 +290,7 @@ void World::select_animation()
 	}
 }
 
-void World::deselect()
+void World::deselect_model()
 {
 	this->selected_model.reset();
 }
@@ -344,14 +344,13 @@ void WorldObj::update(std::chrono::steady_clock::time_point const now)
 	std::shared_ptr<Animation> animation = this->selected_animation.lock();
 	nanoseconds current_frame = ((this->last_update_animation_frame + (now - this->last_update_timestamp)) % animation->get_duration());
 	std::map<std::string, Frame> const new_frames = animation->get_animated_frames(current_frame);
-
-	// TO DO: DO THE REST OF THIS
-	// for (std::pair<std::string, std::shared_ptr<Model>> model : this->models)
-	// {
-	// 	model.second->reset_position();
-	// 	model.second->reset_orientation();
-	// 	model.second->reset_scale();
-	// }
+	for (std::pair<std::string, std::shared_ptr<Model>> model : this->models)
+	{
+		std::map<std::string, Frame>::const_iterator frame = new_frames.find(model.first);
+		if (frame != new_frames.end())
+			continue;
+		model.second->set_position(frame->second.translations);
+	}
 }
 
 void WorldObj::unset_animation()

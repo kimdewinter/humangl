@@ -9,7 +9,7 @@ InputHandler::InputHandler()
 						 { glfwSetWindowShouldClose(this->window, true); }),
 		// Keypress that allows you to select a world object
 		new Unrepeatable(GLFW_KEY_SPACE, [&]()
-						 { this->world->select(); }),
+						 { this->world->select_animation(); }),
 		// Keypresses that change translation
 		new Repeatable(GLFW_KEY_Q, [&]()
 					   {

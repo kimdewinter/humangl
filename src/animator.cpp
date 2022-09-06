@@ -30,12 +30,12 @@ namespace
         float const scale_factor = mid_way_length / frames_difference;
 
         return Frame{
-            .translations{interpolate_vec3(
+            .translations = interpolate_vec3(
                 last_key.translations,
                 next_key.translations,
-                scale_factor)},
-            .rotations{interpolate_vec3(last_key.rotations, next_key.rotations, scale_factor)},
-            .scalings{interpolate_vec3(last_key.scalings, next_key.scalings, scale_factor)}};
+                scale_factor),
+            .rotations = interpolate_vec3(last_key.rotations, next_key.rotations, scale_factor),
+            .scalings = interpolate_vec3(last_key.scalings, next_key.scalings, scale_factor)};
     }
 }
 

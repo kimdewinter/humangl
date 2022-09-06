@@ -20,7 +20,7 @@ public:
 	void render();
 	void update(std::chrono::steady_clock::time_point const now);
 	std::optional<std::weak_ptr<Model>> select_model();
-	void deselect();
+	void deselect_model();
 	std::shared_ptr<Model> get_selected();
 	std::optional<std::weak_ptr<Model>> get_model(
 		WorldObj &world_obj,
