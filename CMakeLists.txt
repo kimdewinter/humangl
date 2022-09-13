@@ -46,6 +46,8 @@ ${SOURCE_DIR}/shader.cpp
 ${SOURCE_DIR}/world.cpp
 ${SOURCE_DIR}/input.cpp
 ${SOURCE_DIR}/animator.cpp
+${SOURCE_DIR}/skelly.cpp
+${SOURCE_DIR}/main_loop.cpp
 )
 
 add_executable(humangl ${sources} ${includes})
@@ -86,4 +88,4 @@ set_target_properties(humangl PROPERTIES
 set_target_properties(humangl PROPERTIES FOLDER ${PROJECT_NAME})
 
 # Set build type to Release or Debug
-set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_BUILD_TYPE Debug)

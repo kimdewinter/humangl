@@ -46,6 +46,6 @@ private:
 	};
 
 	std::vector<Key *> keys;
-	GLFWwindow *window = NULL; // For use by keys' functions. Set, use "action" lambda function, and unset
-	World *world = NULL;	   // For use by keys' functions. Set, use "action" lambda function, and unset
+	GLFWwindow *window = NULL; // For use by keys' functions. Set, use "action" lambda function, and unset back to NULL
+	World *world = NULL;	   // For use by keys' functions. Set, use "action" lambda function, and unset back to NULL
 };

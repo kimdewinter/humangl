@@ -1,201 +1,43 @@
 #include "world.h"
 #include "model.h"
 #include "main.h"
+#include "animator.h"
+#include "skelly.h"
 
 namespace
 {
-	std::vector<std::vector<vec3>> get_cube_vertices()
+	/// Returns how many nanoseconds into the animation we should currently be
+	std::chrono::nanoseconds calculate_current_frame(
+		std::chrono::steady_clock::time_point const current_timestamp,
+		std::chrono::steady_clock::time_point const last_update_timestamp,
+		std::chrono::nanoseconds const last_update_nanoseconds_into_animation,
+		std::chrono::nanoseconds const animation_duration)
 	{
-		return std::vector<std::vector<vec3>>(
-			{
-				{
-					{-0.5, 0.5, 0.5},
-					{-0.5, -0.5, 0.5},
-					{0.5, -0.5, 0.5},
-					{0.5, 0.5, 0.5},
-					{-0.5, 0.5, -0.5},
-					{-0.5, -0.5, -0.5},
-					{0.5, -0.5, -0.5},
-					{0.5, 0.5, -0.5},
-				},
-			});
-	}
+		// If animation has only one Keyframe, just return 0 nanoseconds,
+		// otherwise modulo will cause a floating point error
+		if (animation_duration == std::chrono::nanoseconds(0))
+			return std::chrono::nanoseconds(0);
 
-	std::vector<unsigned int> get_cube_indices()
-	{
-		return std::vector<unsigned int>(
-			{0, 1, 3,
-			 1, 2, 3,
-			 7, 6, 4,
-			 6, 5, 4,
-			 3, 2, 7,
-			 2, 6, 7,
-			 4, 0, 7,
-			 0, 3, 7,
-			 4, 5, 0,
-			 5, 1, 0,
-			 1, 5, 2,
-			 5, 6, 2});
-	}
+		// You take the amount of nanoseconds between last_update_timestamp and current_timestamp,
+		// you add how many nanoseconds into the animation it was on the last update,
+		// and then modulo in case the result is longer than the nanosecond-duration of the entire animation
+		// this tells you how many nanoseconds into the animation we should be in the present
 
-	std::shared_ptr<Model> create_right_lower_leg(std::shared_ptr<Shader> const shader)
-	{
-		return std::shared_ptr<Model>{
-			new Model{
-				"right_lower_leg",							 // Name
-				std::forward_list<std::shared_ptr<Model>>{}, // Children
-				get_cube_vertices(),						 // Vertices
-				get_cube_indices(),							 // Indices
-				shader,										 // Shader
-				{0.0, -1.2, 0.0},							 // Position
-				{0.0, 0.0, 0.0},							 // Orientation
-				{-0.625, 0.2, -0.625},						 // Scale
-				{1.0, 1.0, 0.0, 0.0},						 // Color
-				{0.0, -0.6, 0.0}}};							 // Joint
-	}
-	std::shared_ptr<Model> create_right_upper_leg(std::shared_ptr<Shader> const shader)
-	{
-		return std::shared_ptr<Model>{
-			new Model{
-				"right_upper_leg", // Name
-				std::forward_list<std::shared_ptr<Model>>{
-					create_right_lower_leg(shader)}, // Children
-				get_cube_vertices(),				 // Vertices
-				get_cube_indices(),					 // Indices
-				shader,								 // Shader
-				{-0.25, -1.6, 0.0},					 // Position
-				{0.0, 0.0, 0.0},					 // Orientation
-				{-0.625, 0.2, -0.625},				 // Scale
-				{1.0, 1.0, 0.0, 0.0},				 // Color
-				{0.0, -0.6, 0.0}}};					 // Joint
-	}
-	std::shared_ptr<Model> create_left_lower_leg(std::shared_ptr<Shader> const shader)
-	{
-		return std::shared_ptr<Model>{
-			new Model{
-				"left_lower_leg",							 // Name
-				std::forward_list<std::shared_ptr<Model>>{}, // Children
-				get_cube_vertices(),						 // Vertices
-				get_cube_indices(),							 // Indices
-				shader,										 // Shader
-				{0.0, -1.2, 0.0},							 // Position
-				{0.0, 0.0, 0.0},							 // Orientation
-				{-0.625, 0.2, -0.625},						 // Scale
-				{1.0, 1.0, 0.0, 0.0},						 // Color
-				{0.0, -0.6, 0.0}}};							 // Joint
-	}
-	std::shared_ptr<Model> create_left_upper_leg(std::shared_ptr<Shader> const shader)
-	{
-		return std::shared_ptr<Model>{
-			new Model{
-				"left_upper_leg", // Name
-				std::forward_list<std::shared_ptr<Model>>{
-					create_left_lower_leg(shader)}, // Children
-				get_cube_vertices(),				// Vertices
-				get_cube_indices(),					// Indices
-				shader,								// Shader
-				{0.25, -1.6, 0.0},					// Position
-				{0.0, 0.0, 0.0},					// Orientation
-				{-0.625, 0.2, -0.625},				// Scale
-				{1.0, 1.0, 0.0, 0.0},				// Color
-				{0.0, -0.6, 0.0}}};					// Joint
-	}
-	std::shared_ptr<Model> create_right_lower_arm(std::shared_ptr<Shader> const shader)
-	{
-		return std::shared_ptr<Model>{
-			new Model{
-				"right_lower_arm",							 // Name
-				std::forward_list<std::shared_ptr<Model>>{}, // Children
-				get_cube_vertices(),						 // Vertices
-				get_cube_indices(),							 // Indices
-				shader,										 // Shader
-				{0.0, -1.2, 0.0},							 // Position
-				{0.0, 0.0, 0.0},							 // Orientation
-				{-0.7, 0.2, -0.7},							 // Scale
-				{1.0, 1.0, 0.0, 0.0},						 // Color
-				{0.0, -0.55, 0.0}}};						 // Joint
-	}
-	std::shared_ptr<Model> create_right_upper_arm(std::shared_ptr<Shader> const shader)
-	{
-		return std::shared_ptr<Model>{
-			new Model{
-				"right_upper_arm", // Name
-				std::forward_list<std::shared_ptr<Model>>{
-					create_right_lower_arm(shader)}, // Children
-				get_cube_vertices(),				 // Vertices
-				get_cube_indices(),					 // Indices
-				shader,								 // Shader
-				{-0.67, 0.3, 0.0},					 // Position
-				{0.0, 0.0, 0.0},					 // Orientation
-				{-0.7, 0.2, -0.7},					 // Scale
-				{1.0, 1.0, 0.0, 0.0},				 // Color
-				{0.0, -0.55, 0.0}}};				 // Joint
-	}
-	std::shared_ptr<Model> create_left_lower_arm(std::shared_ptr<Shader> const shader)
-	{
-		return std::shared_ptr<Model>{
-			new Model{
-				"left_lower_arm",							 // Name
-				std::forward_list<std::shared_ptr<Model>>{}, // Children
-				get_cube_vertices(),						 // Vertices
-				get_cube_indices(),							 // Indices
-				shader,										 // Shader
-				{0.0, -1.2, 0.0},							 // Position
-				{0.0, 0.0, 0.0},							 // Orientation
-				{-0.7, 0.2, -0.7},							 // Scale
-				{1.0, 1.0, 0.0, 0.0},						 // Color
-				{0.0, -0.55, 0.0}}};						 // Joint
-	}
-	std::shared_ptr<Model> create_left_upper_arm(std::shared_ptr<Shader> const shader)
-	{
-		return std::shared_ptr<Model>{
-			new Model{
-				"left_upper_arm", // Name
-				std::forward_list<std::shared_ptr<Model>>{
-					create_left_lower_arm(shader)}, // Children
-				get_cube_vertices(),				// Vertices
-				get_cube_indices(),					// Indices
-				shader,								// Shader
-				{0.67, 0.3, 0.0},					// Position
-				{0.0, 0.0, 0.0},					// Orientation
-				{-0.7, 0.2, -0.7},					// Scale
-				{1.0, 1.0, 0.0, 0.0},				// Color
-				{0.0, -0.55, 0.0}}};				// Joint
-	}
-	std::shared_ptr<Model> create_head(std::shared_ptr<Shader> const shader)
-	{
-		return std::shared_ptr<Model>{
-			new Model{
-				"head",										 // Name
-				std::forward_list<std::shared_ptr<Model>>{}, // Children
-				get_cube_vertices(),						 // Vertices
-				get_cube_indices(),							 // Indices
-				shader,										 // Shader
-				{0.0, 1.3, 0.0},							 // Position
-				{0.0, 0.0, 0.0},							 // Orientation
-				{-0.4, -0.4, -0.65},						 // Scale
-				{1.0, 1.0, 0.0, 0.0},						 // Color
-				{0.0, 0.2, 0.0}}};							 // Joint
-	}
-	/// Hardcoded constructor of a skeleton
-	std::shared_ptr<Model> create_torso(std::shared_ptr<Shader> const shader)
-	{
-		return std::shared_ptr<Model>{
-			new Model{
-				"torso", // Name
-				std::forward_list<std::shared_ptr<Model>>{
-					create_head(shader),
-					create_left_upper_arm(shader),
-					create_right_upper_arm(shader),
-					create_left_upper_leg(shader),
-					create_right_upper_leg(shader)}, // Children
-				get_cube_vertices(),				 // Vertices
-				get_cube_indices(),					 // Indices
-				shader,								 // Shader
-				{0.0, 0.75, -3.0},					 // Position
-				{0.0, 0.0, 0.0},					 // Orientation
-				{0.0, 1.0, -0.5},					 // Scale
-				{1.0, 1.0, 0.0, 0.0}}};				 // Color
+		// Calculate the nanoseconds since last update
+		std::chrono::nanoseconds time_since_last_update = current_timestamp - last_update_timestamp;
+
+		// Add this to how far into the animation we were last update,
+		// this may be 0,
+		// this may also be longer than the length of the entire animation
+		std::chrono::nanoseconds intermediary_frame =
+			last_update_nanoseconds_into_animation + time_since_last_update;
+
+		// In case of 0, we don't want to modulo but just return 0
+		if (intermediary_frame == std::chrono::nanoseconds(0))
+			return std::chrono::nanoseconds(0);
+
+		// Otherwise, modulo to loop around the beginning of the animation and return the right frame
+		return (intermediary_frame % animation_duration);
 	}
 }
 
@@ -247,10 +89,10 @@ std::optional<std::weak_ptr<Model>> World::select_model()
 	if (model)
 	{
 		this->selected_model = model.value();
-		PRINT_OUT("Selection succesful.");
+		PRINT_OUT("Model selection succesful.");
 	}
 	else
-		PRINT_OUT("Selection failed: Model not found.");
+		PRINT_OUT("Model selection failed: Model not found.");
 	return this->selected_model;
 }
 
@@ -288,6 +130,7 @@ void World::select_animation()
 	{
 		PRINT_OUT("Error setting animation to WorldObj, most likely WorldObj doesn't have that animation");
 	}
+	PRINT_OUT("Animation selection succesful.");
 }
 
 void World::deselect_model()
@@ -310,10 +153,12 @@ std::optional<std::weak_ptr<Model>> World::get_model(
 	return std::weak_ptr<Model>(model->second);
 }
 
-void World::update(std::chrono::steady_clock::time_point const now)
+void World::update(
+	std::chrono::steady_clock::time_point const now,
+	std::chrono::steady_clock::time_point const last_update)
 {
-	for (auto world_obj : this->world_objs)
-		world_obj.second.update(now);
+	for (auto iter = this->world_objs.begin(); iter != this->world_objs.end(); iter++)
+		iter->second.update(now, last_update);
 }
 
 void WorldObj::map_models(std::shared_ptr<Model> model)
@@ -328,7 +173,7 @@ void WorldObj::set_animation(std::string const &animation_name)
 	std::map<std::string, std::shared_ptr<Animation>>::iterator ptr =
 		this->animations.find(animation_name);
 	if (ptr == this->animations.end())
-		throw;
+		throw std::runtime_error("Animation not found.");
 	this->selected_animation = ptr->second;
 }
 
@@ -337,19 +182,36 @@ void WorldObj::render()
 	this->root->render();
 }
 
-void WorldObj::update(std::chrono::steady_clock::time_point const now)
+void WorldObj::update(
+	std::chrono::steady_clock::time_point const now,
+	std::chrono::steady_clock::time_point const last_update)
 {
+	// If current WorldObj isn't doing any kind of animation, we can leave it as-is
 	if (this->selected_animation.expired())
 		return;
+
 	std::shared_ptr<Animation> animation = this->selected_animation.lock();
-	nanoseconds current_frame = ((this->last_update_animation_frame + (now - this->last_update_timestamp)) % animation->get_duration());
+	// Find out how many nanoseconds into the animation we should be
+	std::chrono::nanoseconds current_frame = calculate_current_frame(
+		now,
+		last_update,
+		this->last_update_animation_frame,
+		animation->get_duration());
+	this->last_update_animation_frame = current_frame;
+
+	// Now we get the data that tells us how to animate the WorldObj and it's Models, and apply it
 	std::map<std::string, Frame> const new_frames = animation->get_animated_frames(current_frame);
 	for (std::pair<std::string, std::shared_ptr<Model>> model : this->models)
 	{
 		std::map<std::string, Frame>::const_iterator frame = new_frames.find(model.first);
-		if (frame != new_frames.end())
+		if (frame == new_frames.end())
 			continue;
-		model.second->set_position(frame->second.translations);
+		model.second->reset_position();
+		model.second->modify_position(frame->second.translations);
+		model.second->reset_orientation();
+		model.second->modify_orientation(frame->second.rotations);
+		model.second->reset_scale();
+		model.second->modify_scale(frame->second.scalings);
 	}
 }
 
@@ -360,6 +222,10 @@ void WorldObj::unset_animation()
 
 Skelly::Skelly(std::shared_ptr<Shader> const shader)
 {
-	this->root = create_torso(shader);
+	this->root = SkellyCreation::create_torso(shader);
 	this->map_models(this->root);
+	this->animations.insert({"walk", SkellyAnimation::create_animation_walk()});
+#if SET_ANIM_AT_START == 1
+	this->set_animation(ANIM_AT_START);
+#endif
 }

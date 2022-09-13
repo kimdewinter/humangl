@@ -18,7 +18,9 @@ public:
 	void spawn_object(std::string const name, WorldObj obj);
 	void remove_object(std::string const name);
 	void render();
-	void update(std::chrono::steady_clock::time_point const now);
+	void update(
+		std::chrono::steady_clock::time_point const now,
+		std::chrono::steady_clock::time_point const last_update);
 	std::optional<std::weak_ptr<Model>> select_model();
 	void deselect_model();
 	std::shared_ptr<Model> get_selected();
@@ -28,8 +30,7 @@ public:
 	void select_animation();
 
 private:
-	std::map<std::string, WorldObj>
-		world_objs;
+	std::map<std::string, WorldObj> world_objs;
 	std::weak_ptr<Model> selected_model;
 };
 
@@ -39,7 +40,9 @@ class WorldObj
 {
 public:
 	void render();
-	void update(std::chrono::steady_clock::time_point const now);
+	void update(
+		std::chrono::steady_clock::time_point const now,
+		std::chrono::steady_clock::time_point const last_update);
 	void map_models(std::shared_ptr<Model> model);
 	friend std::optional<std::weak_ptr<Model>> World::get_model(
 		WorldObj &world_obj,
@@ -51,9 +54,8 @@ protected:
 	std::shared_ptr<Model> root;
 	std::map<std::string, std::shared_ptr<Model>> models;
 	std::map<std::string, std::shared_ptr<Animation>> animations;
-	std::weak_ptr<Animation> selected_animation;				 // The animation the WorldObj is performaing
-	std::chrono::steady_clock::time_point last_update_timestamp; // Last update was done on this timestamp
-	std::chrono::nanoseconds last_update_animation_frame;		 // Last update ended on this part of the animation
+	std::weak_ptr<Animation> selected_animation;										// The animation the WorldObj is performaing
+	std::chrono::nanoseconds last_update_animation_frame = std::chrono::nanoseconds(0); // Last update ended this far into the animation
 };
 
 class Skelly : public WorldObj

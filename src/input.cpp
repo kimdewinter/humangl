@@ -10,6 +10,9 @@ InputHandler::InputHandler()
 		// Keypress that allows you to select a world object
 		new Unrepeatable(GLFW_KEY_SPACE, [&]()
 						 { this->world->select_model(); }),
+		// Keypress that allows you to select an animation
+		new Unrepeatable(GLFW_KEY_ENTER, [&]()
+						 { this->world->select_animation(); }),
 		// Keypresses that change translation
 		new Repeatable(GLFW_KEY_Q, [&]()
 					   {
