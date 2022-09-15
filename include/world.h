@@ -35,10 +35,16 @@ private:
 };
 
 /// WorldObj is an object in the world, consisting out of one or more Models
-/// It is not meant to be used directly, instead inherit from it and create a specific constructor
 class WorldObj
 {
 public:
+	/// @param root the root model with it's children Models attached
+	/// @param animations a map of all Animations the WorldObj should be able to perform
+	/// @param anim_at_start optional setting of starting animation
+	WorldObj(
+		std::shared_ptr<Model> root,
+		std::map<std::string, std::shared_ptr<Animation>> animations,
+		std::string const &anim_at_start = {});
 	void render();
 	void update(
 		std::chrono::steady_clock::time_point const now,
@@ -56,10 +62,4 @@ protected:
 	std::map<std::string, std::shared_ptr<Animation>> animations;
 	std::weak_ptr<Animation> selected_animation;										// The animation the WorldObj is performaing
 	std::chrono::nanoseconds last_update_animation_frame = std::chrono::nanoseconds(0); // Last update ended this far into the animation
-};
-
-class Skelly : public WorldObj
-{
-public:
-	Skelly(std::shared_ptr<Shader> const shader);
 };

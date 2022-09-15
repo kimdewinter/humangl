@@ -2,21 +2,11 @@
 #include "model.h"
 #include "types.h"
 
-namespace CubeCreation
+namespace Skelly
 {
-	/// Use to get a hardcoded 1x1x1 cube
-	std::vector<std::vector<vec3>> get_cube_vertices();
-	std::vector<unsigned int> get_cube_indices();
-}
+	/// Hardcoded constructor of the root Model, with it's children already attached
+	std::shared_ptr<Model> create_skelly(std::shared_ptr<Shader> const shader);
 
-namespace SkellyCreation
-{
-	/// Hardcoded constructor of a skeleton
-	std::shared_ptr<Model> create_torso(std::shared_ptr<Shader> const shader);
-}
-
-namespace SkellyAnimation
-{
-	/// Hardcoded constructor of a skeleton's animation
+	/// Hardcoded constructor of an animation
 	std::shared_ptr<Animation> create_animation_walk();
 }

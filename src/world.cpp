@@ -220,12 +220,13 @@ void WorldObj::unset_animation()
 	this->selected_animation.reset();
 }
 
-Skelly::Skelly(std::shared_ptr<Shader> const shader)
+WorldObj::WorldObj(
+	std::shared_ptr<Model> root,
+	std::map<std::string, std::shared_ptr<Animation>> animations,
+	std::string const &anim_at_start) : root(root),
+										animations(animations)
 {
-	this->root = SkellyCreation::create_torso(shader);
 	this->map_models(this->root);
-	this->animations.insert({"walk", SkellyAnimation::create_animation_walk()});
-#if SET_ANIM_AT_START == 1
-	this->set_animation(ANIM_AT_START);
-#endif
+	if (!anim_at_start.empty())
+		this->set_animation(anim_at_start);
 }

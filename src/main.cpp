@@ -3,6 +3,7 @@
 #include "model.h"
 #include "shader.h"
 #include "world.h"
+#include "skelly.h"
 #include "main_loop.h"
 #include <chrono>
 #include <iostream>
@@ -29,7 +30,13 @@ namespace
 	{
 		std::shared_ptr<Shader> shader =
 			std::make_shared<Shader>("resources/shader.vert", "resources/shader.frag");
-		world.spawn_object("skelly", Skelly(shader));
+		std::shared_ptr<Animation> skelly_walk = Skelly::create_animation_walk();
+		world.spawn_object(
+			"skelly",
+			WorldObj(
+				Skelly::create_skelly(shader),
+				std::map<std::string, std::shared_ptr<Animation>>{{"walk", skelly_walk}},
+				"walk"));
 	}
 
 	void render(Env const &env, World &world)
