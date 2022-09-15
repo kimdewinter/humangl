@@ -7,7 +7,7 @@
 #include <chrono>
 #include <iostream>
 #include <execinfo.h>
-#include <unistd.h>
+#include <signal.h>
 
 namespace
 {
