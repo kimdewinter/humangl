@@ -573,6 +573,65 @@ namespace Skelly
 
 	/********************************* JUMPING ANIMATION *********************************/
 
+	std::pair<std::string, Channel<Keyframe>> jump_left_lower_arm()
+	{
+		Keyframe first = {
+			{
+				.rotations = {-1.5, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
+		};
+
+		Keyframe second = {
+			{
+				.rotations = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(250)),
+		};
+
+		Keyframe third = {
+			{
+				.rotations = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(750)),
+		};
+
+		Keyframe fourth = {
+			{
+				.rotations = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1250)),
+		};
+
+		Keyframe fifth = {
+			{
+				.rotations = {-1.5, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1500)),
+		};
+
+		Keyframe sixth = {
+			{
+				.rotations = {-1.5, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(2000)),
+		};
+
+		return {
+			"left_lower_arm",
+			Channel<Keyframe>{
+				.model_frames = {
+					first,
+					second,
+					third,
+					fourth,
+					fifth,
+					sixth,
+				},
+			},
+		};
+	}
+
 	std::pair<std::string, Channel<Keyframe>> jump_right_lower_arm()
 	{
 		Keyframe first = {
@@ -944,6 +1003,7 @@ namespace Skelly
 					jump_left_upper_leg(),
 					jump_left_lower_leg(),
 					jump_right_lower_arm(),
+					jump_left_lower_arm(),
 				},
 			},
 		};
