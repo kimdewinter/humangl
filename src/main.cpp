@@ -9,6 +9,7 @@
 #include <iostream>
 #include <execinfo.h>
 #include <signal.h>
+#include <unistd.h>
 
 namespace
 {
