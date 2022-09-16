@@ -11,9 +11,9 @@
 #define COLOR_PANTS_B 0.4f
 #define COLOR_PANTS_A 0.0f
 
-#define COLOR_SKIN_R 0.9f
-#define COLOR_SKIN_G 0.8f
-#define COLOR_SKIN_B 0.5f
+#define COLOR_SKIN_R 0.6f
+#define COLOR_SKIN_G 0.5f
+#define COLOR_SKIN_B 0.4f
 #define COLOR_SKIN_A 0.0f
 
 namespace
@@ -572,56 +572,3 @@ namespace Skelly
 		};
 	}
 }
-
-/* TEMPLATE
-	std::pair<std::string, Channel<Keyframe>> walk_left_lower_leg()
-	{
-		Keyframe first = {
-			{
-				.rotations = {0.0, 0.0, 0.0},
-			},
-			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
-		};
-
-		Keyframe second = {
-			{
-				.rotations = {0.0, 0.0, 0.0},
-			},
-			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
-		};
-
-		Keyframe third = {
-			{
-				.rotations = {0.0, 0.0, 0.0},
-			},
-			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1000)),
-		};
-
-		Keyframe fourth = {
-			{
-				.rotations = {0.0, 0.0, 0.0},
-			},
-			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
-		};
-
-		Keyframe fifth = {
-			{
-				.rotations = {0.0, 0.0, 0.0},
-			},
-			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(2000)),
-		};
-
-		return {
-			"left_lower_leg",
-			Channel<Keyframe>{
-				.model_frames = {
-					first,
-					second,
-					third,
-					fourth,
-					fifth,
-				},
-			},
-		};
-	}
-*/
