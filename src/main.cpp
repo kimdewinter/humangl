@@ -37,8 +37,7 @@ namespace
 			"skelly",
 			WorldObj(
 				Skelly::create_skelly(shader),
-				std::map<std::string, std::shared_ptr<Animation>>{{"walk", skelly_walk}},
-				"walk"));
+				std::map<std::string, std::shared_ptr<Animation>>{{"walk", skelly_walk}}));
 	}
 
 	void render(Env const &env, World &world)

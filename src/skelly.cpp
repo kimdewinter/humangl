@@ -42,6 +42,8 @@ namespace
 
 namespace Skelly
 {
+	/********************************* MODELS *********************************/
+
 	std::shared_ptr<Model> create_right_lower_leg(std::shared_ptr<Shader> const shader)
 	{
 		return std::shared_ptr<Model>{
@@ -230,12 +232,14 @@ namespace Skelly
 		};
 	}
 
-	std::pair<std::string, Channel<Keyframe>> walk_torso()
+	/********************************* ANIMATION *********************************/
+
+	std::pair<std::string, Channel<Keyframe>> walk_left_upper_arm()
 	{
 		Keyframe first = {
 			{
 				.translations = {0.0, 0.0, 0.0},
-				.rotations = {0.0, -1.0, 0.0},
+				.rotations = {-0.15, 0.0, 0.0},
 				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
@@ -244,7 +248,7 @@ namespace Skelly
 		Keyframe second = {
 			{
 				.translations = {0.0, 0.0, 0.0},
-				.rotations = {0.0, 1.0, 0.0},
+				.rotations = {0.05, 0.0, 0.0},
 				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1000)),
@@ -253,14 +257,137 @@ namespace Skelly
 		Keyframe third = {
 			{
 				.translations = {0.0, 0.0, 0.0},
-				.rotations = {0.0, -1.0, 0.0},
+				.rotations = {-0.15, 0.0, 0.0},
 				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(2000)),
 		};
 
 		return {
-			"torso",
+			"left_upper_arm",
+			Channel<Keyframe>{
+				.model_frames = {
+					first,
+					second,
+					third,
+				},
+			},
+		};
+	}
+
+	std::pair<std::string, Channel<Keyframe>> walk_right_upper_arm()
+	{
+		Keyframe first = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.05, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
+		};
+
+		Keyframe second = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {-0.15, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1000)),
+		};
+
+		Keyframe third = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.05, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(2000)),
+		};
+
+		return {
+			"right_upper_arm",
+			Channel<Keyframe>{
+				.model_frames = {
+					first,
+					second,
+					third,
+				},
+			},
+		};
+	}
+
+	std::pair<std::string, Channel<Keyframe>> walk_left_upper_leg()
+	{
+		Keyframe first = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.15, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
+		};
+
+		Keyframe second = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {-0.15, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1000)),
+		};
+
+		Keyframe third = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.15, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(2000)),
+		};
+
+		return {
+			"left_upper_leg",
+			Channel<Keyframe>{
+				.model_frames = {
+					first,
+					second,
+					third,
+				},
+			},
+		};
+	}
+
+	std::pair<std::string, Channel<Keyframe>> walk_right_upper_leg()
+	{
+		Keyframe first = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {-0.15, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
+		};
+
+		Keyframe second = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.15, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1000)),
+		};
+
+		Keyframe third = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {-0.15, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(2000)),
+		};
+
+		return {
+			"right_upper_leg",
 			Channel<Keyframe>{
 				.model_frames = {
 					first,
@@ -277,7 +404,10 @@ namespace Skelly
 		return std::shared_ptr<Animation>{
 			new Animation{
 				std::map<std::string, Channel<Keyframe>>{
-					walk_torso(),
+					walk_right_upper_leg(),
+					walk_left_upper_leg(),
+					walk_right_upper_arm(),
+					walk_left_upper_arm(),
 				},
 			},
 		};
