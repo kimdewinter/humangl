@@ -1,6 +1,21 @@
 #include <chrono>
 #include "skelly.h"
 
+#define COLOR_SHIRT_R 0.0f
+#define COLOR_SHIRT_G 0.5f
+#define COLOR_SHIRT_B 0.0f
+#define COLOR_SHIRT_A 1.0f
+
+#define COLOR_PANTS_R 0.2f
+#define COLOR_PANTS_G 0.3f
+#define COLOR_PANTS_B 0.4f
+#define COLOR_PANTS_A 0.0f
+
+#define COLOR_SKIN_R 0.9f
+#define COLOR_SKIN_G 0.8f
+#define COLOR_SKIN_B 0.5f
+#define COLOR_SKIN_A 0.0f
+
 namespace
 {
 	/// Use to get the vertices of a 1x1x1 cube
@@ -48,16 +63,16 @@ namespace Skelly
 	{
 		return std::shared_ptr<Model>{
 			new Model{
-				"right_lower_leg",							 // Name
-				std::forward_list<std::shared_ptr<Model>>{}, // Children
-				get_cube_vertices(),						 // Vertices
-				get_cube_indices(),							 // Indices
-				shader,										 // Shader
-				{0.0, -1.2, 0.0},							 // Position
-				{0.0, 0.0, 0.0},							 // Orientation
-				{-0.625, 0.2, -0.625},						 // Scale
-				{1.0, 1.0, 0.0, 0.0},						 // Color
-				{0.0, -0.6, 0.0}}};							 // Joint
+				"right_lower_leg",											  // Name
+				std::forward_list<std::shared_ptr<Model>>{},				  // Children
+				get_cube_vertices(),										  // Vertices
+				get_cube_indices(),											  // Indices
+				shader,														  // Shader
+				{0.0, -1.2, 0.0},											  // Position
+				{0.0, 0.0, 0.0},											  // Orientation
+				{-0.625, 0.2, -0.625},										  // Scale
+				{COLOR_PANTS_R, COLOR_PANTS_G, COLOR_PANTS_B, COLOR_PANTS_A}, // Color
+				{0.0, -0.6, 0.0}}};											  // Joint
 	}
 	std::shared_ptr<Model> create_right_upper_leg(std::shared_ptr<Shader> const shader)
 	{
@@ -65,30 +80,30 @@ namespace Skelly
 			new Model{
 				"right_upper_leg", // Name
 				std::forward_list<std::shared_ptr<Model>>{
-					create_right_lower_leg(shader)}, // Children
-				get_cube_vertices(),				 // Vertices
-				get_cube_indices(),					 // Indices
-				shader,								 // Shader
-				{-0.25, -1.6, 0.0},					 // Position
-				{0.0, 0.0, 0.0},					 // Orientation
-				{-0.625, 0.2, -0.625},				 // Scale
-				{1.0, 1.0, 0.0, 0.0},				 // Color
-				{0.0, -0.6, 0.0}}};					 // Joint
+					create_right_lower_leg(shader)},						  // Children
+				get_cube_vertices(),										  // Vertices
+				get_cube_indices(),											  // Indices
+				shader,														  // Shader
+				{-0.25, -1.6, 0.0},											  // Position
+				{0.0, 0.0, 0.0},											  // Orientation
+				{-0.625, 0.2, -0.625},										  // Scale
+				{COLOR_PANTS_R, COLOR_PANTS_G, COLOR_PANTS_B, COLOR_PANTS_A}, // Color
+				{0.0, -0.6, 0.0}}};											  // Joint
 	}
 	std::shared_ptr<Model> create_left_lower_leg(std::shared_ptr<Shader> const shader)
 	{
 		return std::shared_ptr<Model>{
 			new Model{
-				"left_lower_leg",							 // Name
-				std::forward_list<std::shared_ptr<Model>>{}, // Children
-				get_cube_vertices(),						 // Vertices
-				get_cube_indices(),							 // Indices
-				shader,										 // Shader
-				{0.0, -1.2, 0.0},							 // Position
-				{0.0, 0.0, 0.0},							 // Orientation
-				{-0.625, 0.2, -0.625},						 // Scale
-				{1.0, 1.0, 0.0, 0.0},						 // Color
-				{0.0, -0.6, 0.0}}};							 // Joint
+				"left_lower_leg",											  // Name
+				std::forward_list<std::shared_ptr<Model>>{},				  // Children
+				get_cube_vertices(),										  // Vertices
+				get_cube_indices(),											  // Indices
+				shader,														  // Shader
+				{0.0, -1.2, 0.0},											  // Position
+				{0.0, 0.0, 0.0},											  // Orientation
+				{-0.625, 0.2, -0.625},										  // Scale
+				{COLOR_PANTS_R, COLOR_PANTS_G, COLOR_PANTS_B, COLOR_PANTS_A}, // Color
+				{0.0, -0.6, 0.0}}};											  // Joint
 	}
 	std::shared_ptr<Model> create_left_upper_leg(std::shared_ptr<Shader> const shader)
 	{
@@ -96,30 +111,30 @@ namespace Skelly
 			new Model{
 				"left_upper_leg", // Name
 				std::forward_list<std::shared_ptr<Model>>{
-					create_left_lower_leg(shader)}, // Children
-				get_cube_vertices(),				// Vertices
-				get_cube_indices(),					// Indices
-				shader,								// Shader
-				{0.25, -1.6, 0.0},					// Position
-				{0.0, 0.0, 0.0},					// Orientation
-				{-0.625, 0.2, -0.625},				// Scale
-				{1.0, 1.0, 0.0, 0.0},				// Color
-				{0.0, -0.6, 0.0}}};					// Joint
+					create_left_lower_leg(shader)},							  // Children
+				get_cube_vertices(),										  // Vertices
+				get_cube_indices(),											  // Indices
+				shader,														  // Shader
+				{0.25, -1.6, 0.0},											  // Position
+				{0.0, 0.0, 0.0},											  // Orientation
+				{-0.625, 0.2, -0.625},										  // Scale
+				{COLOR_PANTS_R, COLOR_PANTS_G, COLOR_PANTS_B, COLOR_PANTS_A}, // Color
+				{0.0, -0.6, 0.0}}};											  // Joint
 	}
 	std::shared_ptr<Model> create_right_lower_arm(std::shared_ptr<Shader> const shader)
 	{
 		return std::shared_ptr<Model>{
 			new Model{
-				"right_lower_arm",							 // Name
-				std::forward_list<std::shared_ptr<Model>>{}, // Children
-				get_cube_vertices(),						 // Vertices
-				get_cube_indices(),							 // Indices
-				shader,										 // Shader
-				{0.0, -1.2, 0.0},							 // Position
-				{0.0, 0.0, 0.0},							 // Orientation
-				{-0.7, 0.2, -0.7},							 // Scale
-				{1.0, 1.0, 0.0, 0.0},						 // Color
-				{0.0, -0.55, 0.0}}};						 // Joint
+				"right_lower_arm",										  // Name
+				std::forward_list<std::shared_ptr<Model>>{},			  // Children
+				get_cube_vertices(),									  // Vertices
+				get_cube_indices(),										  // Indices
+				shader,													  // Shader
+				{0.0, -1.2, 0.0},										  // Position
+				{0.0, 0.0, 0.0},										  // Orientation
+				{-0.7, 0.2, -0.7},										  // Scale
+				{COLOR_SKIN_R, COLOR_SKIN_G, COLOR_SKIN_B, COLOR_SKIN_A}, // Color
+				{0.0, -0.55, 0.0}}};									  // Joint
 	}
 	std::shared_ptr<Model> create_right_upper_arm(std::shared_ptr<Shader> const shader)
 	{
@@ -127,30 +142,30 @@ namespace Skelly
 			new Model{
 				"right_upper_arm", // Name
 				std::forward_list<std::shared_ptr<Model>>{
-					create_right_lower_arm(shader)}, // Children
-				get_cube_vertices(),				 // Vertices
-				get_cube_indices(),					 // Indices
-				shader,								 // Shader
-				{-0.67, 0.3, 0.0},					 // Position
-				{0.0, 0.0, 0.0},					 // Orientation
-				{-0.7, 0.2, -0.7},					 // Scale
-				{1.0, 1.0, 0.0, 0.0},				 // Color
-				{0.0, -0.55, 0.0}}};				 // Joint
+					create_right_lower_arm(shader)},						  // Children
+				get_cube_vertices(),										  // Vertices
+				get_cube_indices(),											  // Indices
+				shader,														  // Shader
+				{-0.67, 0.3, 0.0},											  // Position
+				{0.0, 0.0, 0.0},											  // Orientation
+				{-0.7, 0.2, -0.7},											  // Scale
+				{COLOR_SHIRT_R, COLOR_SHIRT_G, COLOR_SHIRT_B, COLOR_SHIRT_A}, // Color
+				{0.0, -0.55, 0.0}}};										  // Joint
 	}
 	std::shared_ptr<Model> create_left_lower_arm(std::shared_ptr<Shader> const shader)
 	{
 		return std::shared_ptr<Model>{
 			new Model{
-				"left_lower_arm",							 // Name
-				std::forward_list<std::shared_ptr<Model>>{}, // Children
-				get_cube_vertices(),						 // Vertices
-				get_cube_indices(),							 // Indices
-				shader,										 // Shader
-				{0.0, -1.2, 0.0},							 // Position
-				{0.0, 0.0, 0.0},							 // Orientation
-				{-0.7, 0.2, -0.7},							 // Scale
-				{1.0, 1.0, 0.0, 0.0},						 // Color
-				{0.0, -0.55, 0.0}}};						 // Joint
+				"left_lower_arm",										  // Name
+				std::forward_list<std::shared_ptr<Model>>{},			  // Children
+				get_cube_vertices(),									  // Vertices
+				get_cube_indices(),										  // Indices
+				shader,													  // Shader
+				{0.0, -1.2, 0.0},										  // Position
+				{0.0, 0.0, 0.0},										  // Orientation
+				{-0.7, 0.2, -0.7},										  // Scale
+				{COLOR_SKIN_R, COLOR_SKIN_G, COLOR_SKIN_B, COLOR_SKIN_A}, // Color
+				{0.0, -0.55, 0.0}}};									  // Joint
 	}
 	std::shared_ptr<Model> create_left_upper_arm(std::shared_ptr<Shader> const shader)
 	{
@@ -158,30 +173,30 @@ namespace Skelly
 			new Model{
 				"left_upper_arm", // Name
 				std::forward_list<std::shared_ptr<Model>>{
-					create_left_lower_arm(shader)}, // Children
-				get_cube_vertices(),				// Vertices
-				get_cube_indices(),					// Indices
-				shader,								// Shader
-				{0.67, 0.3, 0.0},					// Position
-				{0.0, 0.0, 0.0},					// Orientation
-				{-0.7, 0.2, -0.7},					// Scale
-				{1.0, 1.0, 0.0, 0.0},				// Color
-				{0.0, -0.55, 0.0}}};				// Joint
+					create_left_lower_arm(shader)},							  // Children
+				get_cube_vertices(),										  // Vertices
+				get_cube_indices(),											  // Indices
+				shader,														  // Shader
+				{0.67, 0.3, 0.0},											  // Position
+				{0.0, 0.0, 0.0},											  // Orientation
+				{-0.7, 0.2, -0.7},											  // Scale
+				{COLOR_SHIRT_R, COLOR_SHIRT_G, COLOR_SHIRT_B, COLOR_SHIRT_A}, // Color
+				{0.0, -0.55, 0.0}}};										  // Joint
 	}
 	std::shared_ptr<Model> create_head(std::shared_ptr<Shader> const shader)
 	{
 		return std::shared_ptr<Model>{
 			new Model{
-				"head",										 // Name
-				std::forward_list<std::shared_ptr<Model>>{}, // Children
-				get_cube_vertices(),						 // Vertices
-				get_cube_indices(),							 // Indices
-				shader,										 // Shader
-				{0.0, 1.3, 0.0},							 // Position
-				{0.0, 0.0, 0.0},							 // Orientation
-				{-0.4, -0.4, -0.65},						 // Scale
-				{1.0, 1.0, 0.0, 0.0},						 // Color
-				{0.0, 0.2, 0.0}}};							 // Joint
+				"head",													  // Name
+				std::forward_list<std::shared_ptr<Model>>{},			  // Children
+				get_cube_vertices(),									  // Vertices
+				get_cube_indices(),										  // Indices
+				shader,													  // Shader
+				{0.0, 1.3, 0.0},										  // Position
+				{0.0, 0.0, 0.0},										  // Orientation
+				{-0.4, -0.4, -0.65},									  // Scale
+				{COLOR_SKIN_R, COLOR_SKIN_G, COLOR_SKIN_B, COLOR_SKIN_A}, // Color
+				{0.0, 0.2, 0.0}}};										  // Joint
 	}
 
 	std::shared_ptr<Model> create_torso(std::shared_ptr<Shader> const shader)
@@ -194,14 +209,14 @@ namespace Skelly
 					create_left_upper_arm(shader),
 					create_right_upper_arm(shader),
 					create_left_upper_leg(shader),
-					create_right_upper_leg(shader)}, // Children
-				get_cube_vertices(),				 // Vertices
-				get_cube_indices(),					 // Indices
-				shader,								 // Shader
-				{0.0, 0.75, -3.0},					 // Position
-				{0.0, 0.0, 0.0},					 // Orientation
-				{0.0, 1.0, -0.5},					 // Scale
-				{1.0, 1.0, 0.0, 0.0}}};				 // Color
+					create_right_upper_leg(shader)},							// Children
+				get_cube_vertices(),											// Vertices
+				get_cube_indices(),												// Indices
+				shader,															// Shader
+				{0.0, 0.75, -3.0},												// Position
+				{0.0, 0.0, 0.0},												// Orientation
+				{0.0, 1.0, -0.5},												// Scale
+				{COLOR_SHIRT_R, COLOR_SHIRT_G, COLOR_SHIRT_B, COLOR_SHIRT_A}}}; // Color
 	}
 
 	// This function exists because calling "Skelly::create_skelly()" is more intuitive
@@ -238,45 +253,35 @@ namespace Skelly
 	{
 		Keyframe first = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {-0.15, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
 		};
 
 		Keyframe second = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.0, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(750)),
 		};
 
 		Keyframe third = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.05, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1000)),
 		};
 
 		Keyframe fourth = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.0, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1250)),
 		};
 
 		Keyframe fifth = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {-0.15, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(2000)),
 		};
@@ -299,45 +304,35 @@ namespace Skelly
 	{
 		Keyframe first = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.05, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
 		};
 
 		Keyframe second = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.0, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(250)),
 		};
 
 		Keyframe third = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {-0.15, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1000)),
 		};
 
 		Keyframe fourth = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.0, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1750)),
 		};
 
 		Keyframe fifth = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.05, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(2000)),
 		};
@@ -360,45 +355,35 @@ namespace Skelly
 	{
 		Keyframe first = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.0, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
 		};
 
 		Keyframe second = {
 			{
-				.translations = {0.0, 0.0, 0.0},
-				.rotations = {0.25, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
+				.rotations = {0.5, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(500)),
 		};
 
 		Keyframe third = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.0, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1000)),
 		};
 
 		Keyframe fourth = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.0, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1500)),
 		};
 
 		Keyframe fifth = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.0, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(2000)),
 		};
@@ -421,45 +406,35 @@ namespace Skelly
 	{
 		Keyframe first = {
 			{
-				.translations = {0.0, 0.0, 0.0},
-				.rotations = {0.15, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
+				.rotations = {0.3, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
 		};
 
 		Keyframe second = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.0, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(500)),
 		};
 
 		Keyframe third = {
 			{
-				.translations = {0.0, 0.0, 0.0},
-				.rotations = {-0.15, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
+				.rotations = {-0.3, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1000)),
 		};
 
 		Keyframe fourth = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.0, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1500)),
 		};
 
 		Keyframe fifth = {
 			{
-				.translations = {0.0, 0.0, 0.0},
-				.rotations = {0.15, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
+				.rotations = {0.3, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(2000)),
 		};
@@ -482,45 +457,35 @@ namespace Skelly
 	{
 		Keyframe first = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.0, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
 		};
 
 		Keyframe second = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.0, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(500)),
 		};
 
 		Keyframe third = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.0, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1000)),
 		};
 
 		Keyframe fourth = {
 			{
-				.translations = {0.0, 0.0, 0.0},
-				.rotations = {0.25, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
+				.rotations = {0.5, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1500)),
 		};
 
 		Keyframe fifth = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.0, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(2000)),
 		};
@@ -543,45 +508,35 @@ namespace Skelly
 	{
 		Keyframe first = {
 			{
-				.translations = {0.0, 0.0, 0.0},
-				.rotations = {-0.15, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
+				.rotations = {-0.3, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
 		};
 
 		Keyframe second = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.0, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(500)),
 		};
 
 		Keyframe third = {
 			{
-				.translations = {0.0, 0.0, 0.0},
-				.rotations = {0.15, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
+				.rotations = {0.3, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1000)),
 		};
 
 		Keyframe fourth = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.0, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1500)),
 		};
 
 		Keyframe fifth = {
 			{
-				.translations = {0.0, 0.0, 0.0},
-				.rotations = {-0.15, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
+				.rotations = {-0.3, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(2000)),
 		};
@@ -623,45 +578,35 @@ namespace Skelly
 	{
 		Keyframe first = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.0, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
 		};
 
 		Keyframe second = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.0, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
 		};
 
 		Keyframe third = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.0, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1000)),
 		};
 
 		Keyframe fourth = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.0, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
 		};
 
 		Keyframe fifth = {
 			{
-				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.0, 0.0, 0.0},
-				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(2000)),
 		};
