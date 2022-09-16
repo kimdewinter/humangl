@@ -21,9 +21,5 @@
 #define CLEAR_COLOR_B 0.3f	 // Blue
 #define CLEAR_COLOR_A 1.0f	 // Alpha
 #define MOVEMENT_SPEED 0.01f // When pressing a button to move a model around
-#define SET_ANIM_AT_START 1
-#if SET_ANIM_AT_START == 1
-#define ANIM_AT_START "walk"
-#endif
 
 #define PRINT_OUT(str) std::cout << str << std::endl

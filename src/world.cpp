@@ -226,7 +226,11 @@ WorldObj::WorldObj(
 	std::string const &anim_at_start) : root(root),
 										animations(animations)
 {
+	// map the root Model and it's children and store in this->models,
+	// so they can be accessed both as a forward list and as a map
 	this->map_models(this->root);
+
+	// set a starting animation, if instructed to do so by parameter anim_at_start
 	if (!anim_at_start.empty())
 		this->set_animation(anim_at_start);
 }

@@ -27,6 +27,7 @@ namespace
 		exit(1);
 	}
 
+	// modify this function to change what objects appear in the world
 	void populate_world(World &world)
 	{
 		std::shared_ptr<Shader> shader =
@@ -69,21 +70,17 @@ int main()
 		previous = current;
 		lag += elapsed;
 
-		PRINT_OUT("Processing input.");
 		env.process_input(&world);
 
 		while (lag >= ns_per_update)
 		{
-			PRINT_OUT("Updating world.");
 			updater.update(world, steady_clock::now());
 			lag -= ns_per_update;
 		}
 
-		PRINT_OUT("Rendering.");
 		render(env, world);
 		env.poll_events();
 	}
 
-	PRINT_OUT("Program complete.");
 	return EXIT_SUCCESS;
 }

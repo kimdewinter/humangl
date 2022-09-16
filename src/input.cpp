@@ -99,7 +99,7 @@ InputHandler::InputHandler()
 						model->reset_color();
 	 					} }),
 		// Keypress to print selected Model's data
-		new Unrepeatable(GLFW_KEY_ENTER, [&]()
+		new Unrepeatable(GLFW_KEY_BACKSPACE, [&]()
 						 {
 							if (std::shared_ptr<Model> model = world->get_selected())
 								model->debug_model_data(); }),
