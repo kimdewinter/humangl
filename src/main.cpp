@@ -33,11 +33,16 @@ namespace
 		std::shared_ptr<Shader> shader =
 			std::make_shared<Shader>("resources/shader.vert", "resources/shader.frag");
 		std::shared_ptr<Animation> skelly_walk = Skelly::create_animation_walk();
+		std::shared_ptr<Animation> skelly_jump = Skelly::create_animation_jump();
 		world.spawn_object(
 			"skelly",
 			WorldObj(
 				Skelly::create_skelly(shader),
-				std::map<std::string, std::shared_ptr<Animation>>{{"walk", skelly_walk}}));
+				std::map<std::string, std::shared_ptr<Animation>>{
+					{"walk", skelly_walk},
+					{"jump", skelly_jump},
+				},
+				"jump"));
 	}
 
 	void render(Env const &env, World &world)

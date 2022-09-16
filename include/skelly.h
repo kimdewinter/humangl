@@ -7,6 +7,7 @@ namespace Skelly
 	/// Hardcoded constructor of the root Model, with it's children already attached
 	std::shared_ptr<Model> create_skelly(std::shared_ptr<Shader> const shader);
 
-	/// Hardcoded constructor of an animation
+	/// Hardcoded constructors of animations
 	std::shared_ptr<Animation> create_animation_walk();
+	std::shared_ptr<Animation> create_animation_jump();
 }
