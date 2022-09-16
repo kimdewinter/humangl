@@ -232,7 +232,7 @@ namespace Skelly
 		};
 	}
 
-	/********************************* ANIMATION *********************************/
+	/********************************* WALKING ANIMATION *********************************/
 
 	std::pair<std::string, Channel<Keyframe>> walk_left_upper_arm()
 	{
@@ -248,13 +248,31 @@ namespace Skelly
 		Keyframe second = {
 			{
 				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(750)),
+		};
+
+		Keyframe third = {
+			{
+				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.05, 0.0, 0.0},
 				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1000)),
 		};
 
-		Keyframe third = {
+		Keyframe fourth = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1250)),
+		};
+
+		Keyframe fifth = {
 			{
 				.translations = {0.0, 0.0, 0.0},
 				.rotations = {-0.15, 0.0, 0.0},
@@ -270,6 +288,8 @@ namespace Skelly
 					first,
 					second,
 					third,
+					fourth,
+					fifth,
 				},
 			},
 		};
@@ -289,13 +309,31 @@ namespace Skelly
 		Keyframe second = {
 			{
 				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(250)),
+		};
+
+		Keyframe third = {
+			{
+				.translations = {0.0, 0.0, 0.0},
 				.rotations = {-0.15, 0.0, 0.0},
 				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1000)),
 		};
 
-		Keyframe third = {
+		Keyframe fourth = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1750)),
+		};
+
+		Keyframe fifth = {
 			{
 				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.05, 0.0, 0.0},
@@ -311,6 +349,69 @@ namespace Skelly
 					first,
 					second,
 					third,
+					fourth,
+					fifth,
+				},
+			},
+		};
+	}
+
+	std::pair<std::string, Channel<Keyframe>> walk_left_lower_leg()
+	{
+		Keyframe first = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
+		};
+
+		Keyframe second = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.25, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(500)),
+		};
+
+		Keyframe third = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1000)),
+		};
+
+		Keyframe fourth = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1500)),
+		};
+
+		Keyframe fifth = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(2000)),
+		};
+
+		return {
+			"left_lower_leg",
+			Channel<Keyframe>{
+				.model_frames = {
+					first,
+					second,
+					third,
+					fourth,
+					fifth,
 				},
 			},
 		};
@@ -330,13 +431,31 @@ namespace Skelly
 		Keyframe second = {
 			{
 				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(500)),
+		};
+
+		Keyframe third = {
+			{
+				.translations = {0.0, 0.0, 0.0},
 				.rotations = {-0.15, 0.0, 0.0},
 				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1000)),
 		};
 
-		Keyframe third = {
+		Keyframe fourth = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1500)),
+		};
+
+		Keyframe fifth = {
 			{
 				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.15, 0.0, 0.0},
@@ -352,6 +471,69 @@ namespace Skelly
 					first,
 					second,
 					third,
+					fourth,
+					fifth,
+				},
+			},
+		};
+	}
+
+	std::pair<std::string, Channel<Keyframe>> walk_right_lower_leg()
+	{
+		Keyframe first = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
+		};
+
+		Keyframe second = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(500)),
+		};
+
+		Keyframe third = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1000)),
+		};
+
+		Keyframe fourth = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.25, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1500)),
+		};
+
+		Keyframe fifth = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(2000)),
+		};
+
+		return {
+			"right_lower_leg",
+			Channel<Keyframe>{
+				.model_frames = {
+					first,
+					second,
+					third,
+					fourth,
+					fifth,
 				},
 			},
 		};
@@ -371,13 +553,31 @@ namespace Skelly
 		Keyframe second = {
 			{
 				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(500)),
+		};
+
+		Keyframe third = {
+			{
+				.translations = {0.0, 0.0, 0.0},
 				.rotations = {0.15, 0.0, 0.0},
 				.scalings = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1000)),
 		};
 
-		Keyframe third = {
+		Keyframe fourth = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1500)),
+		};
+
+		Keyframe fifth = {
 			{
 				.translations = {0.0, 0.0, 0.0},
 				.rotations = {-0.15, 0.0, 0.0},
@@ -393,6 +593,8 @@ namespace Skelly
 					first,
 					second,
 					third,
+					fourth,
+					fifth,
 				},
 			},
 		};
@@ -405,7 +607,9 @@ namespace Skelly
 			new Animation{
 				std::map<std::string, Channel<Keyframe>>{
 					walk_right_upper_leg(),
+					walk_right_lower_leg(),
 					walk_left_upper_leg(),
+					walk_left_lower_leg(),
 					walk_right_upper_arm(),
 					walk_left_upper_arm(),
 				},
@@ -413,3 +617,66 @@ namespace Skelly
 		};
 	}
 }
+
+/* TEMPLATE
+	std::pair<std::string, Channel<Keyframe>> walk_left_lower_leg()
+	{
+		Keyframe first = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
+		};
+
+		Keyframe second = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
+		};
+
+		Keyframe third = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1000)),
+		};
+
+		Keyframe fourth = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
+		};
+
+		Keyframe fifth = {
+			{
+				.translations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
+				.scalings = {0.0, 0.0, 0.0},
+			},
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(2000)),
+		};
+
+		return {
+			"left_lower_leg",
+			Channel<Keyframe>{
+				.model_frames = {
+					first,
+					second,
+					third,
+					fourth,
+					fifth,
+				},
+			},
+		};
+	}
+*/
