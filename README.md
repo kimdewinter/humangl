@@ -3,4 +3,4 @@ School project: an introduction to rigging, animations and hierarchical modeling
 
 ## Still a work in progress, check back later!
 
-![](https://i.imgur.com/vhWGFAf.png)
+![]([https://i.imgur.com/vhWGFAf.png](https://i.imgur.com/fneQfSD.gif))
