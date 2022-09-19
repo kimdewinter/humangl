@@ -909,10 +909,12 @@ namespace Skelly
 
 	std::pair<std::string, Channel<Keyframe>> jump_torso()
 	{
+		double const rotation = 0.0; // not a proper camera implementation, just a dirty quick-fix
+
 		Keyframe first = {
 			{
 				.translations = {0.0, -0.78, 0.0},
-				.rotations = {0.5, 0.0, 0.0},
+				.rotations = {0.5, rotation, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
 		};
@@ -920,7 +922,7 @@ namespace Skelly
 		Keyframe second = {
 			{
 				.translations = {0.0, 0.0, 0.0},
-				.rotations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, rotation, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(150)),
 		};
@@ -928,7 +930,7 @@ namespace Skelly
 		Keyframe third = {
 			{
 				.translations = {0.0, 0.5, 0.0},
-				.rotations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, rotation, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(750)),
 		};
@@ -936,7 +938,7 @@ namespace Skelly
 		Keyframe fourth = {
 			{
 				.translations = {0.0, 0.0, 0.0},
-				.rotations = {0.0, 0.0, 0.0},
+				.rotations = {0.0, rotation, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1250)),
 		};
@@ -944,7 +946,7 @@ namespace Skelly
 		Keyframe fifth = {
 			{
 				.translations = {0.0, -0.78, 0.0},
-				.rotations = {0.5, 0.0, 0.0},
+				.rotations = {0.5, rotation, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1500)),
 		};
@@ -952,7 +954,7 @@ namespace Skelly
 		Keyframe sixth = {
 			{
 				.translations = {0.0, -0.78, 0.0},
-				.rotations = {0.5, 0.0, 0.0},
+				.rotations = {0.5, rotation, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(2000)),
 		};
