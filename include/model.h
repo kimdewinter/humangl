@@ -20,6 +20,17 @@
 class Model
 {
 public:
+	/// @param name
+	/// @param children Models that should be attached to and below this Model in the matrix hierarchy
+	/// @param vertices
+	/// @param indices what triangles to draw between the vertices
+	/// @param shader shader program to call for rendering
+	/// @param position xyz position relative to parent (or world if this is the root model)
+	/// @param orientation as above
+	/// @param scale as above
+	/// @param color
+	/// @param joint optional point around which the Model should rotate
+	/// @param scaling_to_parent optional setting, allows Model's position to shift according to parent Model's scale
 	Model(
 		std::string const name,
 		std::forward_list<std::shared_ptr<Model>> children,
@@ -30,9 +41,11 @@ public:
 		vec3 const orientation,
 		vec3 const scale,
 		vec4 const color,
-		vec3 const joint = {0.0, 0.0, 0.0});
+		vec3 const joint = {0.0, 0.0, 0.0},
+		vec3 const scaling_to_parent = {0.0, 0.0, 0.0});
 	std::string const get_name() const;
-	void render(mat4 const parent_mat = {1.0, 0.0, 0.0, 0.0,
+	void render(vec3 const parent_scale,
+				mat4 const parent_mat = {1.0, 0.0, 0.0, 0.0,
 										 0.0, 1.0, 0.0, 0.0,
 										 0.0, 0.0, 1.0, 0.0,
 										 0.0, 0.0, 0.0, 1.0}) const;
@@ -62,6 +75,7 @@ private:
 	vec4 color;
 	vec4 const default_color;
 	vec3 const joint;
+	vec3 const scaling_to_parent;
 
 	std::shared_ptr<Shader> const shader;
 	GlObj const gl_obj;

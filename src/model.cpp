@@ -62,7 +62,8 @@ Model::Model(
 	vec3 const orientation,
 	vec3 const scale,
 	vec4 const color,
-	vec3 const joint)
+	vec3 const joint,
+	vec3 const scaling_to_parent)
 try : name(name),
 	children(children),
 	shader(shader),
@@ -75,6 +76,7 @@ try : name(name),
 	color(color),
 	default_color(color),
 	joint(joint),
+	scaling_to_parent(scaling_to_parent),
 	gl_obj(GlObj(vertices, indices))
 {
 }
@@ -89,7 +91,7 @@ std::string const Model::get_name() const
 }
 
 /// Calcutes transformations, sets uniforms, renders, and calls itself in this->children
-void Model::render(mat4 const parent_mat) const
+void Model::render(vec3 const parent_scale, mat4 const parent_mat) const
 {
 	mat4 for_renderer;
 	mat4 for_child; // The child models must not receive the scaling aspect of the parent transformation
@@ -138,7 +140,7 @@ void Model::render(mat4 const parent_mat) const
 		});
 
 	for (std::shared_ptr<Model> child : this->children)
-		child->render(for_child);
+		child->render(scale, for_child);
 }
 
 void Model::modify_position(vec3 const additives)
