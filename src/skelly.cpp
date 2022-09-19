@@ -227,26 +227,6 @@ namespace Skelly
 		return create_torso(shader);
 	}
 
-	std::pair<std::string, Channel<Keyframe>> walk_head()
-	{
-		using std::chrono::nanoseconds;
-		Keyframe first = {
-			{
-				.rotations = {0.0, 0.3, 0.0},
-			},
-			.time = nanoseconds(0),
-		};
-
-		return {
-			"head",
-			Channel<Keyframe>{
-				.model_frames = {
-					first,
-				},
-			},
-		};
-	}
-
 	/********************************* WALKING ANIMATION *********************************/
 
 	std::pair<std::string, Channel<Keyframe>> walk_left_upper_arm()
@@ -586,7 +566,7 @@ namespace Skelly
 			{
 				.rotations = {0.0, 0.0, 0.0},
 			},
-			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(250)),
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(150)),
 		};
 
 		Keyframe third = {
@@ -645,7 +625,7 @@ namespace Skelly
 			{
 				.rotations = {0.0, 0.0, 0.0},
 			},
-			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(250)),
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(150)),
 		};
 
 		Keyframe third = {
@@ -695,7 +675,7 @@ namespace Skelly
 	{
 		Keyframe first = {
 			{
-				.rotations = {1.25, 0.0, 0.0},
+				.rotations = {2.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
 		};
@@ -704,7 +684,7 @@ namespace Skelly
 			{
 				.rotations = {0.0, 0.0, 0.0},
 			},
-			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(250)),
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(150)),
 		};
 
 		Keyframe third = {
@@ -723,14 +703,14 @@ namespace Skelly
 
 		Keyframe fifth = {
 			{
-				.rotations = {1.25, 0.0, 0.0},
+				.rotations = {2.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1500)),
 		};
 
 		Keyframe sixth = {
 			{
-				.rotations = {1.25, 0.0, 0.0},
+				.rotations = {2.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(2000)),
 		};
@@ -754,7 +734,7 @@ namespace Skelly
 	{
 		Keyframe first = {
 			{
-				.rotations = {-0.75, 0.0, 0.0},
+				.rotations = {-2.0, 0.37, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
 		};
@@ -763,7 +743,7 @@ namespace Skelly
 			{
 				.rotations = {0.0, 0.0, 0.0},
 			},
-			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(250)),
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(150)),
 		};
 
 		Keyframe third = {
@@ -782,14 +762,14 @@ namespace Skelly
 
 		Keyframe fifth = {
 			{
-				.rotations = {-1.25, 0.0, 0.0},
+				.rotations = {-2.0, 0.37, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1500)),
 		};
 
 		Keyframe sixth = {
 			{
-				.rotations = {-1.25, 0.0, 0.0},
+				.rotations = {-2.0, 0.37, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(2000)),
 		};
@@ -813,7 +793,7 @@ namespace Skelly
 	{
 		Keyframe first = {
 			{
-				.rotations = {1.25, 0.0, 0.0},
+				.rotations = {2.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
 		};
@@ -822,7 +802,7 @@ namespace Skelly
 			{
 				.rotations = {0.0, 0.0, 0.0},
 			},
-			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(250)),
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(150)),
 		};
 
 		Keyframe third = {
@@ -841,14 +821,14 @@ namespace Skelly
 
 		Keyframe fifth = {
 			{
-				.rotations = {1.25, 0.0, 0.0},
+				.rotations = {2.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1500)),
 		};
 
 		Keyframe sixth = {
 			{
-				.rotations = {1.25, 0.0, 0.0},
+				.rotations = {2.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(2000)),
 		};
@@ -872,7 +852,7 @@ namespace Skelly
 	{
 		Keyframe first = {
 			{
-				.rotations = {-0.75, 0.0, 0.0},
+				.rotations = {-2.0, -0.37, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
 		};
@@ -881,7 +861,7 @@ namespace Skelly
 			{
 				.rotations = {0.0, 0.0, 0.0},
 			},
-			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(250)),
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(150)),
 		};
 
 		Keyframe third = {
@@ -900,14 +880,14 @@ namespace Skelly
 
 		Keyframe fifth = {
 			{
-				.rotations = {-1.25, 0.0, 0.0},
+				.rotations = {-2.0, -0.37, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1500)),
 		};
 
 		Keyframe sixth = {
 			{
-				.rotations = {-1.25, 0.0, 0.0},
+				.rotations = {-2.0, -0.37, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(2000)),
 		};
@@ -931,8 +911,8 @@ namespace Skelly
 	{
 		Keyframe first = {
 			{
-				.translations = {0.0, -0.5, 0.0},
-				.rotations = {0.0, 1.0, -0.5},
+				.translations = {0.0, -0.78, 0.0},
+				.rotations = {0.5, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(0)),
 		};
@@ -940,15 +920,15 @@ namespace Skelly
 		Keyframe second = {
 			{
 				.translations = {0.0, 0.0, 0.0},
-				.rotations = {0.0, 1.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
 			},
-			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(250)),
+			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(150)),
 		};
 
 		Keyframe third = {
 			{
 				.translations = {0.0, 0.5, 0.0},
-				.rotations = {0.0, 1.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(750)),
 		};
@@ -956,23 +936,23 @@ namespace Skelly
 		Keyframe fourth = {
 			{
 				.translations = {0.0, 0.0, 0.0},
-				.rotations = {0.0, 1.0, 0.0},
+				.rotations = {0.0, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1250)),
 		};
 
 		Keyframe fifth = {
 			{
-				.translations = {0.0, -0.5, 0.0},
-				.rotations = {0.0, 1.0, -0.5},
+				.translations = {0.0, -0.78, 0.0},
+				.rotations = {0.5, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(1500)),
 		};
 
 		Keyframe sixth = {
 			{
-				.translations = {0.0, -0.5, 0.0},
-				.rotations = {0.0, 1.0, -0.5},
+				.translations = {0.0, -0.78, 0.0},
+				.rotations = {0.5, 0.0, 0.0},
 			},
 			.time = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::milliseconds(2000)),
 		};

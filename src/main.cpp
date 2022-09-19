@@ -41,8 +41,7 @@ namespace
 				std::map<std::string, std::shared_ptr<Animation>>{
 					{"walk", skelly_walk},
 					{"jump", skelly_jump},
-				},
-				"jump"));
+				}));
 	}
 
 	void render(Env const &env, World &world)
