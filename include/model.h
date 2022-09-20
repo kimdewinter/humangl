@@ -30,7 +30,7 @@ public:
 	/// @param scale as above
 	/// @param color
 	/// @param joint optional point around which the Model should rotate
-	/// @param scaling_to_parent optional setting, allows Model's position to shift according to parent Model's scale
+	/// @param adjust_pos_to_parent_scale_delta optional setting, allows Model's position to shift according to parent Model's scale
 	Model(
 		std::string const name,
 		std::forward_list<std::shared_ptr<Model>> children,
@@ -42,13 +42,15 @@ public:
 		vec3 const scale,
 		vec4 const color,
 		vec3 const joint = {0.0, 0.0, 0.0},
-		vec3 const scaling_to_parent = {0.0, 0.0, 0.0});
+		vec3 const adjust_pos_to_parent_scale_delta = {0.0, 0.0, 0.0});
 	std::string const get_name() const;
-	void render(vec3 const parent_scale,
-				mat4 const parent_mat = {1.0, 0.0, 0.0, 0.0,
+	/// @param parent_mat parent's transformation matrix without scaling (otherwise child scale also changes)
+	/// @param parent_scale_delta delta between parent's scale and parent's default scale (needed for pos-adjustment when parent's scale changes)
+	void render(mat4 const parent_mat = {1.0, 0.0, 0.0, 0.0,
 										 0.0, 1.0, 0.0, 0.0,
 										 0.0, 0.0, 1.0, 0.0,
-										 0.0, 0.0, 0.0, 1.0}) const;
+										 0.0, 0.0, 0.0, 1.0},
+				vec3 const parent_scale_delta = {0.0, 0.0, 0.0}) const;
 	void modify_position(vec3 const additives);
 	void modify_orientation(vec3 const additives);
 	void modify_scale(vec3 const additives);
@@ -75,7 +77,7 @@ private:
 	vec4 color;
 	vec4 const default_color;
 	vec3 const joint;
-	vec3 const scaling_to_parent;
+	vec3 const adjust_pos_to_parent_scale_delta;
 
 	std::shared_ptr<Shader> const shader;
 	GlObj const gl_obj;

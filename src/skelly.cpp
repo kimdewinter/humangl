@@ -146,7 +146,7 @@ namespace Skelly
 				get_cube_vertices(),										  // Vertices
 				get_cube_indices(),											  // Indices
 				shader,														  // Shader
-				{-0.67, 0.3, 0.0},											  // Position
+				{-0.65, 0.3, 0.0},											  // Position
 				{0.0, 0.0, 0.0},											  // Orientation
 				{-0.7, 0.2, -0.7},											  // Scale
 				{COLOR_SHIRT_R, COLOR_SHIRT_G, COLOR_SHIRT_B, COLOR_SHIRT_A}, // Color
@@ -177,11 +177,12 @@ namespace Skelly
 				get_cube_vertices(),										  // Vertices
 				get_cube_indices(),											  // Indices
 				shader,														  // Shader
-				{0.67, 0.3, 0.0},											  // Position
+				{0.65, 0.3, 0.0},											  // Position
 				{0.0, 0.0, 0.0},											  // Orientation
 				{-0.7, 0.2, -0.7},											  // Scale
 				{COLOR_SHIRT_R, COLOR_SHIRT_G, COLOR_SHIRT_B, COLOR_SHIRT_A}, // Color
-				{0.0, -0.55, 0.0}}};										  // Joint
+				{0.0, -0.55, 0.0},											  // Joint
+				{1.0, 1.0, 0.0}}};											  // Whether position should be adjusted according to "adjust_post_to_parent_scale_delta"
 	}
 	std::shared_ptr<Model> create_head(std::shared_ptr<Shader> const shader)
 	{
