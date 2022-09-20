@@ -909,7 +909,7 @@ namespace Skelly
 
 	std::pair<std::string, Channel<Keyframe>> jump_torso()
 	{
-		double const rotation = 0.0; // not a proper camera implementation, just a dirty quick-fix
+		float const rotation = 0.0; // not a proper camera implementation, just a dirty quick-fix
 
 		Keyframe first = {
 			{
