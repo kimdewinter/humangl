@@ -5,16 +5,19 @@
 #include <array>
 
 /// X, Y, Z
-#define SIZE_VEC3 sizeof(GLfloat) * 3
-typedef std::array<GLfloat, 3> vec3;
+#define ELEMENTS_VEC3 3
+#define SIZE_VEC3 sizeof(GLfloat) * ELEMENTS_VEC3
+typedef std::array<GLfloat, ELEMENTS_VEC3> vec3;
 
 /// X, Y, Z, W
-#define SIZE_VEC4 sizeof(GLfloat) * 4
-typedef std::array<GLfloat, 4> vec4;
+#define ELEMENTS_VEC4 4
+#define SIZE_VEC4 sizeof(GLfloat) * ELEMENTS_VEC4
+typedef std::array<GLfloat, ELEMENTS_VEC4> vec4;
 
 /// Column-first 4x4 float matrix
-#define SIZE_MAT4 sizeof(GLfloat) * 16
-typedef std::array<GLfloat, 16> mat4;
+#define ELEMENTS_MAT4 16
+#define SIZE_MAT4 sizeof(GLfloat) * ELEMENTS_MAT4
+typedef std::array<GLfloat, ELEMENTS_MAT4> mat4;
 
 vec3 addition_vec3(vec3 const a, vec3 const b);
 mat4 dot_product_mat4(mat4 const a, mat4 const b);
