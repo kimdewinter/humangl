@@ -62,8 +62,7 @@ Model::Model(
 	vec3 const orientation,
 	vec3 const scale,
 	vec4 const color,
-	vec3 const joint,
-	vec3 const adjust_pos_to_parent_scale_delta)
+	vec3 const joint)
 try : name(name),
 	children(children),
 	shader(shader),
@@ -76,7 +75,6 @@ try : name(name),
 	color(color),
 	default_color(color),
 	joint(joint),
-	adjust_pos_to_parent_scale_delta(adjust_pos_to_parent_scale_delta),
 	gl_obj(GlObj(vertices, indices))
 {
 }
@@ -90,29 +88,9 @@ std::string const Model::get_name() const
 	return this->name;
 }
 
-mat4 const calculate_position_adjusted_to_parent_scale_delta(
-	vec3 const old_pos,
-	vec3 const adjust_pos_to_parent_scale_delta,
-	vec3 const parent_scale_delta)
-{
-	vec3 new_pos;
-	for (int i = 0; i < new_pos.size(); i++)
-	{
-		if (adjust_pos_to_parent_scale_delta[i] > static_cast<GLfloat>(0.0))
-			new_pos[i] = old_pos[i] * (parent_scale_delta[i] + static_cast<GLfloat>(1));
-		else
-			new_pos[i] = old_pos[i];
-	}
-	return get_translation_mat4(new_pos[0], new_pos[1], new_pos[2]);
-}
-
 /// Calcutes transformations, sets uniforms, renders, and calls itself in this->children
-void Model::render(mat4 const parent_mat, vec3 const parent_scale_delta) const
+void Model::render(mat4 const parent_mat) const
 {
-	mat4 new_translation = calculate_position_adjusted_to_parent_scale_delta(
-		this->position,
-		this->adjust_pos_to_parent_scale_delta,
-		parent_scale_delta);
 	mat4 for_renderer;
 	mat4 for_child; // The child models must not receive the scaling aspect of the parent transformation
 	{
@@ -124,8 +102,9 @@ void Model::render(mat4 const parent_mat, vec3 const parent_scale_delta) const
 			this->joint[0],
 			this->joint[1],
 			this->joint[2]);
+		mat4 translation = get_translation_mat4(this->position[0], this->position[1], this->position[2]);
 		for_renderer = dot_product_mat4(
-			dot_product_mat4(dot_product_mat4(scaling, rotation), new_translation), parent_mat);
+			dot_product_mat4(dot_product_mat4(scaling, rotation), translation), parent_mat);
 	}
 	{
 		mat4 rotation = get_rotation_around_joint(
@@ -135,7 +114,8 @@ void Model::render(mat4 const parent_mat, vec3 const parent_scale_delta) const
 			this->joint[0],
 			this->joint[1],
 			this->joint[2]);
-		for_child = dot_product_mat4(dot_product_mat4(rotation, new_translation), parent_mat);
+		mat4 translation = get_translation_mat4(this->position[0], this->position[1], this->position[2]);
+		for_child = dot_product_mat4(dot_product_mat4(rotation, translation), parent_mat);
 	}
 	this->gl_obj.render(
 		this->shader,
@@ -158,7 +138,7 @@ void Model::render(mat4 const parent_mat, vec3 const parent_scale_delta) const
 		});
 
 	for (std::shared_ptr<Model> child : this->children)
-		child->render(for_child, subtract_vec3(this->scale, this->default_scale));
+		child->render(for_child);
 }
 
 void Model::modify_position(vec3 const additives)

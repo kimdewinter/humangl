@@ -181,8 +181,7 @@ namespace Skelly
 				{0.0, 0.0, 0.0},											  // Orientation
 				{-0.7, 0.2, -0.7},											  // Scale
 				{COLOR_SHIRT_R, COLOR_SHIRT_G, COLOR_SHIRT_B, COLOR_SHIRT_A}, // Color
-				{0.0, -0.55, 0.0},											  // Joint
-				{1.0, 1.0, 0.0}}};											  // Whether position should be adjusted according to "adjust_post_to_parent_scale_delta"
+				{0.0, -0.55, 0.0}}};										  // Joint
 	}
 	std::shared_ptr<Model> create_head(std::shared_ptr<Shader> const shader)
 	{
