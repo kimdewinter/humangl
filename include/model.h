@@ -45,8 +45,8 @@ public:
 		std::array<bool, ELEMENTS_VEC3> const adjust_scale = {});
 	std::string const get_name() const;
 	/// @param parent_mat parent's transformation matrix without scaling (otherwise child scale also changes)
-	void render(vec3 const parent_scale,
-				vec3 const parent_def_scale,
+	void render(vec3 const parent_scale = {0.0, 0.0, 0.0},
+				vec3 const parent_def_scale = {0.0, 0.0, 0.0},
 				mat4 const parent_mat = {1.0, 0.0, 0.0, 0.0,
 										 0.0, 1.0, 0.0, 0.0,
 										 0.0, 0.0, 1.0, 0.0,
