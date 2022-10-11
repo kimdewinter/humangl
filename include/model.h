@@ -30,7 +30,8 @@ public:
 	/// @param scale as above
 	/// @param color
 	/// @param joint optional point around which the Model should rotate
-	/// @param adjust_scale whether, when the parent's scale changes in a certain dimension, this model should shift it's position to still be positioned correctly relative to the parent
+	/// @param allow_scaling
+	/// @param adjust_for_parent whether, when the parent's scale changes in a certain dimension, this model should shift it's position to still be positioned correctly relative to the parent
 	Model(
 		std::string const name,
 		std::forward_list<std::shared_ptr<Model>> children,
@@ -42,7 +43,8 @@ public:
 		vec3 const scale,
 		vec4 const color,
 		vec3 const joint = {0.0, 0.0, 0.0},
-		std::array<bool, ELEMENTS_VEC3> const adjust_scale = {});
+		std::array<bool, ELEMENTS_VEC3> const allow_scaling = {},
+		std::array<bool, ELEMENTS_VEC3> const adjust_for_parent = {});
 	std::string const get_name() const;
 	/// @param parent_mat parent's transformation matrix without scaling (otherwise child scale also changes)
 	void render(vec3 const parent_scale = {0.0, 0.0, 0.0},
@@ -77,7 +79,8 @@ private:
 	vec4 color;
 	vec4 const default_color;
 	vec3 const joint;
-	std::array<bool, ELEMENTS_VEC3> const adjust_scale;
+	std::array<bool, ELEMENTS_VEC3> const allow_scaling;
+	std::array<bool, ELEMENTS_VEC3> const adjust_for_parent;
 	std::shared_ptr<Shader> const shader;
 	GlObj const gl_obj;
 };

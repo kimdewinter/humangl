@@ -68,7 +68,8 @@ Model::Model(
 	vec3 const scale,
 	vec4 const color,
 	vec3 const joint,
-	std::array<bool, ELEMENTS_VEC3> const adjust_scale)
+	std::array<bool, ELEMENTS_VEC3> const allow_scaling,
+	std::array<bool, ELEMENTS_VEC3> const adjust_for_parent)
 try : name(name),
 	children(children),
 	shader(shader),
@@ -81,7 +82,8 @@ try : name(name),
 	color(color),
 	default_color(color),
 	joint(joint),
-	adjust_scale(adjust_scale),
+	allow_scaling(allow_scaling),
+	adjust_for_parent(adjust_for_parent),
 	gl_obj(GlObj(vertices, indices))
 {
 }
@@ -105,7 +107,7 @@ void Model::render(
 	{
 		for (int i = 0; i < ELEMENTS_VEC3; i++)
 		{
-			if (this->adjust_scale[i])
+			if (this->adjust_for_parent[i])
 			{
 				GLfloat scale_combined = ensure_positive(parent_default_scale[i]) + ensure_positive(this->default_scale[i]);
 				GLfloat parent_portion = ensure_positive(parent_default_scale[i]) / scale_combined;
