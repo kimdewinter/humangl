@@ -68,8 +68,7 @@ Model::Model(
 	vec3 const scale,
 	vec4 const color,
 	vec3 const joint,
-	std::array<bool, ELEMENTS_VEC3> const allow_scaling,
-	std::array<bool, ELEMENTS_VEC3> const adjust_for_parent)
+	std::array<bool, ELEMENTS_VEC3> const allow_scaling)
 try : name(name),
 	children(children),
 	shader(shader),
@@ -83,7 +82,6 @@ try : name(name),
 	default_color(color),
 	joint(joint),
 	allow_scaling(allow_scaling),
-	adjust_for_parent(adjust_for_parent),
 	gl_obj(GlObj(vertices, indices))
 {
 }
@@ -108,19 +106,14 @@ void Model::render(
 	{
 		for (int i = 0; i < ELEMENTS_VEC3; i++)
 		{
-			if (this->adjust_for_parent[i])
-			{
-				GLfloat scale_combined = ensure_positive(parent_default_scale[i]) + ensure_positive(this->default_scale[i]);
-				GLfloat parent_portion = ensure_positive(parent_default_scale[i]) / scale_combined;
-				GLfloat child_portion = ensure_positive(this->default_scale[i]) / scale_combined;
-				adjusted_position[i] =
-					(this->default_position[i] * parent_portion *
-					 ensure_positive(parent_scale[i]) / ensure_positive(parent_default_scale[i])) +
-					(this->default_position[i] * child_portion *
-					 ensure_positive(this->scale[i]) / ensure_positive(this->default_scale[i]));
-			}
-			else
-				adjusted_position[i] = this->default_position[i];
+			GLfloat scale_combined = ensure_positive(parent_default_scale[i]) + ensure_positive(this->default_scale[i]);
+			GLfloat parent_portion = ensure_positive(parent_default_scale[i]) / scale_combined;
+			GLfloat child_portion = ensure_positive(this->default_scale[i]) / scale_combined;
+			adjusted_position[i] =
+				(this->default_position[i] * parent_portion *
+				 ensure_positive(parent_scale[i]) / ensure_positive(parent_default_scale[i])) +
+				(this->default_position[i] * child_portion *
+				 ensure_positive(this->scale[i]) / ensure_positive(this->default_scale[i]));
 		}
 	}
 #endif
