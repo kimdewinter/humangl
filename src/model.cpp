@@ -103,7 +103,8 @@ void Model::render(
 	vec3 const parent_default_scale,
 	mat4 const parent_mat) const
 {
-	vec3 adjusted_position;
+	vec3 adjusted_position = {this->position[0], this->position[1], this->position[2]};
+#if MODEL_DESIGN_MODE == 0
 	{
 		for (int i = 0; i < ELEMENTS_VEC3; i++)
 		{
@@ -122,6 +123,7 @@ void Model::render(
 				adjusted_position[i] = this->default_position[i];
 		}
 	}
+#endif
 	mat4 for_renderer;
 	mat4 for_child; // The child models must not receive the scaling aspect of the parent transformation
 	{
@@ -184,7 +186,9 @@ void Model::modify_orientation(vec3 const additives)
 
 void Model::modify_scale(vec3 const additives)
 {
-	this->scale = addition_vec3(this->scale, additives);
+	for (int i = 0; i < ELEMENTS_VEC3; i++)
+		if (this->allow_scaling[i] || MODEL_DESIGN_MODE)
+			this->scale[i] += additives[i];
 }
 
 void Model::set_position(vec3 const position)
