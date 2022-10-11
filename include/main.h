@@ -17,9 +17,9 @@
 #define WINDOW_RESIZABLE GL_FALSE
 #define MODEL_DESIGN_MODE 0
 #define MS_PER_UPDATE 30
-#define CLEAR_COLOR_R 0.2f   // Red
-#define CLEAR_COLOR_G 0.3f   // Green
-#define CLEAR_COLOR_B 0.3f   // Blue
+#define CLEAR_COLOR_R 0.0f   // Red
+#define CLEAR_COLOR_G 0.0f   // Green
+#define CLEAR_COLOR_B 0.0f   // Blue
 #define CLEAR_COLOR_A 1.0f   // Alpha
 #define MOVEMENT_SPEED 0.01f // When pressing a button to move a model around
 
