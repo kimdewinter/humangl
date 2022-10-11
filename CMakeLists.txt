@@ -56,7 +56,6 @@ target_include_directories(humangl PUBLIC
 ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-
 # Perform dependency linkage
 include(${CMAKE_DIR}/LinkGLFW.cmake)
 LinkGLFW(humangl PRIVATE)
@@ -88,4 +87,4 @@ set_target_properties(humangl PROPERTIES
 set_target_properties(humangl PROPERTIES FOLDER ${PROJECT_NAME})
 
 # Set build type to Release or Debug
-set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Release)
