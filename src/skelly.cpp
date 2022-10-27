@@ -73,7 +73,8 @@ namespace Skelly
 				{-0.625, 0.2, -0.625},										  // Scale
 				{COLOR_PANTS_R, COLOR_PANTS_G, COLOR_PANTS_B, COLOR_PANTS_A}, // Color
 				{0.0, -0.6, 0.0},											  // Joint
-				{false, true, false}}};										  // Allow Scaling
+				{false, true, false},										  // Allow Scaling
+				{0.0, 0.0, 0.0}}};											  // Scaling Offset
 	}
 	std::shared_ptr<Model> create_right_upper_leg(std::shared_ptr<Shader> const shader)
 	{
@@ -90,7 +91,8 @@ namespace Skelly
 				{-0.625, 0.2, -0.625},										  // Scale
 				{COLOR_PANTS_R, COLOR_PANTS_G, COLOR_PANTS_B, COLOR_PANTS_A}, // Color
 				{0.0, -0.6, 0.0},											  // Joint
-				{false, true, false}}};										  // Allow Scaling
+				{false, true, false},										  // Allow Scaling
+				{-0.4, 0.0, 0.0}}};											  // Scaling Offset
 	}
 	std::shared_ptr<Model> create_left_lower_leg(std::shared_ptr<Shader> const shader)
 	{
@@ -106,7 +108,8 @@ namespace Skelly
 				{-0.625, 0.2, -0.625},										  // Scale
 				{COLOR_PANTS_R, COLOR_PANTS_G, COLOR_PANTS_B, COLOR_PANTS_A}, // Color
 				{0.0, -0.6, 0.0},											  // Joint
-				{false, true, false}}};										  // Allow Scaling
+				{false, true, false},										  // Allow Scaling
+				{0.0, 0.0, 0.0}}};											  // Scaling Offset
 	}
 	std::shared_ptr<Model> create_left_upper_leg(std::shared_ptr<Shader> const shader)
 	{
@@ -123,7 +126,8 @@ namespace Skelly
 				{-0.625, 0.2, -0.625},										  // Scale
 				{COLOR_PANTS_R, COLOR_PANTS_G, COLOR_PANTS_B, COLOR_PANTS_A}, // Color
 				{0.0, -0.6, 0.0},											  // Joint
-				{false, true, false}}};										  // Allow Scaling
+				{false, true, false},										  // Allow Scaling
+				{-0.4, 0.0, 0.0}}};											  // Scaling Offset
 	}
 	std::shared_ptr<Model> create_right_lower_arm(std::shared_ptr<Shader> const shader)
 	{
@@ -139,7 +143,8 @@ namespace Skelly
 				{-0.7, 0.2, -0.7},										  // Scale
 				{COLOR_SKIN_R, COLOR_SKIN_G, COLOR_SKIN_B, COLOR_SKIN_A}, // Color
 				{0.0, -0.55, 0.0},										  // Joint
-				{false, true, false}}};
+				{false, true, false},									  // Allow Scaling
+				{0.0, 0.0, 0.0}}};										  // Scaling Offset
 	}
 	std::shared_ptr<Model> create_right_upper_arm(std::shared_ptr<Shader> const shader)
 	{
@@ -156,7 +161,8 @@ namespace Skelly
 				{-0.7, 0.2, -0.7},											  // Scale
 				{COLOR_SHIRT_R, COLOR_SHIRT_G, COLOR_SHIRT_B, COLOR_SHIRT_A}, // Color
 				{0.0, -0.55, 0.0},											  // Joint
-				{false, true, false}}};										  // Allow Scaling
+				{false, true, false},										  // Allow Scaling
+				{0.0, -0.55, 0.0}}};										  // Scaling Offset
 	}
 	std::shared_ptr<Model> create_left_lower_arm(std::shared_ptr<Shader> const shader)
 	{
@@ -172,7 +178,8 @@ namespace Skelly
 				{-0.7, 0.2, -0.7},										  // Scale
 				{COLOR_SKIN_R, COLOR_SKIN_G, COLOR_SKIN_B, COLOR_SKIN_A}, // Color
 				{0.0, -0.55, 0.0},										  // Joint
-				{false, true, false}}};									  // Allow Scaling
+				{false, true, false},									  // Allow Scaling
+				{0.0, 0.0, 0.0}}};										  // Scaling Offset
 	}
 	std::shared_ptr<Model> create_left_upper_arm(std::shared_ptr<Shader> const shader)
 	{
@@ -206,7 +213,8 @@ namespace Skelly
 				{-0.4, -0.4, -0.65},									  // Scale
 				{COLOR_SKIN_R, COLOR_SKIN_G, COLOR_SKIN_B, COLOR_SKIN_A}, // Color
 				{0.0, 0.2, 0.0},										  // Joint
-				{true, true, true}}};									  // Allow Scaling
+				{true, true, true},										  // Allow Scaling
+				{0.0, 0.0, 0.0}}};										  // Scaling Offset
 	}
 
 	std::shared_ptr<Model> create_torso(std::shared_ptr<Shader> const shader)
@@ -228,7 +236,8 @@ namespace Skelly
 				{0.0, 1.0, -0.5},											  // Scale
 				{COLOR_SHIRT_R, COLOR_SHIRT_G, COLOR_SHIRT_B, COLOR_SHIRT_A}, // Color
 				{0.0, 0.0, 0.0},											  // Joint
-				{true, true, false}}};										  // Allow Scaling
+				{true, true, false},										  // Allow Scaling
+				{0.0, 0.0, 0.0}}};											  // Scaling Offset
 	}
 
 	// This function exists because calling "Skelly::create_skelly()" is more intuitive
