@@ -106,21 +106,22 @@ void Model::render(
 	{
 		for (int i = 0; i < ELEMENTS_VEC3; i++)
 		{
-			if (this->name == "left_upper_arm" && i == 1)
-			{
-				adjusted_position[i] = this->default_position[i] + ((parent_scale[i] - parent_default_scale[i]) * 0.55);
-			}
-			else
-			{
-				GLfloat scale_combined = ensure_positive(parent_default_scale[i]) + ensure_positive(this->default_scale[i]);
-				GLfloat parent_portion = ensure_positive(parent_default_scale[i]) / scale_combined;
-				GLfloat child_portion = ensure_positive(this->default_scale[i]) / scale_combined;
-				adjusted_position[i] =
-					(this->default_position[i] * parent_portion *
-					 ensure_positive(parent_scale[i]) / ensure_positive(parent_default_scale[i])) +
-					(this->default_position[i] * child_portion *
-					 ensure_positive(this->scale[i]) / ensure_positive(this->default_scale[i]));
-			}
+			// adjusted_position[i] = this->default_position[i] + ((parent_scale[i] - parent_default_scale[i]) * -this->joint[i]);
+			GLfloat scale_combined = ensure_positive(parent_default_scale[i]) + ensure_positive(this->default_scale[i]);
+			GLfloat parent_portion = ensure_positive(parent_default_scale[i]) / scale_combined;
+			GLfloat child_portion = ensure_positive(this->default_scale[i]) / scale_combined;
+			// adjusted_position[i] =
+			// 	(this->default_position[i] * parent_portion *
+			// 	 ensure_positive(parent_scale[i]) / ensure_positive(parent_default_scale[i])) +
+			// 	(this->default_position[i] * child_portion *
+			// 	 ensure_positive(this->scale[i]) / ensure_positive(this->default_scale[i])) +
+			// 	((parent_scale[i] - parent_default_scale[i]) * -this->joint[i]);
+			adjusted_position[i] =
+				(this->default_position[i] * parent_portion *
+				 ensure_positive(parent_scale[i]) / ensure_positive(parent_default_scale[i])) +
+				(this->default_position[i] * child_portion *
+				 ensure_positive(this->scale[i]) / ensure_positive(this->default_scale[i])) +
+				((ensure_positive(parent_scale[i]) - ensure_positive(parent_default_scale[i])) * -this->joint[i] * parent_portion);
 		}
 	}
 #endif

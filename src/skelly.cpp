@@ -227,7 +227,7 @@ namespace Skelly
 				{0.0, 1.0, -0.5},											  // Scale
 				{COLOR_SHIRT_R, COLOR_SHIRT_G, COLOR_SHIRT_B, COLOR_SHIRT_A}, // Color
 				{0.0, 0.0, 0.0},											  // Joint
-				{false, true, false}}};										  // Allow Scaling
+				{true, true, false}}};										  // Allow Scaling
 	}
 
 	// This function exists because calling "Skelly::create_skelly()" is more intuitive
