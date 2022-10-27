@@ -68,7 +68,8 @@ Model::Model(
 	vec3 const scale,
 	vec4 const color,
 	vec3 const joint,
-	std::array<bool, ELEMENTS_VEC3> const allow_scaling)
+	std::array<bool, ELEMENTS_VEC3> const allow_scaling,
+	vec3 const scaling_offset)
 try : name(name),
 	children(children),
 	shader(shader),
@@ -82,6 +83,7 @@ try : name(name),
 	default_color(color),
 	joint(joint),
 	allow_scaling(allow_scaling),
+	scaling_offset(scaling_offset),
 	gl_obj(GlObj(vertices, indices))
 {
 }
@@ -106,23 +108,16 @@ void Model::render(
 	{
 		for (int i = 0; i < ELEMENTS_VEC3; i++)
 		{
-			// adjusted_position[i] = this->default_position[i] + ((parent_scale[i] - parent_default_scale[i]) * -this->joint[i]);
 			GLfloat scale_combined = ensure_positive(parent_default_scale[i]) + ensure_positive(this->default_scale[i]);
 			GLfloat parent_portion = ensure_positive(parent_default_scale[i]) / scale_combined;
 			GLfloat child_portion = ensure_positive(this->default_scale[i]) / scale_combined;
-			// adjusted_position[i] =
-			// 	(this->default_position[i] * parent_portion *
-			// 	 ensure_positive(parent_scale[i]) / ensure_positive(parent_default_scale[i])) +
-			// 	(this->default_position[i] * child_portion *
-			// 	 ensure_positive(this->scale[i]) / ensure_positive(this->default_scale[i])) +
-			// 	((parent_scale[i] - parent_default_scale[i]) * -this->joint[i]);
 			adjusted_position[i] =
 				(this->default_position[i] * parent_portion *
 				 ensure_positive(parent_scale[i]) / ensure_positive(parent_default_scale[i])) +
 				(this->default_position[i] * child_portion *
 				 ensure_positive(this->scale[i]) / ensure_positive(this->default_scale[i])) +
-				((ensure_positive(parent_scale[i]) - ensure_positive(parent_default_scale[i])) * -this->joint[i] * parent_portion) +
-				((ensure_positive(this->scale[i]) - ensure_positive(this->default_scale[i])) * -this->joint[i] * child_portion);
+				((ensure_positive(parent_scale[i]) - ensure_positive(parent_default_scale[i])) * -this->scaling_offset[i] * parent_portion) +
+				((ensure_positive(this->default_scale[i]) - ensure_positive(this->scale[i])) * -this->scaling_offset[i]);
 		}
 	}
 #endif

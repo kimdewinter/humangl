@@ -43,7 +43,8 @@ public:
 		vec3 const scale,
 		vec4 const color,
 		vec3 const joint = {0.0, 0.0, 0.0},
-		std::array<bool, ELEMENTS_VEC3> const allow_scaling = {});
+		std::array<bool, ELEMENTS_VEC3> const allow_scaling = {},
+		vec3 const scaling_offset = {0.0, 0.0, 0.0});
 	std::string const get_name() const;
 	/// @param parent_mat parent's transformation matrix without scaling (otherwise child scale also changes)
 	void render(vec3 const parent_scale = {0.0, 0.0, 0.0},
@@ -79,6 +80,7 @@ private:
 	vec4 const default_color;
 	vec3 const joint;
 	std::array<bool, ELEMENTS_VEC3> const allow_scaling;
+	vec3 const scaling_offset;
 	std::shared_ptr<Shader> const shader;
 	GlObj const gl_obj;
 };

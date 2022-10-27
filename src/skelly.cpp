@@ -189,7 +189,8 @@ namespace Skelly
 				{-0.7, 0.2, -0.7},											  // Scale
 				{COLOR_SHIRT_R, COLOR_SHIRT_G, COLOR_SHIRT_B, COLOR_SHIRT_A}, // Color
 				{0.0, -0.55, 0.0},											  // Joint
-				{false, true, false}}};										  // Allow Scaling
+				{false, true, false},										  // Allow Scaling
+				{0.0, -0.55, 0.0}}};										  // Scaling Offset
 	}
 	std::shared_ptr<Model> create_head(std::shared_ptr<Shader> const shader)
 	{
