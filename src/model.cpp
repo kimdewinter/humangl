@@ -121,7 +121,8 @@ void Model::render(
 				 ensure_positive(parent_scale[i]) / ensure_positive(parent_default_scale[i])) +
 				(this->default_position[i] * child_portion *
 				 ensure_positive(this->scale[i]) / ensure_positive(this->default_scale[i])) +
-				((ensure_positive(parent_scale[i]) - ensure_positive(parent_default_scale[i])) * -this->joint[i] * parent_portion);
+				((ensure_positive(parent_scale[i]) - ensure_positive(parent_default_scale[i])) * -this->joint[i] * parent_portion) +
+				((ensure_positive(this->scale[i]) - ensure_positive(this->default_scale[i])) * -this->joint[i] * child_portion);
 		}
 	}
 #endif
